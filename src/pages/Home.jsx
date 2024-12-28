@@ -2,6 +2,8 @@ import React from "react";
 import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
 import BottomNavigation from "../components/BottomNavigation.jsx"
+import TitleBox from "../components/TitleBox.jsx";
+import TopBar from "../components/TopBar.jsx";
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -21,16 +23,19 @@ export const PC = ({children}) => {
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
-    align-items: end;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const WrapperPC = styled.div`
     width: 500px;
-    height: 100vh;
+    height: 100%;
     display: flex;
-    align-items: end;
+    flex-direction: column;
+    align-items: center;
+    
 `;
 
 const Home = () =>{
@@ -38,12 +43,12 @@ const Home = () =>{
         <>
             <Mobile>
                 <Wrapper>
-                    <BottomNavigation></BottomNavigation>
+                    <TopBar></TopBar>
                 </Wrapper>
             </Mobile>
-            <PC style={{display : 'flex', justifyContent : 'center'}}>
+            <PC>
                 <WrapperPC>
-                    <BottomNavigation></BottomNavigation>
+                    <TopBar></TopBar>
                 </WrapperPC>
             </PC>
         </>
@@ -51,4 +56,4 @@ const Home = () =>{
 
     )
 }
-export default Home
+export default Home;
