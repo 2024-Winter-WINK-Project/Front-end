@@ -26,7 +26,7 @@ const Background_Bar = styled.nav`
     width: 100vw;
     height: 10vh;
     display: flex;
-    align-items: end;
+    align-items: center;
     justify-content: center;
     position: fixed;
     top: 0;
@@ -39,7 +39,7 @@ const Background_BarPC = styled.div`
     width: 500px;
     height: 10vh;
     display: flex;
-    align-items: end;
+    align-items: center;
     justify-content: center;
     position: fixed;
     top: 0;

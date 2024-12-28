@@ -1,9 +1,11 @@
 import React from "react";
 import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
-import BottomNavigation from "../components/BottomNavigation.jsx"
 import TitleBox from "../components/TitleBox.jsx";
 import TopBar from "../components/TopBar.jsx";
+import TwoButtons from "../components/TwoButtons.jsx";
+import ThreeButtons from "../components/ThreeButtons.jsx";
+import OneButton from "../components/OneButton.jsx";
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -27,6 +29,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 11vh;
 `;
 
 const WrapperPC = styled.div`
@@ -35,6 +38,7 @@ const WrapperPC = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 11vh;
     
 `;
 
@@ -44,11 +48,17 @@ const Home = () =>{
             <Mobile>
                 <Wrapper>
                     <TopBar></TopBar>
+                    <OneButton></OneButton>
+                    <TwoButtons></TwoButtons>
+                    <ThreeButtons></ThreeButtons>
                 </Wrapper>
             </Mobile>
             <PC>
                 <WrapperPC>
                     <TopBar></TopBar>
+                    <OneButton></OneButton>
+                    <TwoButtons></TwoButtons>
+                    <ThreeButtons></ThreeButtons>
                 </WrapperPC>
             </PC>
         </>

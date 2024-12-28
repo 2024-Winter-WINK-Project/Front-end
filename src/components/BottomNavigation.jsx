@@ -29,7 +29,7 @@ export const PC = ({children}) => {
 const Background_Nav = styled.nav`
     background-color: white;
     width: 100vw;
-    height: 8vh;
+    height: 9vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,7 +43,7 @@ const Background_Nav = styled.nav`
 const Background_NavPC = styled.div`
     background-color: white;
     width: 500px;
-    height: 8vh;
+    height: 9vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,8 +62,8 @@ const ButtonWrapper = styled.div`
 `;
 
 const ButtonIcons = styled.img`
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 `;
 
 const ButtonIconsPC = styled.img`

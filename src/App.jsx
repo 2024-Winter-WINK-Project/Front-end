@@ -13,7 +13,7 @@ const App = () =>{
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home style={{height : {vh}}}/>}></Route>
+                <Route path="/" element={<Home />}></Route>
             </Routes>
         </BrowserRouter>
     )
