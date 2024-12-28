@@ -26,7 +26,7 @@ export const PC = ({children}) => {
     return <>{isPC && children}</>
 }
 
-const Background_Nav = styled.div`
+const Background_Nav = styled.nav`
     background-color: white;
     width: 100vw;
     height: 8vh;
@@ -34,7 +34,22 @@ const Background_Nav = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: 0 -10px 5px -4px rgba(86, 86, 86, 0.20);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+`;
 
+const Background_NavPC = styled.div`
+    background-color: white;
+    width: 500px;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -10px 5px -4px rgba(86, 86, 86, 0.20);
+    position: fixed;
+    bottom: 0;
 `;
 
 const ButtonWrapper = styled.div`
@@ -58,7 +73,7 @@ const ButtonIconsPC = styled.img`
 
 const StyledButton = styled.div`
     width: 100%;
-    height: 2vh;
+    height: 25px;
     background: none;
     display: flex;
     justify-content: center;
@@ -70,7 +85,7 @@ const StyledButton = styled.div`
 
 const StyledButtonPC = styled.div`
     width: 100%;
-    height: 2vh;
+    height: 25px;
     background: none;
     display: flex;
     justify-content: center;
@@ -84,8 +99,6 @@ const Navigation = styled.div`
     background-color: white;
     display: flex;
     width: 90%;
-
-
 `;
 
 
@@ -115,7 +128,7 @@ const BottomNavigation = () => {
                 </Background_Nav>
             </Mobile>
             <PC>
-                <Background_Nav>
+                <Background_NavPC>
                     <Navigation>
                         <ButtonWrapper>
                             <ButtonIconsPC src={home}/>
@@ -134,7 +147,7 @@ const BottomNavigation = () => {
                             <StyledButtonPC>마이페이지</StyledButtonPC>
                         </ButtonWrapper>
                     </Navigation>
-                </Background_Nav>
+                </Background_NavPC>
             </PC>
         </>
 
