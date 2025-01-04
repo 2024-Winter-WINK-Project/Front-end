@@ -23,10 +23,9 @@ export const PC = ({children}) => {
 
 const Background_Bar = styled.nav`
     background-color: white;
-    width: 100vw;
-    height: 10vh;
+    width: 100%;
+    height: 8vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     position: fixed;
     top: 0;
@@ -37,9 +36,8 @@ const Background_Bar = styled.nav`
 const Background_BarPC = styled.div`
     background-color: white;
     width: 500px;
-    height: 10vh;
+    height: 8vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     position: fixed;
     top: 0;
@@ -48,39 +46,45 @@ const Background_BarPC = styled.div`
 const ButtonIcons = styled.img`
     width: 30px;
     height: 30px;
+
 `;
 
 const BarWrapper = styled.div`
     background-color: white;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: space-between;
     width: 90%;
 `;
 
 const TextWrapper = styled.div`
-    width: 100%;
+    width: 150px;
     display: flex;
+    align-items: center;
 `;
 
 const Text = styled.text`
-    width: 100%;
-    font-size: 22px;
+    font-size: 30px;
     font-weight: bold;
     display: flex;
-    justify-content: center;
+    //justify-content: center;
 `;
 
-const TopBar = ({pageName}) => {
+const TopBar = ({nickName}) => {
     return (
         <>
             <Mobile>
                 <Background_Bar>
                     <BarWrapper>
-                        <ButtonIcons src={back}/>
                         <TextWrapper>
-                            <Text>{pageName}</Text>
+                            <Text style={{
+                                marginRight : '10px'
+                            }}>{nickName}</Text>
+                            <Text style={{
+                                fontSize :'22px',
+                                fontWeight : 'normal',
+                            }}>님</Text>
                         </TextWrapper>
-                        {/*<ButtonIcons src={done}/>*/}
                         <ButtonIcons src={add}/>
                     </BarWrapper>
                 </Background_Bar>
@@ -88,11 +92,17 @@ const TopBar = ({pageName}) => {
             <PC>
                 <Background_BarPC>
                     <BarWrapper>
-                        <ButtonIcons src={back}/>
                         <TextWrapper>
-                            <Text>{pageName}</Text>
+                            <Text style={{
+                                marginRight : '10px'
+                            }}>{nickName}</Text>
+                            <Text style={{
+                                fontSize : '22px',
+                                fontWeight : 'normal',
+                                marginLeft : '10px'
+                            }}>님</Text>
                         </TextWrapper>
-                        <ButtonIcons src={done}/>
+                        <ButtonIcons src={add}/>
                     </BarWrapper>
                 </Background_BarPC>
             </PC>
