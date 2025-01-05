@@ -17,7 +17,7 @@ export const BigButton = styled.button`
 export const ModalButton1 = styled.button`
   width: 88px;
   height: 40px;
-  border: 3px solid white;
+  border: 2px solid white;
   border-radius: 10px;
   background: #0234A8;
   font-size: 12px;

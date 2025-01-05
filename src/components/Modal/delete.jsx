@@ -13,13 +13,13 @@ const DeleteModal = ({ isOpen, handleConfirm, closeModal }) => {
               <Button
                 size="small"
                 num="one"
-                name="확인"
+                content="확인"
                 onClick={handleConfirm}
               />
               <Button
                 size="small"
                 num="two"
-                name="취소"
+                content="취소"
                 onClick={closeModal}
               />
             </div>
