@@ -26,12 +26,14 @@ export const ProfileContainer = styled.div`
 export const ProfileTitle = styled.span`
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-bottom: 28px;
 `;
 
 export const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 44px;
 `;
 
@@ -59,7 +61,7 @@ export const UserInfo = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin: 20px;
+  align-items: center;
+  margin: 28px;
   margin-bottom: 80px;
 `;
