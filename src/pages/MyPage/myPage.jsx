@@ -5,6 +5,7 @@ import Profile from '../../assets/MyPage/profile.svg';
 import Button from '../../components/Button/ProfileButton.jsx';
 import SingOutModal from '../../components/Modal/signout.jsx';
 import DeleteModal from '../../components/Modal/delete.jsx';
+import LightBlueBox from "../../components/LightBlueBox.jsx";
 import * as style from './styles';
 
 export const Mobile = ({children}) => {
@@ -82,6 +83,11 @@ export default function MyPage() {
                 </div>
               </style.ButtonContainer>
             <style.ProfileTitle>가장 가까운 모임</style.ProfileTitle>
+            <LightBlueBox
+              eventTitle={"제주도 여행"}
+              eventStartDate={"2025-02-10"}
+              eventEndDate={"2025-02-15"}>
+            </LightBlueBox>
           </style.ProfileContainer>
         </style.Wrapper>
       </Mobile>
@@ -111,6 +117,11 @@ export default function MyPage() {
                 </div>
               </style.ButtonContainer>
             <style.ProfileTitle>가장 가까운 모임</style.ProfileTitle>
+            <LightBlueBox
+              eventTitle={"제주도 여행"}
+              eventStartDate={"2025-02-10"}
+              eventEndDate={"2025-02-15"}>
+            </LightBlueBox>
           </style.ProfileContainer>
         </style.WrapperPC>
       </PC>
