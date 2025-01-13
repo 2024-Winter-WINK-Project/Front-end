@@ -5,6 +5,8 @@ import EventList from "./pages/EventList.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import MovingKakaoMap from "./pages/MovingKakaoMap.jsx";
 import ManageEvent from "./pages/ManageEvent.jsx";
+import MyPage from "./pages/MyPage/myPage.jsx";
+
 
 let vh = window.innerHeight * 0.01
 
@@ -24,8 +26,7 @@ const App = () =>{
                 <Route path="/createevent" element={<CreateEvent />}></Route>
                 <Route path="/manageevent" element={<ManageEvent />}></Route>
                 <Route path="/movingmap" element={<MovingKakaoMap />}></Route>
-
-
+                <Route path="/mypage" element={<MyPage />}></Route>
             </Routes>
         </BrowserRouter>
     )
