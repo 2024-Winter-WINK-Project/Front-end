@@ -41,3 +41,29 @@ export const ModalButton2 = styled.button`
   padding: 4px;
   margin: 12px;
 `;
+
+export const HistoryButton = styled.button`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  background-color: ${(props) =>
+    props.name === 'income'
+      ? '#E7EBF7'
+      : props.name === 'outcome'
+      ? '#F7E7E7'
+      : 'transparent'};
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+`;
+
+export const ButtonContent = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
