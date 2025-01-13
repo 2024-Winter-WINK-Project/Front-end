@@ -1,7 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login/login.jsx";
+import EventList from "./pages/EventList.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";
+import MovingKakaoMap from "./pages/MovingKakaoMap.jsx";
+import ManageEvent from "./pages/ManageEvent.jsx";
 import MyPage from "./pages/MyPage/myPage.jsx";
+
 
 let vh = window.innerHeight * 0.01
 
@@ -17,6 +22,10 @@ const App = () =>{
             <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/login" element={<Login />}></Route>
+                <Route path="/eventlist" element={<EventList />}></Route>
+                <Route path="/createevent" element={<CreateEvent />}></Route>
+                <Route path="/manageevent" element={<ManageEvent />}></Route>
+                <Route path="/movingmap" element={<MovingKakaoMap />}></Route>
                 <Route path="/mypage" element={<MyPage />}></Route>
             </Routes>
         </BrowserRouter>
