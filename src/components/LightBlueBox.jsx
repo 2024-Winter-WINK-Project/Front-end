@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import group_manager from "../icons/group_manager.png";
 import {useMediaQuery} from "react-responsive";
+import {useNavigate} from "react-router-dom";
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -50,15 +51,29 @@ const LBTextContainer = styled.div`
 `;
 
 const LBIcon = styled.img`
-    width: 25px;
+    width: 30px;
     height: 30px;
 `;
 
-const LightBlueBox = ({eventTitle,eventStartDate,eventEndDate}) => {
+const LightBlueBox = ({eventTitle,eventStartDate,eventEndDate, isManager, eventPlaceName, eventPlaceXPos, eventPlaceYPos}) => {
+    const navigate = useNavigate();
+    var ManagerIcon = null;
+    if (isManager === "true"){
+        ManagerIcon = group_manager;
+    }
     return(
         <>
             <Mobile>
-                <Wrapper style={{width : "100vw"}}>
+                <Wrapper style={{width : "100vw"}} onClick={() => navigate("/manageevent",
+                    {state :{
+                            xPos:eventPlaceXPos,
+                            yPos:eventPlaceYPos,
+                            pName:eventPlaceName,
+                            eTitle:eventTitle,
+                            eSDate:eventStartDate,
+                            eEDate:eventEndDate,
+                            manager:isManager
+                        }})}>
                     <LBBox>
                         <LBTextContainer>
                             <LBText style={{
@@ -67,12 +82,26 @@ const LightBlueBox = ({eventTitle,eventStartDate,eventEndDate}) => {
                             }}>{eventTitle}</LBText>
                             <LBText>{eventStartDate} ~ {eventEndDate}</LBText>
                         </LBTextContainer>
-                        <LBIcon src={group_manager}></LBIcon>
+                        {ManagerIcon ?
+                            <LBIcon src={ManagerIcon}></LBIcon>
+                            :
+                            <div style={{width : "30px", height : "30px", border : 'none'}}></div>
+                        }
                     </LBBox>
                 </Wrapper>
             </Mobile>
             <PC>
-                <Wrapper style={{width : "500px"}}>
+                <Wrapper style={{width : "500px"}} onClick={() => navigate("/manageevent",
+                    {state : {
+                                xPos:eventPlaceXPos,
+                                yPos:eventPlaceYPos,
+                                pName:eventPlaceName,
+                                eTitle:eventTitle,
+                                eSDate:eventStartDate,
+                                eEDate:eventEndDate,
+                                manager:isManager
+
+                    }})}>
                     <LBBox>
                         <LBTextContainer>
                             <LBText style={{
@@ -81,7 +110,11 @@ const LightBlueBox = ({eventTitle,eventStartDate,eventEndDate}) => {
                             }}>{eventTitle}</LBText>
                             <LBText>{eventStartDate} ~ {eventEndDate}</LBText>
                         </LBTextContainer>
-                        <LBIcon src={group_manager}></LBIcon>
+                        {ManagerIcon ?
+                            <LBIcon src={ManagerIcon}></LBIcon>
+                            :
+                            <div style={{width : "30px", height : "30px", border : "none"}}></div>
+                        }
                     </LBBox>
                 </Wrapper>
             </PC>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
 import TitleBox from "../components/TitleBox.jsx";
@@ -8,6 +8,8 @@ import ThreeButtons from "../components/ThreeButtons.jsx";
 import OneButton from "../components/OneButton.jsx";
 import HomeTopBar from "../components/HomeTopBar.jsx";
 import LightBlueBox from "../components/LightBlueBox.jsx";
+import {useNavigate} from "react-router-dom";
+import Modal from "../components/Modal.jsx";
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -59,59 +61,106 @@ const Text = styled.text`
 `;
 
 const Home = () =>{
+    const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const isOpen = childData => {
+        setOpen(childData);
+    };
     return (
         <>
             <Mobile>
                 <Wrapper>
-                    <HomeTopBar nickName={"홍길동"}></HomeTopBar>
+                    <HomeTopBar nickName={"홍길동"} destination={"createevent"}></HomeTopBar>
+                    <BodyWrapper>
+                        <Text onClick={() => setOpen(true)}>다가오는 모임 일정이예요</Text>
+                    </BodyWrapper>
+                    <LightBlueBox
+                        eventTitle={"제주도 여행"}
+                        eventStartDate={"2025-02-10"}
+                        eventEndDate={"2025-02-15"}
+                        isManager={"true"}
+                        eventPlaceName={"제주공항"}
+                        eventPlaceXPos={126.2934}
+                        eventPlaceYPos={33.3044}
+                    >
+                    </LightBlueBox>
+                    <LightBlueBox
+                        eventTitle={"WINK MT"}
+                        eventStartDate={"2025-02-25"}
+                        eventEndDate={"2025-02-26"}
+                        isManager={"false"}
+                        eventPlaceName={"강남역"}
+                        eventPlaceXPos={127.028361548}
+                        eventPlaceYPos={37.496486063}
+                    >
+                    </LightBlueBox>
+                    <LightBlueBox
+                        eventTitle={"개강총회"}
+                        eventStartDate={"2025-03-05"}
+                        eventEndDate={"2025-03-05"}
+                        isManager={"false"}
+                    >
+                    </LightBlueBox>
+                    <LightBlueBox
+                        eventTitle={"한강 나들이"}
+                        eventStartDate={"2025-03-10"}
+                        eventEndDate={"2025-03-10"}
+                        isManager={"true"}
+                    >
+                    </LightBlueBox>
+                    {open == true ?
+                        <Modal onClick={isOpen}></Modal>
+                        :
+                        null
+                    }
+                </Wrapper>
+
+            </Mobile>
+            <PC>
+                <WrapperPC>
+                    <HomeTopBar nickName={"홍길동"} destination={"createevent"}></HomeTopBar>
                     <BodyWrapper>
                         <Text>다가오는 모임 일정이예요</Text>
                     </BodyWrapper>
                     <LightBlueBox
                         eventTitle={"제주도 여행"}
                         eventStartDate={"2025-02-10"}
-                        eventEndDate={"2025-02-15"}>
+                        eventEndDate={"2025-02-15"}
+                        isManager={"true"}
+                        eventPlaceName={"제주공항"}
+                        eventPlaceXPos={126.2934}
+                        eventPlaceYPos={33.3044}
+                    >
                     </LightBlueBox>
                     <LightBlueBox
                         eventTitle={"WINK MT"}
                         eventStartDate={"2025-02-25"}
-                        eventEndDate={"2025-02-26"}>
+                        eventEndDate={"2025-02-26"}
+                        isManager={"false"}
+                        eventPlaceName={"강남역"}
+                        eventPlaceXPos={127.028361548}
+                        eventPlaceYPos={37.496486063}
+                    >
                     </LightBlueBox>
                     <LightBlueBox
                         eventTitle={"개강총회"}
                         eventStartDate={"2025-03-05"}
-                        eventEndDate={"2025-03-05"}>
+                        eventEndDate={"2025-03-05"}
+                        isManager={"false"}
+                    >
                     </LightBlueBox>
                     <LightBlueBox
                         eventTitle={"한강 나들이"}
                         eventStartDate={"2025-03-10"}
-                        eventEndDate={"2025-03-10"}>
+                        eventEndDate={"2025-03-10"}
+                        isManager={"true"}
+                    >
                     </LightBlueBox>
-                </Wrapper>
-            </Mobile>
-            <PC>
-                <WrapperPC>
-                    <HomeTopBar nickName={"홍길동"}></HomeTopBar>
-                    <LightBlueBox
-                        eventTitle={"제주도 여행"}
-                        eventStartDate={"2025-02-10"}
-                        eventEndDate={"2025-02-15"}>
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"WINK MT"}
-                        eventStartDate={"2025-02-25"}
-                        eventEndDate={"2025-02-26"}>
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"개강총회"}
-                        eventStartDate={"2025-03-05"}
-                        eventEndDate={"2025-03-05"}>
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"한강 나들이"}
-                        eventStartDate={"2025-03-10"}
-                        eventEndDate={"2025-03-10"}>
-                    </LightBlueBox>
+                    {open == true ?
+                        <Modal onClick={isOpen}></Modal>
+                        :
+                        null
+                    }
                 </WrapperPC>
             </PC>
         </>

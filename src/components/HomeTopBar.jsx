@@ -4,6 +4,7 @@ import styled from "styled-components";
 import back from "../icons/back.png";
 import done from "../icons/done.png";
 import add from "../icons/add.png";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -70,7 +71,12 @@ const Text = styled.text`
     //justify-content: center;
 `;
 
-const TopBar = ({nickName}) => {
+const HomeTopBar = ({nickName, destination}) => {
+    const navigate = useNavigate();
+    const movePage = () => {
+        navigate("/"+String(destination), {state :{xPos : 126.570667, yPos : 33.450701}});
+    }
+
     return (
         <>
             <Mobile>
@@ -85,7 +91,7 @@ const TopBar = ({nickName}) => {
                                 fontWeight : 'normal',
                             }}>님</Text>
                         </TextWrapper>
-                        <ButtonIcons src={add}/>
+                        <ButtonIcons src={add} onClick={() => movePage()}/>
                     </BarWrapper>
                 </Background_Bar>
             </Mobile>
@@ -97,12 +103,11 @@ const TopBar = ({nickName}) => {
                                 marginRight : '10px'
                             }}>{nickName}</Text>
                             <Text style={{
-                                fontSize : '22px',
+                                fontSize :'22px',
                                 fontWeight : 'normal',
-                                marginLeft : '10px'
                             }}>님</Text>
                         </TextWrapper>
-                        <ButtonIcons src={add}/>
+                        <ButtonIcons src={add} onClick={() => movePage()}/>
                     </BarWrapper>
                 </Background_BarPC>
             </PC>
@@ -111,4 +116,4 @@ const TopBar = ({nickName}) => {
 
 }
 
-export default TopBar;
+export default HomeTopBar;

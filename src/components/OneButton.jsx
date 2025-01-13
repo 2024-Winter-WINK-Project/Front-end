@@ -22,7 +22,7 @@ const ButtonContainer = styled.div`
     width : 100vw;
     display: flex;
     justify-content: center;
-
+    
 `;
 const ButtonContainerPC = styled.div`
     width : 500px;
@@ -54,13 +54,16 @@ const ColoredButton = styled.button`
 const TextBox = styled.text`
     font-size: 20px;
 `;
-const OneButton = () =>{
+const OneButton = ({isOpen}) =>{
+    const Controller = () =>{
+        isOpen(false);
+    }
     return (
         <>
             <Mobile>
                 <ButtonContainer>
                     <ButtonWrapper>
-                        <ColoredButton>
+                        <ColoredButton onClick={Controller}>
                             <TextBox>예</TextBox>
                         </ColoredButton>
                     </ButtonWrapper>
