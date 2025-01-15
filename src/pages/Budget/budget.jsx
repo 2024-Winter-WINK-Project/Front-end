@@ -32,7 +32,7 @@ export default function History() {
   const handleButtonClick = (type) => {
     setBtnState(type);
     if (type === 'addHistory') {
-      navigate('/history');
+      navigate('/addhistory');
     }
   };
 
