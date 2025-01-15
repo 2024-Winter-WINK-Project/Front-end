@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {useMediaQuery} from "react-responsive";
 import TopBar from "../../components/TopBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
@@ -26,9 +27,13 @@ export const PC = ({children}) => {
 
 export default function History() {
   const [btnState, setBtnState] = useState('income');
+  const navigate = useNavigate();
 
   const handleButtonClick = (type) => {
     setBtnState(type);
+    if (type === 'addHistory') {
+      navigate('/history');
+    }
   };
 
   return (
@@ -60,6 +65,7 @@ export default function History() {
                 <Button
                   name={'options'}
                   image={Add}
+                  onClick={() => handleButtonClick('addHistory')}
                 />
                 <span>내역 추가</span>
               </style.Label>
@@ -134,6 +140,7 @@ export default function History() {
                 <Button
                   name={'options'}
                   image={Add}
+                  onClick={() => handleButtonClick('addHistory')}
                 />
                 <span>내역 추가</span>
               </style.Label>
