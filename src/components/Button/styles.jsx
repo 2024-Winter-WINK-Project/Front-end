@@ -62,11 +62,12 @@ export const OptionsButton = styled.button`
   border-radius: 10px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const HistoryButton = styled.button`
-  width: 360px;
-  height:80px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   background-color: ${(props) =>
     props.name === 'income'
       ? '#E7EBF7'
@@ -75,9 +76,17 @@ export const HistoryButton = styled.button`
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 8px;
   cursor: pointer;
+`;
+
+export const DetailButton = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ButtonContent = styled.div`
@@ -95,7 +104,7 @@ export const ButtonContent = styled.div`
     margin-left: ${(props) =>
     props.name === 'options'
       ? '18px'
-      : '16px'};
+      : '-156px'};
   }
   >span {
     margin-top: ${(props) =>
@@ -108,7 +117,7 @@ export const ButtonContent = styled.div`
     left: ${(props) =>
     props.name === 'budget'
       ? '28px'
-      : '100px'};
+      : '-80px'};
     white-space: nowrap;
   }
   > span:nth-of-type(2) {
@@ -122,7 +131,7 @@ export const ButtonContent = styled.div`
     right: ${(props) =>
     props.name === 'budget'
       ? '-320px'
-      : '-332px'};
+      : '-156px'};
     white-space: nowrap;
   }
 `;

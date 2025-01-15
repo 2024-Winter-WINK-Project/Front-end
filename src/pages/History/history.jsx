@@ -38,6 +38,7 @@ export default function History() {
                 width={'168px'}
                 height={'68px'}
                 name={'income'}
+                type={'detail'}
                 content={'수입'}
                 onClick={() => handleButtonClick('income')}
               />
@@ -45,6 +46,7 @@ export default function History() {
                 width={'168px'}
                 height={'68px'}
                 name={'outcome'}
+                type={'detail'}
                 content={'지출'}
                 onClick={() => handleButtonClick('outcome')}
               />
@@ -81,6 +83,7 @@ export default function History() {
               width={'188px'}
               height={'68px'}
               name={'income'}
+              type={'detail'}
               content={'수입'}
               onClick={() => handleButtonClick('income')}
             />
@@ -88,6 +91,7 @@ export default function History() {
               width={'188px'}
               height={'68px'}
               name={'outcome'}
+              type={'detail'}
               content={'지출'}
               onClick={() => handleButtonClick('outcome')}
             />

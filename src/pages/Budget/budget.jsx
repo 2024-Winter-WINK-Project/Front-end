@@ -74,24 +74,32 @@ export default function History() {
             <style.HistoryContainer>
               <style.HistoryTitle>거래 내역</style.HistoryTitle>
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'income'}
                 image={Withdrawal}
                 content1={'1차 회비'}
                 content2={'+500,000'}
               />
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'outcome'}
                 image={Deposit}
                 content1={'1일차 점심'}
                 content2={'-150,000'}
               />
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'income'}
                 image={Withdrawal}
                 content1={'2차 회비'}
                 content2={'-1,500,000'}
               />
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'income'}
                 image={Withdrawal}
                 content1={'호텔 환불'}
@@ -140,24 +148,32 @@ export default function History() {
             <style.HistoryContainer>
               <style.HistoryTitle>거래 내역</style.HistoryTitle>
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'income'}
                 image={Withdrawal}
                 content1={'1차 회비'}
                 content2={'+500,000'}
               />
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'outcome'}
                 image={Deposit}
                 content1={'1일차 점심'}
                 content2={'-150,000'}
               />
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'income'}
                 image={Withdrawal}
                 content1={'2차 회비'}
                 content2={'-1,500,000'}
               />
               <Button
+                width={'360px'}
+                height={'80px'}
                 name={'income'}
                 image={Withdrawal}
                 content1={'호텔 환불'}

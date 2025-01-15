@@ -11,10 +11,17 @@ export default function BudgetButton(props) {
 
   return (
     <ButtonComponent
+      width={props.width}
+      height={props.height}
       name={props.name}
+      type={props.type}
       onClick={props.onClick}
     >
-      {props.name === 'options' ? (
+      {props.type === 'detail' ? (
+        <style.DetailButton>
+          <span>{props.content}</span>
+        </style.DetailButton>
+      ) : props.name === 'options' ? (
         <style.ButtonContent name={props.name}>
           {props.image && <img src={props.image} alt="icon" />}
           <span>{props.content1}</span>
