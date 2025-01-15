@@ -1,19 +1,36 @@
 import React from 'react';
 import * as style from './styles';
 
-export default function HistoryButton(props) {
+export default function BudgetButton(props) {
+  const ButtonComponent =
+  props.name === 'budget'
+    ? style.BudgetButton
+    : props.name === 'options'
+    ? style.OptionsButton
+    : style.HistoryButton;
+
   return (
-    <style.HistoryButton
-      width={props.width}
-      height={props.height}
+    <ButtonComponent
       name={props.name}
       onClick={props.onClick}
     >
-      {props.name === 'income' || props.name === 'outcome' ? (
-        <style.ButtonContent>
-          <span>{props.content}</span>
+      {props.name === 'options' ? (
+        <style.ButtonContent name={props.name}>
+          {props.image && <img src={props.image} alt="icon" />}
+          <span>{props.content1}</span>
         </style.ButtonContent>
-      ) : null}
-    </style.HistoryButton>
+      ) : props.name === 'budget' ? (
+        <style.ButtonContent name={props.name}>
+          <span>{props.content1}</span>
+          <span>{props.content2}</span>
+        </style.ButtonContent>
+      ) : (
+        <style.ButtonContent name={props.name}>
+          {props.image && <img src={props.image} alt="icon" />}
+          <span>{props.content1}</span>
+          <span>{props.content2}</span>
+        </style.ButtonContent>
+      )}
+    </ButtonComponent>
   );
 }
