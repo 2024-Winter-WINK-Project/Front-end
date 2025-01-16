@@ -6,6 +6,8 @@ import CreateEvent from "./pages/CreateEvent.jsx";
 import MovingKakaoMap from "./pages/MovingKakaoMap.jsx";
 import ManageEvent from "./pages/ManageEvent.jsx";
 import MyPage from "./pages/MyPage/myPage.jsx";
+import Budget from "./pages/Budget/budget.jsx";
+import AddHistory from "./pages/History/addHistory.jsx";
 
 
 let vh = window.innerHeight * 0.01
@@ -27,6 +29,8 @@ const App = () =>{
                 <Route path="/manageevent" element={<ManageEvent />}></Route>
                 <Route path="/movingmap" element={<MovingKakaoMap />}></Route>
                 <Route path="/mypage" element={<MyPage />}></Route>
+                <Route path="/budget" element={<Budget />}></Route>
+                <Route path="/addhistory" element={<AddHistory />}></Route>
             </Routes>
         </BrowserRouter>
     )
