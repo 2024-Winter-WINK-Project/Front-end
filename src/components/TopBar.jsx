@@ -25,7 +25,7 @@ export const PC = ({children}) => {
     return <>{isPC && children}</>
 }
 
-const Background_Bar = styled.nav`
+const BackgroundBar = styled.nav`
     background-color: white;
     opacity: 90%;
     width: 100vw;
@@ -42,7 +42,7 @@ const Background_Bar = styled.nav`
     
 `;
 
-const Background_BarPC = styled.div`
+const BackgroundBarPC = styled.div`
     background-color: white;
     opacity: 90%;
     width: 500px;
@@ -79,14 +79,14 @@ const Text = styled.text`
     justify-content: center;
 `;
 
-function TopBar ({pageName, feature, isModalRequired, data}){
+const TopBar = ({pageName, feature, isModalRequired, data}) =>{
     const iconList = [add, done];
     const [placeXPos, setPlaceXPos] = useState(0);
     const [placeYPos, setPlaceYPos] = useState(0);
     const [placeName, setPlaceName] = useState("");
 
 
-    const sendInfo = () => {
+    const SendInfo = () => {
         if (placeXPos !== null && placeYPos !== null){
             navigate('/createevent', {state:{xPos : placeXPos, yPos : placeYPos, pName : placeName }});
         }
@@ -119,7 +119,7 @@ function TopBar ({pageName, feature, isModalRequired, data}){
             <Mobile>
                 {isModalRequired ?
                     <>
-                        <Background_Bar>
+                        <BackgroundBar>
                             <BarWrapper>
                                 <ButtonIcons src={back} onClick={() => navigate('/', {replace : true })}/>
                                 <TextWrapper>
@@ -127,28 +127,28 @@ function TopBar ({pageName, feature, isModalRequired, data}){
                                 </TextWrapper>
                                 <ButtonIcons src={feat} onClick={() => {setOpen(true)}}/>
                             </BarWrapper>
-                        </Background_Bar>
-                        {open == true ?
+                        </BackgroundBar>
+                        {open === true ?
                             <Modal isOpen={open} onClose={() => {setOpen(false)}}></Modal>
                             :
                             null}
                     </>
                     :
-                    <Background_Bar>
+                    <BackgroundBar>
                         <BarWrapper>
                             <ButtonIcons src={back} onClick={() => navigate("/",{replace : true})}/>
                                 <TextWrapper>
                                     <Text>{pageName}</Text>
                                 </TextWrapper>
-                                <ButtonIcons src={feat} onClick={() => sendInfo()}/>
+                                <ButtonIcons src={feat} onClick={() => SendInfo()}/>
                             </BarWrapper>
-                    </Background_Bar>
+                    </BackgroundBar>
                 }
             </Mobile>
             <PC>
                 {isModalRequired ?
                     <>
-                        <Background_BarPC>
+                        <BackgroundBarPC>
                             <BarWrapper>
                                 <ButtonIcons src={back} onClick={() => navigate('/', {replace : true })}/>
                                 <TextWrapper>
@@ -156,22 +156,22 @@ function TopBar ({pageName, feature, isModalRequired, data}){
                                 </TextWrapper>
                                 <ButtonIcons src={feat} onClick={() => {setOpen(true)}}/>
                             </BarWrapper>
-                        </Background_BarPC>
-                        {open == true ?
+                        </BackgroundBarPC>
+                        {open === true ?
                             <Modal isOpen={open} onClose={() => {setOpen(false)}}></Modal>
                             :
                             null}
                     </>
                     :
-                    <Background_BarPC>
+                    <BackgroundBarPC>
                         <BarWrapper>
                             <ButtonIcons src={back} onClick={() => navigate("/",{replace : true})}/>
                             <TextWrapper>
                                 <Text>{pageName}</Text>
                             </TextWrapper>
-                            <ButtonIcons src={feat} onClick={() => sendInfo()}/>
+                            <ButtonIcons src={feat} onClick={() => SendInfo()}/>
                         </BarWrapper>
-                    </Background_BarPC>
+                    </BackgroundBarPC>
                 }
             </PC>
 

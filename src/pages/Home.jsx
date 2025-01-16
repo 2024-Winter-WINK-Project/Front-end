@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
 import TitleBox from "../components/TitleBox.jsx";
@@ -10,6 +10,7 @@ import HomeTopBar from "../components/HomeTopBar.jsx";
 import LightBlueBox from "../components/LightBlueBox.jsx";
 import {useNavigate} from "react-router-dom";
 import Modal from "../components/Modal.jsx";
+import axios from "axios";
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -66,6 +67,14 @@ const Home = () =>{
     const isOpen = childData => {
         setOpen(childData);
     };
+    useEffect(() => {
+        // const callApi = () => {
+        //     axios.get("http://localhost:3306/api/test").then((res)=>{
+        //         console.log(res);
+        //     })
+        // }
+        // callApi();
+    }, []);
     return (
         <>
             <Mobile>
@@ -108,7 +117,7 @@ const Home = () =>{
                         isManager={"true"}
                     >
                     </LightBlueBox>
-                    {open == true ?
+                    {open === true ?
                         <Modal onClick={isOpen}></Modal>
                         :
                         null
@@ -156,7 +165,7 @@ const Home = () =>{
                         isManager={"true"}
                     >
                     </LightBlueBox>
-                    {open == true ?
+                    {open === true ?
                         <Modal onClick={isOpen}></Modal>
                         :
                         null

@@ -91,7 +91,7 @@ const TextBox = styled.text`
     align-items: center;
 `;
 
-const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isEditable, eventTitle}) => {
+const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isEditable, eventTitle, isOut}) => {
     const iconList = [location,edit,search];
     const [place,setPlace] = useState("");
     const navigate = useNavigate();
@@ -138,6 +138,8 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
             <Mobile>
                 <Wrapper style={{width : "100vw"}}>
                         {isBlank ?
+                            //isBlank : 파란색 박스, 보통 제목이나 검색 박스로 활용됨
+                            //true : 파란색 박스
                             <LBBox style={{
                                 backgroundColor : "#0234A8",
                                 boxShadow: "0 10px 3px -5px rgba(86, 86, 86, 0.30)"
@@ -149,13 +151,11 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                                 <InputBox value={place} placeholder={"어디로 떠나볼까요?"} onChange={saveData}/>
                                                 <LBIcon src={resIcon} onClick={sendDataToParent}/>
                                             </>
-
                                             :
                                             <>
                                                 <InputBox value={place} placeholder={"어디로 떠나볼까요?"} onChange={saveData}/>
                                                 <LBIcon src={resIcon} onClick={sendDataToParent}/>
                                             </>
-
                                         }
 
                                     </LBContainer>
@@ -184,9 +184,7 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                                 <TextBox>{eventTitle}</TextBox>
                                             </>
                                         }
-
                                     </LBContainer>
-
                                 }
                             </LBBox>
                             :
@@ -197,7 +195,21 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                             fontSize : '20px',
                                         }}>{boxtitle}</LBText>
                                     </LBTextContainer>
-                                    <LBIcon src={resIcon} onClick={() => navigate(dest, {replace : true})}/>
+                                    {isOut ?
+                                        // isOut : 외부 사이트로 나가야 하는 경우
+                                        // true : 외부 사이트로 이동
+                                        <a href={dest}>
+                                            <img alt={"아이콘"} src={resIcon} style={{
+                                                backgroundImage : resIcon,
+                                                width : "30px",
+                                                height : "30px"
+                                            }}/>
+                                        </a>
+                                        :
+                                        // false : 내부 페이지 이동
+                                        <LBIcon src={resIcon}
+                                                onClick={() => navigate(dest, {replace : true})}/>
+                                    }
                                 </LBContainer>
                             </LBBox>
                         }
@@ -206,19 +218,28 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
             <PC>
                 <Wrapper style={{width : "500px"}}>
                     {isBlank ?
+                        //isBlank : 파란색 박스, 보통 제목이나 검색 박스로 활용됨
+                        //true : 파란색 박스
                         <LBBox style={{
                             backgroundColor : "#0234A8",
                             boxShadow: "0 10px 3px -5px rgba(86, 86, 86, 0.30)"
                         }}>
                             {isSearchBox ?
+                                //isSearchBox : 검색 박스 여부
+                                //true : 검색 박스
                                 <LBContainer style={{width : "90%"}}>
-                                    <InputBox value={place} placeholder={"어디로 떠나볼까요?"} onChange={saveData}/>
-                                    <LBIcon src={resIcon} onClick={sendDataToParent}/>
+                                    <InputBox value={place}
+                                              placeholder={"어디로 떠나볼까요?"}
+                                              onChange={saveData}/>
+                                    <LBIcon src={resIcon}
+                                            onClick={sendDataToParent}/>
                                 </LBContainer>
                                 :
-
+                                //false : 검색 기능이 없고, 텍스트 표시/ 편집 가능한 박스
                                 <LBContainer style={{width : "90%"}}>
                                     {isEditable ?
+                                        // isEditable : 편집 가능 여부
+                                        // true : 모임장인 경우, 편집가능
                                         <>
                                             <LBTextContainer style={{width : "50%"}}>
                                                 <LBText style={{
@@ -230,6 +251,7 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                             <InputBox id={name} placeholder={"모임 제목을 입력해 주세요."}/>
                                         </>
                                         :
+                                        // false : 모임 멤버인 경우, 편집 불가.
                                         <>
                                             <LBTextContainer style={{width : "50%"}}>
                                                 <LBText style={{
@@ -241,12 +263,11 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                             <TextBox>{eventTitle}</TextBox>
                                         </>
                                     }
-
                                 </LBContainer>
-
                             }
                         </LBBox>
                         :
+                        // false : 파란색 박스 아님. 일반 1줄짜리 하늘색 박스
                         <LBBox>
                             <LBContainer>
                                 <LBTextContainer>
@@ -254,7 +275,22 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                         fontSize : '20px',
                                     }}>{boxtitle}</LBText>
                                 </LBTextContainer>
-                                <LBIcon src={resIcon} onClick={() => navigate(dest, {replace : true})}/>
+                                {isOut ?
+                                    // isOut : 외부 사이트로 나가야 하는 경우
+                                    // true : 외부 사이트로 이동
+                                    <a href={dest}>
+                                        <img alt={"아이콘"} src={resIcon} style={{
+                                            backgroundImage: resIcon,
+                                            width: "30px",
+                                            height: "30px"
+                                        }}/>
+                                    </a>
+                                    :
+                                    // false : 내부 페이지 이동
+                                    <LBIcon src={resIcon}
+                                            onClick={() => navigate(dest, {replace: true})}/>
+                                }
+
                             </LBContainer>
                         </LBBox>
                     }

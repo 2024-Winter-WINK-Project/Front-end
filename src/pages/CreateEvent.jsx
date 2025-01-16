@@ -65,7 +65,7 @@ const CreateEvent = () => {
                 <Wrapper>
                     <TopBar pageName={"모임 생성"} feature={"done"} isModalRequired={true}/>
                     <FormContainer>
-                        <LightBlueBoxSingleLine feature={""} boxtitle={"모임명"}/>
+                        <LightBlueBoxSingleLine feature={""} boxtitle={"모임명"} isEditable={true}/>
                         <LightBlueBoxSingleLine feature={"location"} style={{paddingTop : "none"}} boxtitle={"모임 장소"} to={"/movingmap"}/>
                         <KakaoMap xPos={xPosVal} yPos={yPosVal} placeName={pNameVal}/>
                         <LightBlueBoxDoubleLines feature={"calendar"} firstLine={"모임 시작날짜"} secondLine={"모임 종료날짜"}></LightBlueBoxDoubleLines>
@@ -81,7 +81,7 @@ const CreateEvent = () => {
                 <WrapperPC>
                     <TopBar pageName={"모임 생성"} feature={"done"} isModalRequired={true}/>
                     <FormContainer>
-                        <LightBlueBoxSingleLine feature={""} boxtitle={"모임명"}/>
+                        <LightBlueBoxSingleLine feature={""} boxtitle={"모임명"} isEditable={true}/>
                         <LightBlueBoxSingleLine feature={"location"} style={{paddingTop : "none"}} boxtitle={"모임 장소"} to={"/movingmap"}/>
                         <KakaoMap xPos={xPosVal} yPos={yPosVal} placeName={pNameVal}/>
                         <LightBlueBoxDoubleLines feature={"calendar"} firstLine={"모임 시작날짜"} secondLine={"모임 종료날짜"}></LightBlueBoxDoubleLines>

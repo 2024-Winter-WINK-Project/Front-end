@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import group_manager from "../icons/group_manager.png";
 import {useMediaQuery} from "react-responsive";
@@ -6,6 +6,10 @@ import calendar from "../icons/calendar.png";
 import locationMap from "../icons/location.png";
 import add from "../icons/add.png";
 import edit from "../icons/edit.png";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+
 
 
 export const Mobile = ({children}) => {
@@ -72,6 +76,7 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
     const iconSelect = [calendar,add,edit];
     let resIcon = null;
     let isCalendar = false;
+    let calendarSwitch = false;
     if (feature === "plus"){
         resIcon = iconSelect[1];
         isCalendar = false;
@@ -84,6 +89,8 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
         resIcon = iconSelect[2];
         isCalendar = false;
     }
+    const [startDate, setStartDate] = useState(new Date());
+
 
     return(
         <>
@@ -92,23 +99,49 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
                     {isCalendar ?
                         <LBBox>
                             <div style={{width : "90%",display : "flex", flexDirection : "column", justifyContent : "center"}}>
-                                <LBTextContainer style={{width : "100%", display : "flex", flexDirection : "row", justifyContent : "space-between", alignItems : "center"}}>
-                                    <div style={{display : "flex", justifyContent:"center",alignItems :"center"}}>
+                                <LBTextContainer style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center"
+                                }}>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                         <LBText>{firstLine}</LBText>
                                     </div>
-                                    <LBIcon src={resIcon}></LBIcon>
+
+                                    <input
+                                        type="date"
+                                        name="startDate"
+                                        id="startDate"
+                                        style={{
+                                            border : "none",
+                                            background : "transparent",
+                                            fontSize : "15px"
+                                                }}
+                                        />
                                 </LBTextContainer>
                                 <DivideLine/>
-                                <LBTextContainer style={{width : "100%", display : "flex", flexDirection : "row", justifyContent : "space-between", alignItems :"center"}}>
-                                    <LBText>{secondLine}</LBText>
-                                    <LBIcon src={resIcon}></LBIcon>
+                                <LBTextContainer style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center"
+                                }}>
+                                <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                        <LBText>{secondLine}</LBText>
+                                </div>
+                                <input type="date" name="endDate" id="endDate"  style={{border : "none", background : "transparent", fontSize : "15px", borderRadius :"10px"}}/>
                                 </LBTextContainer>
 
                             </div>
                         </LBBox>
                         :
                         <LBBox>
-                            <div style={{width : "90%",display : "flex", flexDirection : "column", justifyContent : "center"}}>
+                            <div style={{
+                                width: "90%",
+                                display : "flex", flexDirection : "column", justifyContent : "center"}}>
                                 <LBTextContainer style={{width : "100%", display : "flex", flexDirection : "row", justifyContent : "space-between", alignItems : "center"}}>
                                     <div style={{display : "flex", justifyContent:"center",alignItems :"center"}}>
                                         <LBText>{firstLine}</LBText>
@@ -116,8 +149,15 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
                                     <LBIcon src={resIcon}></LBIcon>
                                 </LBTextContainer>
                                 <DivideLine/>
-                                <LBTextContainer style={{width : "100%", display : "flex", flexDirection : "row", justifyContent : "space-between"}}>
-                                    <LBText style={{fontSize : "15px"}}>{secondLine}</LBText>
+                                <LBTextContainer style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between"
+                                }}>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                        <LBText style={{fontSize: "15px"}}>{secondLine}</LBText>
+                                    </div>
                                 </LBTextContainer>
                             </div>
                         </LBBox>
@@ -141,8 +181,15 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
                                     <LBIcon src={resIcon}></LBIcon>
                                 </LBTextContainer>
                                 :
-                                <LBTextContainer style={{width : "100%", display : "flex", flexDirection : "row", justifyContent : "space-between"}}>
-                                    <LBText style={{fontSize : "15px", color : "grey"}}>{secondLine}</LBText>
+                                <LBTextContainer style={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between"
+                                }}>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                        <LBText style={{fontSize: "15px", color: "grey"}}>{secondLine}</LBText>
+                                    </div>
                                 </LBTextContainer>
                             }
 
