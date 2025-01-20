@@ -1,0 +1,14 @@
+1. npm i 로 라이브러리 업데이트
+2. 실행 : npx json-server --watch data/db.json --port 8000
+3. GET : fetch(`http://localhost:8000/groups? + 명령어`)
+                .then((response) => response.json())
+                .then((json) => set함수)
+                .catch((error) => console.log(error));
+
+    조회 시 조건문 :
+            1. 정렬 : _sort=-id(역순으로 정렬), _sort=id
+            2. 데이터 개수 제한 : _limit=제한하고싶은 데이터 개수
+            이외는 https://redux-advanced.vlpt.us/3/01.html 참고
+            (정렬 조건문은 홈페이지가 아닌 1번에 적힌 것이 최신이라고 함)
+4. POST : axios.post("http://localhost:8000/groups",{key:value})
+                .then((res) => console.log(res))

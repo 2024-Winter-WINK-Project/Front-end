@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
-import TitleBox from "../components/TitleBox.jsx";
-import TopBar from "../components/TopBar.jsx";
-import TwoButtons from "../components/TwoButtons.jsx";
-import ThreeButtons from "../components/ThreeButtons.jsx";
-import OneButton from "../components/OneButton.jsx";
 import HomeTopBar from "../components/HomeTopBar.jsx";
 import LightBlueBox from "../components/LightBlueBox.jsx";
 import {useNavigate} from "react-router-dom";
 import Modal from "../components/Modal.jsx";
 import axios from "axios";
+
+
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -67,109 +64,37 @@ const Home = () =>{
     const isOpen = childData => {
         setOpen(childData);
     };
+    const [latestGroup, setLatestGroup] = useState(null);
+
     useEffect(() => {
-        // const callApi = () => {
-        //     axios.get("http://localhost:3306/api/test").then((res)=>{
-        //         console.log(res);
-        //     })
-        // }
-        // callApi();
+        fetch("http://localhost:8000/groups?_limit=5&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                setLatestGroup(data);
+            });
     }, []);
+
     return (
         <>
             <Mobile>
                 <Wrapper>
-                    <HomeTopBar nickName={"홍길동"} destination={"createevent"}></HomeTopBar>
+                    <HomeTopBar nickName={"홍길동"} destination={"creategroup"}></HomeTopBar>
                     <BodyWrapper>
                         <Text onClick={() => setOpen(true)}>다가오는 모임 일정이예요</Text>
                     </BodyWrapper>
-                    <LightBlueBox
-                        eventTitle={"제주도 여행"}
-                        eventStartDate={"2025-02-10"}
-                        eventEndDate={"2025-02-15"}
-                        isManager={"true"}
-                        eventPlaceName={"제주공항"}
-                        eventPlaceXPos={126.2934}
-                        eventPlaceYPos={33.3044}
-                    >
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"WINK MT"}
-                        eventStartDate={"2025-02-25"}
-                        eventEndDate={"2025-02-26"}
-                        isManager={"false"}
-                        eventPlaceName={"강남역"}
-                        eventPlaceXPos={127.028361548}
-                        eventPlaceYPos={37.496486063}
-                    >
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"개강총회"}
-                        eventStartDate={"2025-03-05"}
-                        eventEndDate={"2025-03-05"}
-                        isManager={"false"}
-                    >
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"한강 나들이"}
-                        eventStartDate={"2025-03-10"}
-                        eventEndDate={"2025-03-10"}
-                        isManager={"true"}
-                    >
-                    </LightBlueBox>
-                    {open === true ?
-                        <Modal onClick={isOpen}></Modal>
-                        :
-                        null
-                    }
-                </Wrapper>
+                    {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
 
+                </Wrapper>
             </Mobile>
             <PC>
                 <WrapperPC>
-                    <HomeTopBar nickName={"홍길동"} destination={"createevent"}></HomeTopBar>
+                    <HomeTopBar nickName={"홍길동"} destination={"creategroup"}></HomeTopBar>
                     <BodyWrapper>
                         <Text>다가오는 모임 일정이예요</Text>
                     </BodyWrapper>
-                    <LightBlueBox
-                        eventTitle={"제주도 여행"}
-                        eventStartDate={"2025-02-10"}
-                        eventEndDate={"2025-02-15"}
-                        isManager={"true"}
-                        eventPlaceName={"제주공항"}
-                        eventPlaceXPos={126.2934}
-                        eventPlaceYPos={33.3044}
-                    >
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"WINK MT"}
-                        eventStartDate={"2025-02-25"}
-                        eventEndDate={"2025-02-26"}
-                        isManager={"false"}
-                        eventPlaceName={"강남역"}
-                        eventPlaceXPos={127.028361548}
-                        eventPlaceYPos={37.496486063}
-                    >
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"개강총회"}
-                        eventStartDate={"2025-03-05"}
-                        eventEndDate={"2025-03-05"}
-                        isManager={"false"}
-                    >
-                    </LightBlueBox>
-                    <LightBlueBox
-                        eventTitle={"한강 나들이"}
-                        eventStartDate={"2025-03-10"}
-                        eventEndDate={"2025-03-10"}
-                        isManager={"true"}
-                    >
-                    </LightBlueBox>
-                    {open === true ?
-                        <Modal onClick={isOpen}></Modal>
-                        :
-                        null
-                    }
+                    {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
                 </WrapperPC>
             </PC>
         </>

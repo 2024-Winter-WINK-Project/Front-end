@@ -32,7 +32,7 @@ const Wrapper = styled.div`
     justify-content: center;
 `;
 
-const LBBox = styled.div`
+const LBBox = styled.a`
     border : none;
     border-radius: 10px;
     width: 90%;
@@ -41,6 +41,7 @@ const LBBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 `;
 
 const LBText = styled.div`
@@ -91,17 +92,26 @@ const TextBox = styled.text`
     align-items: center;
 `;
 
-const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isEditable, eventTitle, isOut}) => {
+const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, onDataChange2, isEditable, eventTitle}) => {
     const iconList = [location,edit,search];
     const [place,setPlace] = useState("");
     const navigate = useNavigate();
-
+    const groupName = useRef("");
     const saveData = event => {
         setPlace(event.target.value);
+    }
+    const saveData2 = event => {
+        groupName.current = event.target.value;
+        sendDataToParent2();
     }
     const sendDataToParent = () => {
         onDataChange(place);
     }
+
+    const sendDataToParent2 = () => {
+        onDataChange2(groupName);
+    }
+
     let resIcon = null;
     let isBlank = false;
     let isPopup = false;
@@ -170,7 +180,7 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                                         color : "white",
                                                     }}>{boxtitle}:</LBText>
                                                 </LBTextContainer>
-                                                <InputBox id={name} placeholder={"모임 제목을 입력해 주세요."}/>
+                                                <InputBox placeholder={"모임 제목을 입력해 주세요."} onChange={saveData2}/>
                                             </>
                                             :
                                             <>
@@ -188,35 +198,23 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                 }
                             </LBBox>
                             :
-                            <LBBox>
+                            <LBBox href={dest}>
                                 <LBContainer>
                                     <LBTextContainer>
                                         <LBText style={{
-                                            fontSize : '20px',
+                                            fontSize: '20px',
                                         }}>{boxtitle}</LBText>
                                     </LBTextContainer>
-                                    {isOut ?
-                                        // isOut : 외부 사이트로 나가야 하는 경우
-                                        // true : 외부 사이트로 이동
-                                        <a href={dest}>
-                                            <img alt={"아이콘"} src={resIcon} style={{
-                                                backgroundImage : resIcon,
-                                                width : "30px",
-                                                height : "30px"
-                                            }}/>
-                                        </a>
-                                        :
-                                        // false : 내부 페이지 이동
-                                        <LBIcon src={resIcon}
-                                                onClick={() => navigate(dest, {replace : true})}/>
-                                    }
+                                    <LBIcon src={resIcon}
+                                        onClick={() => navigate(dest, {replace: true})}/>
+
                                 </LBContainer>
                             </LBBox>
                         }
                 </Wrapper>
             </Mobile>
             <PC>
-                <Wrapper style={{width : "500px"}}>
+                <Wrapper style={{width: "500px"}}>
                     {isBlank ?
                         //isBlank : 파란색 박스, 보통 제목이나 검색 박스로 활용됨
                         //true : 파란색 박스
@@ -275,22 +273,8 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, isE
                                         fontSize : '20px',
                                     }}>{boxtitle}</LBText>
                                 </LBTextContainer>
-                                {isOut ?
-                                    // isOut : 외부 사이트로 나가야 하는 경우
-                                    // true : 외부 사이트로 이동
-                                    <a href={dest}>
-                                        <img alt={"아이콘"} src={resIcon} style={{
-                                            backgroundImage: resIcon,
-                                            width: "30px",
-                                            height: "30px"
-                                        }}/>
-                                    </a>
-                                    :
-                                    // false : 내부 페이지 이동
-                                    <LBIcon src={resIcon}
-                                            onClick={() => navigate(dest, {replace: true})}/>
-                                }
-
+                                <LBIcon src={resIcon}
+                                    onClick={() => navigate(dest, {replace: true})}/>
                             </LBContainer>
                         </LBBox>
                     }

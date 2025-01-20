@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useMediaQuery} from "react-responsive";
 import TopBar from "../../components/TopBar.jsx";
 import Profile from '../../assets/MyPage/profile.svg';
@@ -53,7 +53,16 @@ export default function MyPage() {
     console.log("delete account");
     closeDeleteModal();
   }
-
+  const [latestGroup, setLatestGroup] = useState();
+  useEffect(() => {
+      fetch("http://localhost:8000/groups?_limit=1&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
+          .then(res => {
+              return res.json();
+          })
+          .then(data => {
+              setLatestGroup(data);
+          });
+  }, []);
   return (
     <>
       <TopBar></TopBar>
@@ -83,11 +92,7 @@ export default function MyPage() {
                 </div>
               </style.ButtonContainer>
             <style.ProfileTitle>가장 가까운 모임</style.ProfileTitle>
-            <LightBlueBox
-              eventTitle={"제주도 여행"}
-              eventStartDate={"2025-02-10"}
-              eventEndDate={"2025-02-15"}>
-            </LightBlueBox>
+            {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
           </style.ProfileContainer>
         </style.Wrapper>
       </Mobile>

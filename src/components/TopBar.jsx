@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
 import back from "../icons/back.png";
@@ -79,7 +79,7 @@ const Text = styled.text`
     justify-content: center;
 `;
 
-const TopBar = ({pageName, feature, isModalRequired, data}) =>{
+const TopBar = ({pageName, feature, isModalRequired, data, onDataChange}) =>{
     const iconList = [add, done];
     const [placeXPos, setPlaceXPos] = useState(0);
     const [placeYPos, setPlaceYPos] = useState(0);
@@ -88,10 +88,10 @@ const TopBar = ({pageName, feature, isModalRequired, data}) =>{
 
     const SendInfo = () => {
         if (placeXPos !== null && placeYPos !== null){
-            navigate('/createevent', {state:{xPos : placeXPos, yPos : placeYPos, pName : placeName }});
+            navigate('/creategroup', {state:{xPos : placeXPos, yPos : placeYPos, pName : placeName }});
         }
         else{
-            navigate('/createevent');
+            navigate('/creategroup');
         }
 
     }
@@ -113,7 +113,9 @@ const TopBar = ({pageName, feature, isModalRequired, data}) =>{
     }
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-
+    const sendSubmit = () => {
+        onDataChange(true);
+    }
     return (
         <>
             <Mobile>
@@ -121,17 +123,17 @@ const TopBar = ({pageName, feature, isModalRequired, data}) =>{
                     <>
                         <BackgroundBar>
                             <BarWrapper>
-                                <ButtonIcons src={back} onClick={() => navigate('/', {replace : true })}/>
+                                <ButtonIcons src={back} onClick={() => navigate("/",{replace : true})}/>
                                 <TextWrapper>
                                     <Text>{pageName}</Text>
                                 </TextWrapper>
-                                <ButtonIcons src={feat} onClick={() => {setOpen(true)}}/>
+                                <ButtonIcons src={feat} onClick={sendSubmit}/>
                             </BarWrapper>
                         </BackgroundBar>
-                        {open === true ?
-                            <Modal isOpen={open} onClose={() => {setOpen(false)}}></Modal>
-                            :
-                            null}
+                        {/*{open === true ?*/}
+                        {/*    <Modal isOpen={open} onClose={() => {setOpen(false)}}></Modal>*/}
+                        {/*    :*/}
+                        {/*    null}*/}
                     </>
                     :
                     <BackgroundBar>

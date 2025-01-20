@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useMediaQuery} from "react-responsive";
 import Logo from '../../assets/Login/logoEx.svg'
 import kakaoLogo from '../../assets/Login/Kakao.svg'
@@ -28,6 +28,7 @@ export default function Login() {
   const handleLogin = () => {
     window.location.href = kakaoLink; // 카카오 로그인 페이지로 리디렉션
   };
+
   return (
     <>
       <Mobile>

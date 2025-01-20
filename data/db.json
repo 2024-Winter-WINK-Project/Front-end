@@ -1,0 +1,64 @@
+{
+  "groups": [
+    {
+      "id": "0",
+      "eventTitle": "제주도 여행",
+      "eventStartDate": 20250210,
+      "eventEndDate": 20250215,
+      "isManager": true,
+      "eventPlaceName": "제주국제공항",
+      "eventPlaceXPos": 126.2934,
+      "eventPlaceYPos": 33.3044
+    },
+    {
+      "id": "1",
+      "eventTitle": "WINK MT",
+      "eventStartDate": 20250225,
+      "eventEndDate": 20250226,
+      "isManager": false,
+      "eventPlaceName": "국민대학교",
+      "eventPlaceXPos": 126.9973,
+      "eventPlaceYPos": 37.6109
+    },
+    {
+      "id": "2",
+      "eventTitle": "개강총회",
+      "eventStartDate": 20250305,
+      "eventEndDate": 20250305,
+      "isManager": false,
+      "eventPlaceName": "국민대학교",
+      "eventPlaceXPos": 126.9973,
+      "eventPlaceYPos": 37.6109
+    },
+    {
+      "id": "3",
+      "eventTitle": "중학교 동창 술약속",
+      "eventStartDate": 20250310,
+      "eventEndDate": 20250310,
+      "isManager": true,
+      "eventPlaceName": "강남역",
+      "eventPlaceXPos": 127.028361548,
+      "eventPlaceYPos": 37.496486063
+    },
+    {
+      "id": 4,
+      "eventTitle": "테스트",
+      "eventStartDate": 20250106,
+      "eventEndDate": 20250123,
+      "isManager": true,
+      "eventPlaceName": "카카오엔터프라이즈 판교오피스",
+      "eventPlaceXPos": "127.108636946335",
+      "eventPlaceYPos": "37.4020952990786"
+    },
+    {
+      "id": 5,
+      "eventTitle": "테스트3",
+      "eventStartDate": 20250310,
+      "eventEndDate": 20250328,
+      "isManager": true,
+      "eventPlaceName": "서울역공간모아",
+      "eventPlaceXPos": "126.97218099204292",
+      "eventPlaceYPos": "37.558128238544775"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import group_manager from "../icons/group_manager.png";
 import {useMediaQuery} from "react-responsive";
@@ -72,24 +72,48 @@ const DivideLine = styled.hr`
     background-color: #A8B5DC;
 `;
 
-const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
+const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, startDate, endDate, onDataChange}) => {
     const iconSelect = [calendar,add,edit];
-    let resIcon = null;
-    let isCalendar = false;
-    let calendarSwitch = false;
-    if (feature === "plus"){
-        resIcon = iconSelect[1];
-        isCalendar = false;
+    const [resIcon, setResIcon] = useState();
+    const [isCalendar, setIsCalendar] = useState(false);
+    const [calendarSwitch,setCalsendarSwitch] = useState(false);
+    const [sDate, setSDate] = useState(0);
+    const [eDate, setEDate] = useState(0);
+    const saveSDate = useRef(0);
+    const saveEDate = useRef(0);
+
+
+    const saveData = event => {
+        saveSDate.current = Number(event.target.value.replace(/-/g,""));
+        sendDataToParent();
     }
-    else if (feature === "calendar"){
-        resIcon = iconSelect[0];
-        isCalendar = true;
+    const saveData2 = event => {
+        saveEDate.current = Number(event.target.value.replace(/-/g,""));
+        sendDataToParent();
     }
-    else if (feature === "edit"){
-        resIcon = iconSelect[2];
-        isCalendar = false;
+
+    const sendDataToParent = () => {
+        onDataChange(saveSDate, saveEDate);
     }
-    const [startDate, setStartDate] = useState(new Date());
+
+
+    useEffect(() => {
+        if (feature === "plus"){
+            setResIcon(iconSelect[1]);
+            setIsCalendar(false);
+        }
+        else if (feature === "calendar"){
+            setResIcon(iconSelect[0]);
+            setIsCalendar(true);
+        }
+        else if (feature === "edit"){
+            setResIcon(iconSelect[2]);
+            setIsCalendar(false);
+        }
+        setSDate(startDate);
+        setEDate(endDate);
+    }, []);
+
 
 
     return(
@@ -109,30 +133,53 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature}) => {
                                     <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                         <LBText>{firstLine}</LBText>
                                     </div>
-
-                                    <input
-                                        type="date"
-                                        name="startDate"
-                                        id="startDate"
-                                        style={{
-                                            border : "none",
-                                            background : "transparent",
-                                            fontSize : "15px"
-                                                }}
+                                    {isEditable ?
+                                        <input
+                                            type="date"
+                                            name="startDate"
+                                            id="startDate"
+                                            value="sDate"
+                                            style={{
+                                                border: "none",
+                                                background: "transparent",
+                                                fontSize: "15px"
+                                            }}
+                                            onChange={saveData}
                                         />
-                                </LBTextContainer>
-                                <DivideLine/>
+                                        :
+                                        <>
+                                            <LBText>{sDate}</LBText>
+                                            <LBIcon src={calendar}/>
+                                        </>}
+                                        </LBTextContainer>
+                                        <DivideLine/>
                                 <LBTextContainer style={{
                                     width: "100%",
                                     display: "flex",
                                     flexDirection: "row",
                                     justifyContent: "space-between",
-                                    alignItems: "center"
-                                }}>
-                                <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                        <LBText>{secondLine}</LBText>
-                                </div>
-                                <input type="date" name="endDate" id="endDate"  style={{border : "none", background : "transparent", fontSize : "15px", borderRadius :"10px"}}/>
+                                    alignItems: "center"}}>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                            <LBText>{secondLine}</LBText>
+                                    </div>
+                                    {isEditable ?
+                                    <input type="date"
+                                           name="endDate"
+                                           id="endDate"
+                                           style={{
+                                                border: "none",
+                                                background: "transparent",
+                                                fontSize: "15px",
+                                                borderRadius: "10px"
+                                                }}
+                                           onChange={saveData2}
+                                    />
+                                    :
+                                    <>
+                                        <LBText>{eDate}</LBText>
+                                        <LBIcon src={calendar}/>
+                                    </>}
+
                                 </LBTextContainer>
 
                             </div>

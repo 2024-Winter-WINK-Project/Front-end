@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import group_manager from "../icons/group_manager.png";
+import calculate from "../icons/calculator.png";
 import {useMediaQuery} from "react-responsive";
 import {useNavigate} from "react-router-dom";
+
 
 export const Mobile = ({children}) => {
     const isMobile = useMediaQuery({
@@ -20,7 +22,7 @@ export const PC = ({children}) => {
     return <>{isPC && children}</>
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.li`
     height: 110%;
     display: flex;
     justify-content: center;
@@ -55,72 +57,143 @@ const LBIcon = styled.img`
     height: 30px;
 `;
 
-const LightBlueBox = ({eventTitle,eventStartDate,eventEndDate, isManager, eventPlaceName, eventPlaceXPos, eventPlaceYPos}) => {
+const LightBlueBox = ({group,isList}) => {
     const navigate = useNavigate();
-    var ManagerIcon = null;
-    if (isManager === "true"){
-        ManagerIcon = group_manager;
-    }
+
     return(
         <>
-            <Mobile>
-                <Wrapper style={{width : "100vw"}} onClick={() => navigate("/manageevent",
-                    {state :{
-                            xPos:eventPlaceXPos,
-                            yPos:eventPlaceYPos,
-                            pName:eventPlaceName,
-                            eTitle:eventTitle,
-                            eSDate:eventStartDate,
-                            eEDate:eventEndDate,
-                            manager:isManager
-                        }})}>
-                    <LBBox>
-                        <LBTextContainer>
-                            <LBText style={{
-                                fontSize : '25px',
-                                fontWeight : 'bold'
-                            }}>{eventTitle}</LBText>
-                            <LBText>{eventStartDate} ~ {eventEndDate}</LBText>
-                        </LBTextContainer>
-                        {ManagerIcon ?
-                            <LBIcon src={ManagerIcon}></LBIcon>
-                            :
-                            <div style={{width : "30px", height : "30px", border : 'none'}}></div>
-                        }
-                    </LBBox>
-                </Wrapper>
-            </Mobile>
-            <PC>
-                <Wrapper style={{width : "500px"}} onClick={() => navigate("/manageevent",
-                    {state : {
-                                xPos:eventPlaceXPos,
-                                yPos:eventPlaceYPos,
-                                pName:eventPlaceName,
-                                eTitle:eventTitle,
-                                eSDate:eventStartDate,
-                                eEDate:eventEndDate,
-                                manager:isManager
+            {group.map(elements=>(
+                <Mobile key={elements.id} >
 
-                    }})}>
-                    <LBBox>
-                        <LBTextContainer>
-                            <LBText style={{
-                                fontSize : '25px',
-                                fontWeight : 'bold'
-                            }}>{eventTitle}</LBText>
-                            <LBText>{eventStartDate} ~ {eventEndDate}</LBText>
-                        </LBTextContainer>
-                        {ManagerIcon ?
-                            <LBIcon src={ManagerIcon}></LBIcon>
+                    <Wrapper style={{width : "100vw"}} onClick={() => navigate((`/managegroup/${elements.id}`))}>
+                        {isList ?
+                            <LBBox>
+                                <LBTextContainer>
+                                    <LBText style={{
+                                        fontSize : '25px',
+                                        fontWeight : 'bold'
+                                    }}>{elements.eventTitle}</LBText>
+                                    <LBText>{elements.eventStartDate} ~
+                                        {elements.eventEndDate}</LBText>
+                                </LBTextContainer>
+                                <LBIcon src={calculate}></LBIcon>
+                            </LBBox>
                             :
-                            <div style={{width : "30px", height : "30px", border : "none"}}></div>
+                            <LBBox>
+                                <LBTextContainer>
+                                    <LBText style={{
+                                        fontSize : '25px',
+                                        fontWeight : 'bold'
+                                    }}>{elements.eventTitle}</LBText>
+                                    <LBText>{elements.eventStartDate} ~
+                                        {elements.eventEndDate}</LBText>
+                                </LBTextContainer>
+                                {elements.isManager ?
+                                    <LBIcon src={group_manager}></LBIcon>
+                                    :
+                                    <div style={{width : "30px", height : "30px", border : 'none'}}></div>
+                                }
+                            </LBBox>
                         }
-                    </LBBox>
-                </Wrapper>
-            </PC>
+                    </Wrapper>
+                </Mobile>
+            ))}
+            {group.map(elements=>(
+                <PC key={elements.id} >
+                    <Wrapper style={{width : "500px"}} onClick={() => navigate(("/managegroup/"+elements.id+"/"+elements.isManager))}>
+                        <LBBox>
+                            <LBTextContainer>
+                                <LBText style={{
+                                    fontSize : '25px',
+                                    fontWeight : 'bold'
+                                }}>{elements.eventTitle}</LBText>
+                                <LBText>{elements.eventStartDate} ~
+                                        {elements.eventEndDate}</LBText>
+                            </LBTextContainer>
+                            {elements.isManager ?
+                                <LBIcon src={group_manager}></LBIcon>
+                                :
+                                <div style={{width : "30px", height : "30px", border : "none"}}></div>
+                            }
+                        </LBBox>
+                    </Wrapper>
+                </PC>
+            ))}
         </>
 
     )
 }
 
+
 export default LightBlueBox;
+
+
+// const LightBlueBox = ({eventTitle,eventStartDate,eventEndDate, isManager, eventPlaceName, eventPlaceXPos, eventPlaceYPos}) => {
+//     const navigate = useNavigate();
+//     var ManagerIcon = null;
+//     if (isManager === "true"){
+//         ManagerIcon = group_manager;
+//     }
+//     return(
+//         <>
+//             <Mobile>
+//                 <Wrapper style={{width : "100vw"}} onClick={() => navigate("/manageevent",
+//                     {state :{
+//                             xPos:eventPlaceXPos,
+//                             yPos:eventPlaceYPos,
+//                             pName:eventPlaceName,
+//                             eTitle:eventTitle,
+//                             eSDate:eventStartDate,
+//                             eEDate:eventEndDate,
+//                             manager:isManager
+//                         }})}>
+//                     <LBBox>
+//                         <LBTextContainer>
+//                             <LBText style={{
+//                                 fontSize : '25px',
+//                                 fontWeight : 'bold'
+//                             }}>{eventTitle}</LBText>
+//                             <LBText>{eventStartDate} ~ {eventEndDate}</LBText>
+//                         </LBTextContainer>
+//                         {ManagerIcon ?
+//                             <LBIcon src={ManagerIcon}></LBIcon>
+//                             :
+//                             <div style={{width : "30px", height : "30px", border : 'none'}}></div>
+//                         }
+//                     </LBBox>
+//                 </Wrapper>
+//             </Mobile>
+//             <PC>
+//                 <Wrapper style={{width : "500px"}} onClick={() => navigate("/manageevent",
+//                     {state : {
+//                                 xPos:eventPlaceXPos,
+//                                 yPos:eventPlaceYPos,
+//                                 pName:eventPlaceName,
+//                                 eTitle:eventTitle,
+//                                 eSDate:eventStartDate,
+//                                 eEDate:eventEndDate,
+//                                 manager:isManager
+//
+//                     }})}>
+//                     <LBBox>
+//                         <LBTextContainer>
+//                             <LBText style={{
+//                                 fontSize : '25px',
+//                                 fontWeight : 'bold'
+//                             }}>{eventTitle}</LBText>
+//                             <LBText>{eventStartDate} ~ {eventEndDate}</LBText>
+//                         </LBTextContainer>
+//                         {ManagerIcon ?
+//                             <LBIcon src={ManagerIcon}></LBIcon>
+//                             :
+//                             <div style={{width : "30px", height : "30px", border : "none"}}></div>
+//                         }
+//                     </LBBox>
+//                 </Wrapper>
+//             </PC>
+//         </>
+//
+//     )
+// }
+
+// export default LightBlueBox;
