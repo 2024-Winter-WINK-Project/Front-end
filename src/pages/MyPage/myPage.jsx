@@ -5,7 +5,6 @@ import Profile from '../../assets/MyPage/profile.svg';
 import Button from '../../components/Button/ProfileButton.jsx';
 import SingOutModal from '../../components/Modal/signout.jsx';
 import DeleteModal from '../../components/Modal/delete.jsx';
-import LightBlueBox from "../../components/LightBlueBox.jsx";
 import * as style from './styles';
 
 export const Mobile = ({children}) => {
@@ -53,16 +52,7 @@ export default function MyPage() {
     console.log("delete account");
     closeDeleteModal();
   }
-  const [latestGroup, setLatestGroup] = useState();
-  useEffect(() => {
-      fetch("http://localhost:8000/groups?_limit=1&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
-          .then(res => {
-              return res.json();
-          })
-          .then(data => {
-              setLatestGroup(data);
-          });
-  }, []);
+  
   return (
     <>
       <TopBar></TopBar>
@@ -70,29 +60,22 @@ export default function MyPage() {
         <style.Wrapper>
           <style.ProfileContainer>
             <style.ProfileTitle>나의 프로필</style.ProfileTitle>
-            <style.UserInfoContainer>
-              <style.Profile>
-                <img src={Profile} alt="프로필 사진" />
-              </style.Profile>
-              <style.UserInfoBox>
+              <style.UserInfoContainer>
+                <style.Profile>
+                  <img src={Profile} alt="프로필 사진" />
+                </style.Profile>
                 <style.UserInfo>
                   <span>이름</span>
                   <span>홍길동</span>
                 </style.UserInfo>
-                <style.UserInfo>
-                  <span>이메일</span>
-                  <span>gildong@gmail.com</span>
-                </style.UserInfo>
-              </style.UserInfoBox>
-            </style.UserInfoContainer>
-            <style.ButtonContainer>
+              </style.UserInfoContainer>
+              <style.ButtonContainer>
                 <div>
                   <Button size="big" content="로그아웃" onClick={openSignOutModal} />
                   <Button size="big" content="탈퇴하기" onClick={openDeleteModal} />
                 </div>
               </style.ButtonContainer>
-            <style.ProfileTitle>가장 가까운 모임</style.ProfileTitle>
-            {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
+            <style.ProfileTitle>자주 묻는 질문</style.ProfileTitle>
           </style.ProfileContainer>
         </style.Wrapper>
       </Mobile>
@@ -104,29 +87,18 @@ export default function MyPage() {
               <style.Profile>
                 <img src={Profile} alt="프로필 사진" />
               </style.Profile>
-              <style.UserInfoBox>
                 <style.UserInfo>
                   <span>이름</span>
                   <span>홍길동</span>
                 </style.UserInfo>
-                <style.UserInfo>
-                  <span>이메일</span>
-                  <span>gildong@gmail.com</span>
-                </style.UserInfo>
-              </style.UserInfoBox>
             </style.UserInfoContainer>
             <style.ButtonContainer>
-                <div>
-                  <Button size="big" content="로그아웃" onClick={openSignOutModal} />
-                  <Button size="big" content="탈퇴하기" onClick={openDeleteModal} />
-                </div>
-              </style.ButtonContainer>
-            <style.ProfileTitle>가장 가까운 모임</style.ProfileTitle>
-            <LightBlueBox
-              eventTitle={"제주도 여행"}
-              eventStartDate={"2025-02-10"}
-              eventEndDate={"2025-02-15"}>
-            </LightBlueBox>
+              <div>
+                <Button size="big" content="로그아웃" onClick={openSignOutModal} />
+                <Button size="big" content="탈퇴하기" onClick={openDeleteModal} />
+              </div>
+            </style.ButtonContainer>
+            <style.ProfileTitle>자주 묻는 질문</style.ProfileTitle>
           </style.ProfileContainer>
         </style.WrapperPC>
       </PC>

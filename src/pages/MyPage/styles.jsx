@@ -32,9 +32,10 @@ export const ProfileTitle = styled.span`
 
 export const UserInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 44px;
+  gap: 24px;
 `;
 
 export const Profile = styled.div`
@@ -44,18 +45,13 @@ export const Profile = styled.div`
   }
 `;
 
-export const UserInfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
 export const UserInfo = styled.div`
   font-size: 16px;
   :first-child {
     font-weight: 600;
     margin-right: 12px;
   }
+  margin-bottom: 32px;
 `;
 
 export const ButtonContainer = styled.div`
