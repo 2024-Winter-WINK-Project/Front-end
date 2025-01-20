@@ -19,10 +19,10 @@ export const ModalButton1 = styled.button`
   height: 40px;
   border: 2px solid white;
   border-radius: 10px;
-  background: #0234A8;
+  background: #E7EBF7;
   font-size: 12px;
   font-weight: 600;
-  color: white;
+  color: black;
   cursor: pointer;
   padding: 4px;
   margin: 12px;
@@ -31,12 +31,12 @@ export const ModalButton1 = styled.button`
 export const ModalButton2 = styled.button`
   width: 88px;
   height: 40px;
-  border: 2px solid #0234A8;
+  border: 2px solid white;
   border-radius: 10px;
-  background: white;
+  background: #F7E7E7;
   font-size: 14px;
   font-weight: 600;
-  color: #0234A8;
+  color: black;
   cursor: pointer;
   padding: 4px;
   margin: 12px;
