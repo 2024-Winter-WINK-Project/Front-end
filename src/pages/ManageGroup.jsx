@@ -57,7 +57,7 @@ const ManageGroup = () => {
     const [lon, setLon] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:8000/groups?id=${groupId}`)
+        fetch(`http://localhost:8000/meeting?id=${groupId}`)
             .then((response) => response.json())
             .then((json) => setSelectedEvent(json))
             .catch((error) => console.log(error));

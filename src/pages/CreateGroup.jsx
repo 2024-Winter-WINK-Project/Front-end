@@ -73,7 +73,7 @@ const CreateGroup = () => {
         // e.preventDefault();
 
         axios
-            .post("http://localhost:8000/groups", {
+            .post("http://localhost:8000/meeting", {
                 id:currId,
                 eventTitle:groupName.current.current,
                 eventStartDate:startDate.current.current,
@@ -88,7 +88,7 @@ const CreateGroup = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8000/groups?_sort=-id&_limit=1`)
+        fetch(`http://localhost:8000/meeting?_sort=-id&_limit=1`)
             .then((response) => response.json())
             .then((json) => setCurrId(Number(json[0].id)+1))
             .catch((error) => console.log(error));

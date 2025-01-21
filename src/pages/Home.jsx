@@ -67,7 +67,7 @@ const Home = () =>{
     const [latestGroup, setLatestGroup] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/groups?_limit=5&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
+        fetch("http://localhost:8000/meeting?_limit=5&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
             .then(res => {
                 return res.json();
             })
