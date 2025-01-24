@@ -1,14 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import group_manager from "../icons/group_manager.png";
 import {useMediaQuery} from "react-responsive";
 import calendar from "../icons/calendar.png";
-import locationMap from "../icons/location.png";
 import add from "../icons/add.png";
 import edit from "../icons/edit.png";
-import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
+
 
 
 
@@ -77,10 +74,11 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
     const [resIcon, setResIcon] = useState();
     const [isCalendar, setIsCalendar] = useState(false);
     const [calendarSwitch,setCalsendarSwitch] = useState(false);
-    const [sDate, setSDate] = useState(0);
-    const [eDate, setEDate] = useState(0);
+    const [sDate, setSDate] = useState(null);
+    const [eDate, setEDate] = useState(null);
     const saveSDate = useRef(0);
     const saveEDate = useRef(0);
+    const today = new Date();
 
 
     const saveData = event => {
@@ -94,6 +92,10 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
 
     const sendDataToParent = () => {
         onDataChange(saveSDate, saveEDate);
+    }
+
+    const openModal = () => {
+        onDataChange(true);
     }
 
 
@@ -138,7 +140,8 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
                                             type="date"
                                             name="startDate"
                                             id="startDate"
-                                            value="sDate"
+                                            value={sDate}
+                                            min={today}
                                             style={{
                                                 border: "none",
                                                 background: "transparent",
@@ -166,11 +169,12 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
                                     <input type="date"
                                            name="endDate"
                                            id="endDate"
+                                           value={eDate}
+                                           min={today}
                                            style={{
                                                 border: "none",
                                                 background: "transparent",
                                                 fontSize: "15px",
-                                                borderRadius: "10px"
                                                 }}
                                            onChange={saveData2}
                                     />
@@ -185,6 +189,7 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
                             </div>
                         </LBBox>
                         :
+                        // 2줄짜리 버튼있는 박스가 아니라 1줄에만 박스가 있는 경우
                         <LBBox>
                             <div style={{
                                 width: "90%",
@@ -193,7 +198,8 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
                                     <div style={{display : "flex", justifyContent:"center",alignItems :"center"}}>
                                         <LBText>{firstLine}</LBText>
                                     </div>
-                                    <LBIcon src={resIcon}></LBIcon>
+                                    <LBIcon src={resIcon}
+                                            onClick={openModal}/>
                                 </LBTextContainer>
                                 <DivideLine/>
                                 <LBTextContainer style={{
@@ -244,6 +250,7 @@ const LightBlueBoxDoubleLines = ({firstLine, secondLine, feature, isEditable, st
                     </LBBox>
                 </Wrapper>
             </PC>
+
         </>
 
     )

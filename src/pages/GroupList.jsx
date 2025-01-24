@@ -60,7 +60,7 @@ const GroupList = () =>{
 
 
     useEffect(() => {
-        fetch("http://localhost:8000/groups?isManager=true&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
+        fetch("http://localhost:8000/meeting?isManager=true&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
             .then(res => {
                 return res.json();
             })
@@ -68,7 +68,7 @@ const GroupList = () =>{
                 setCreatedGroup(data);
 
             });
-        fetch("http://localhost:8000/groups?isManager=false&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
+        fetch("http://localhost:8000/meeting?isManager=false&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
             .then(res => {
                 return res.json();
             })

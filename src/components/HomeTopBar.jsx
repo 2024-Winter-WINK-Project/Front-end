@@ -59,16 +59,16 @@ const BarWrapper = styled.div`
 `;
 
 const TextWrapper = styled.div`
-    width: 150px;
+    width: 100%;
     display: flex;
     align-items: center;
 `;
 
 const Text = styled.text`
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     display: flex;
-    //justify-content: center;
+   
 `;
 
 const HomeTopBar = ({nickName, destination}) => {
@@ -83,11 +83,10 @@ const HomeTopBar = ({nickName, destination}) => {
                 <Background_Bar>
                     <BarWrapper>
                         <TextWrapper>
+                            {/*// 닉네임 11자*/}
+                            <Text>{nickName}</Text>
                             <Text style={{
-                                marginRight : '10px'
-                            }}>{nickName}</Text>
-                            <Text style={{
-                                fontSize :'22px',
+                                fontSize :'20px',
                                 fontWeight : 'normal',
                             }}>님</Text>
                         </TextWrapper>

@@ -52,7 +52,19 @@ export default function MyPage() {
     console.log("delete account");
     closeDeleteModal();
   }
-  
+
+  const [profilePicture, setProfilePicture] = useState();
+  const [nickName, setNickName] = useState();
+  useEffect(() => {
+      fetch("http://localhost:8000/member?id=100")
+          .then((response) => response.json())
+          .then((json) => {
+              setProfilePicture(json[0].profilePicture);
+              setNickName(json[0].nickName);
+          })
+          .catch((error) => console.log(error));
+  }, []);
+
   return (
     <>
       <TopBar></TopBar>
@@ -64,9 +76,20 @@ export default function MyPage() {
                 <style.Profile>
                   <img src={Profile} alt="프로필 사진" />
                 </style.Profile>
+//             프로필 사진 가져오는 기능 구현 부분, 주석 풀고 실행하시면 불러와 집니다.
+//             <style.UserInfoContainer>
+//               <style.Profile>
+//                   {profilePicture ?
+//                       <img src={profilePicture} alt="프로필 사진"/>
+//                       :
+//                       <img src={Profile} alt="프로필 사진"/>
+//                   }
+//               </style.Profile>
+//                 <style.UserInfoBox>
+
                 <style.UserInfo>
                   <span>이름</span>
-                  <span>홍길동</span>
+                  <span>{nickName}</span>
                 </style.UserInfo>
               </style.UserInfoContainer>
               <style.ButtonContainer>
