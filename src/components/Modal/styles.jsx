@@ -14,7 +14,7 @@ export const ModalContainer = styled.div`
 
 export const ModalContent = styled.div`
   background: white;
-  border: 2px solid #0234A8;
+  border: 2px solid black;
   padding: 36px 36px;
   border-radius: 10px;
   > p {
