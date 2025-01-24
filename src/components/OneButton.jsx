@@ -54,17 +54,14 @@ const ColoredButton = styled.button`
 const TextBox = styled.text`
     font-size: 20px;
 `;
-const OneButton = ({isOpen}) =>{
-    const Controller = () =>{
-        isOpen(false);
-    }
+const OneButton = ({buttonContent, onClick}) =>{
     return (
         <>
             <Mobile>
-                <ButtonContainer>
+                <ButtonContainer onClick={onClick}>
                     <ButtonWrapper>
-                        <ColoredButton onClick={Controller}>
-                            <TextBox>예</TextBox>
+                        <ColoredButton>
+                            <TextBox>{buttonContent}</TextBox>
                         </ColoredButton>
                     </ButtonWrapper>
                 </ButtonContainer>

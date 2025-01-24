@@ -79,13 +79,11 @@ const Text = styled.text`
     justify-content: center;
 `;
 
-const TopBar = ({pageName, feature, isModalRequired, data, onDataChange}) =>{
+const TopBar = ({pageName, feature, isModalRequired, data, onDataChange, dest}) =>{
     const iconList = [add, done];
     const [placeXPos, setPlaceXPos] = useState(0);
     const [placeYPos, setPlaceYPos] = useState(0);
     const [placeName, setPlaceName] = useState("");
-
-
     const SendInfo = () => {
         if (placeXPos !== null && placeYPos !== null){
             navigate('/creategroup', {state:{xPos : placeXPos, yPos : placeYPos, pName : placeName }});
@@ -113,8 +111,18 @@ const TopBar = ({pageName, feature, isModalRequired, data, onDataChange}) =>{
     }
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+
+    const handleConfirm = () => {
+        closeModal();
+    }
+    const closeModal = () => {
+        setOpen(false);
+        navigate(dest);
+    }
     const sendSubmit = () => {
-        onDataChange(true);
+        if (onDataChange(true) === true){
+            setOpen(true);
+        }
     }
     return (
         <>
@@ -130,10 +138,12 @@ const TopBar = ({pageName, feature, isModalRequired, data, onDataChange}) =>{
                                 <ButtonIcons src={feat} onClick={sendSubmit}/>
                             </BarWrapper>
                         </BackgroundBar>
-                        {/*{open === true ?*/}
-                        {/*    <Modal isOpen={open} onClose={() => {setOpen(false)}}></Modal>*/}
-                        {/*    :*/}
-                        {/*    null}*/}
+                        <Modal isOpen={open}
+                               confirm={handleConfirm}
+                               closeModal={closeModal}
+                               content={"모임 생성을 완료했어요."}
+
+                        />
                     </>
                     :
                     <BackgroundBar>

@@ -53,15 +53,23 @@ export default function MyPage() {
     console.log("delete account");
     closeDeleteModal();
   }
-  const [latestGroup, setLatestGroup] = useState();
+  const [profilePicture, setProfilePicture] = useState();
+  const [nickName, setNickName] = useState();
   useEffect(() => {
-      fetch("http://localhost:8000/groups?_limit=1&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
-          .then(res => {
-              return res.json();
+      // fetch("http://localhost:8000/groups?_limit=1&_sort=eventStartDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
+      //     .then(res => {
+      //         return res.json();
+      //     })
+      //     .then(data => {
+      //         setLatestGroup(data);
+      //     });
+      fetch("http://localhost:8000/member?id=100")
+          .then((response) => response.json())
+          .then((json) => {
+              setProfilePicture(json[0].profilePicture);
+              setNickName(json[0].nickName);
           })
-          .then(data => {
-              setLatestGroup(data);
-          });
+          .catch((error) => console.log(error));
   }, []);
   return (
     <>
@@ -72,12 +80,16 @@ export default function MyPage() {
             <style.ProfileTitle>나의 프로필</style.ProfileTitle>
             <style.UserInfoContainer>
               <style.Profile>
-                <img src={Profile} alt="프로필 사진" />
+                  {profilePicture ?
+                      <img src={profilePicture} alt="프로필 사진"/>
+                      :
+                      <img src={Profile} alt="프로필 사진"/>
+                  }
               </style.Profile>
-              <style.UserInfoBox>
+                <style.UserInfoBox>
                 <style.UserInfo>
                   <span>이름</span>
-                  <span>홍길동</span>
+                  <span>{nickName}</span>
                 </style.UserInfo>
                 <style.UserInfo>
                   <span>이메일</span>
@@ -92,7 +104,6 @@ export default function MyPage() {
                 </div>
               </style.ButtonContainer>
             <style.ProfileTitle>가장 가까운 모임</style.ProfileTitle>
-            {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
           </style.ProfileContainer>
         </style.Wrapper>
       </Mobile>

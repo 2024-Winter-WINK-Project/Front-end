@@ -61,9 +61,10 @@ const Text = styled.text`
 const Home = () =>{
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-    const isOpen = childData => {
-        setOpen(childData);
-    };
+    const [userName, setUserName] = useState(null);
+    // const isOpen = childData => {
+    //     setOpen(childData);
+    // };
     const [latestGroup, setLatestGroup] = useState(null);
 
     useEffect(() => {
@@ -74,13 +75,17 @@ const Home = () =>{
             .then(data => {
                 setLatestGroup(data);
             });
+        fetch(`http://localhost:8000/member?id=100`)
+            .then((response) => response.json())
+            .then((json) => setUserName(json[0].nickName))
+            .catch((error) => console.log(error));
     }, []);
 
     return (
         <>
             <Mobile>
                 <Wrapper>
-                    <HomeTopBar nickName={"홍길동"} destination={"creategroup"}></HomeTopBar>
+                    <HomeTopBar nickName={userName} destination={"creategroup"}></HomeTopBar>
                     <BodyWrapper>
                         <Text onClick={() => setOpen(true)}>다가오는 모임 일정이예요</Text>
                     </BodyWrapper>
