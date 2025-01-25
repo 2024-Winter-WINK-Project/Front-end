@@ -1,0 +1,11 @@
+{
+  "/meeting/:meetingId" : "/meeting/:meetingId",
+  "/meeting/:meetingId/place": "/place?meetingId=:meetingId",
+  "/meeting/:meetingId/members": "/members?meetingId=:meetingId",
+  "/members/:socialId": "/members/:socialId",
+  "/meeting/:meetingId/members/:memberId": "/members/:memberId",
+  "/meeting/:meetingId/ledgers": "/ledgers?meetingId=:meetingId",
+  "/meeting/:meetingId/ledgers/:ledgersId": "/ledgers/:ledgersId",
+  "/meeting/:meetingId/ledgers/:ledgersId/ledgerDetails": "/ledgerDetails?meetingId=:meetingId&ledgersId=:ledgersId",
+  "/meeting/:meetingId/ledgers/:ledgersId/ledgerDetails/:ledgerDetailsId": "/ledgerDetails/:ledgerDetailsId"
+}

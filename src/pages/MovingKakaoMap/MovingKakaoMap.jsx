@@ -1,44 +1,7 @@
 import React, {useEffect, useState} from "react";
-import styled from "styled-components";
-import {useMediaQuery} from "react-responsive";
-import {useNavigate} from "react-router-dom";
-import HomeTopBar from "../components/HomeTopBar.jsx";
-import TopBar from "../components/TopBar.jsx";
-import LightBlueBoxSingleLine from "../components/LightBlueBoxSingleLine.jsx";
-
-export const Mobile = ({children}) => {
-    const isMobile = useMediaQuery({
-        query : "(max-width : 768px)"
-    });
-
-    return <>{isMobile && children}</>
-}
-
-export const PC = ({children}) => {
-    const isPC = useMediaQuery({
-        query : "(min-width : 769px)"
-    });
-
-    return <>{isPC && children}</>
-}
-
-const MapContainer = styled.div`
-    width: 100vw;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    margin-top: 10vh;
-`;
-
-const MapArea = styled.div`
-    width: 90%;
-    height: 95%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-    z-index: 0;
-`;
+import * as styled from "./styles";
+import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
+import LightBlueBoxSingleLine from "../../components/Box/LightBlueBoxSingleLine.jsx";
 
 const { kakao } = window;
 
@@ -46,8 +9,8 @@ const MovingKakaoMap = ({size}) => {
     const [place, setPlace] = useState("");
     const [placeName, setPlaceName] = useState("");
     const [placeId, setPlaceId] = useState("");
-    const [placeXPos, setPlaceXPos] = useState("");
-    const [placeYPos, setPlaceYPos] = useState("");
+    const [placeLat, setPlaceLat] = useState("");
+    const [placeLon, setPlaceLon] = useState("");
     const handleDataChange = (newData) => {
         setPlace(newData);
     }
@@ -99,8 +62,8 @@ const MovingKakaoMap = ({size}) => {
                 infowindow.open(map, marker);
                 setPlaceName(place.place_name);
                 setPlaceId(place.id);
-                setPlaceXPos(place.x);
-                setPlaceYPos(place.y);
+                setPlaceLat(place.x);
+                setPlaceLon(place.y);
 
             });
 
@@ -108,29 +71,20 @@ const MovingKakaoMap = ({size}) => {
     }, [place]);
 
     return (
-        <>
-            <Mobile>
-                <MapContainer style={{height : size}}>
-                    <TopBar pageName={"장소 선택"} feature={"done"} isModalRequired={false} data={[placeId,placeName,placeXPos,placeYPos]}/>
-                    <MapArea>
-                        <LightBlueBoxSingleLine feature={"search"} onDataChange={handleDataChange}/>
-                        <div id="map" style={{width: '100%', height: '100%', borderRadius : '10px', zIndex : '-1', marginTop : '10px' }}></div>
-                    </MapArea>
-                </MapContainer>
-            </Mobile>
-            <PC>
-                <MapContainer style={{width : '500px', height : size}}>
-                    <TopBar pageName={"장소 선택"} feature={"done"} isModalRequired={false} data={[placeId,placeName,placeXPos,placeYPos]}/>
-                    <MapArea>
-                        <LightBlueBoxSingleLine feature={"search"} onDataChange={handleDataChange}/>
-                        <div id="map" style={{width: '100%', height: '100%', borderRadius: '10px', zIndex: '-1', marginTop: '10px'
-                        }}></div>
-                    </MapArea>
-                </MapContainer>
-            </PC>
-        </>
-
-
+        <styled.MapContainer style={{height: size}}>
+            <TopNavBar pageName={"장소 선택"} feature={"done"} isModalRequired={false}
+                       data={[placeId, placeName, placeLat, placeLon]}/>
+            <styled.MapContentsContainer>
+                <LightBlueBoxSingleLine feature={"search"} onDataChange={handleDataChange}/>
+                <div id="map" style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '10px',
+                    zIndex: '-1',
+                    marginTop: '10px'
+                }}></div>
+            </styled.MapContentsContainer>
+        </styled.MapContainer>
     )
 }
 

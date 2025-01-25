@@ -5,182 +5,238 @@
       "title": "가족여행",
       "startDate": 20250127,
       "endDate": 20250130,
-      "place" : {
-        "id" : 12638634791,
-        "placeName": "목포역 관광안내소",
-        "placeLon": 126.386548425986,
-        "placeLat": 34.7910991670854
-      },
-      "members": [
-        {
-          "id": 100,
-          "meetingId": 1,
-          "socialId": 20250101000,
-          "nickName": "가족여행_나",
-          "permission": "OWNER",
-          "profilePicture": "https://cdn-useast1.kapwing.com/static/templates/crying-cat-meme-template-regular-096fc808.webp",
-          "isQuit": false
-        },
-        {
-          "id": 101,
-          "meetingId": 1,
-          "socialId":  20250101001,
-          "nickName": "가족여행_엄마",
-          "permission": "MEMBER",
-          "profilePicture": "https://www.catster.com/wp-content/uploads/2023/11/Beluga-Cat-e1714190563227.webp",
-          "isQuit": false
-        },
-        {
-          "id": 102,
-          "meetingId": 1,
-          "socialId": 20250101002,
-          "nickName": "가족여행_아빠",
-          "permission": "MEMBER",
-          "profilePicture": "https://www.cnet.com/a/img/resize/61c44c6765cb6b8529df884935ad7aefc622aeec/hub/2021/11/03/3c2a7d79-770e-4cfa-9847-66b3901fb5d7/c09.jpg?auto=webp&fit=crop&height=675&width=1200",
-          "isQuit": false
-        },
-        {
-          "id": 103,
-          "meetingId": 1,
-          "socialId": 20250101003,
-          "nickName": "가족여행_형",
-          "permission": "MEMBER",
-          "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
-          "isQuit": false
-        },
-        {
-          "id": 104,
-          "meetingId": 1,
-          "socialId": 20250101004,
-          "nickName": "가족여행_누나",
-          "permission": "MEMBER",
-          "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
-          "isQuit": false
-        }
-      ],
-      "ledger" : {
-        "id" : 2501271,
-        "balance" : 100000,
-        "kakaoURL" : "www.kakao.com",
-        "tossURL" : "www.toss.com",
-        "bankAccNum" : "20120012346875",
-        "legderDetails" :[
-          {
-            "id": 2501271001,
-            "description" : "1차 예산 설정금액",
-            "amount" : 1500000
-          },
-          {
-            "id": 2501271002,
-            "description" : "기차표 예약",
-            "amount" : -300000
-          },
-          {
-            "id": 2501271003,
-            "description" : "호텔 예약",
-            "amount" : -700000
-          },
-          {
-            "id": 2501271004,
-            "description" : "렌트카",
-            "amount" : -400000
-          }
-        ]
-      }
+      "isManager" : true
     },
-
 
     {
       "id": 2,
-      "eventTitle": "WINK 팀회식",
-      "eventStartDate": 20250130,
-      "eventEndDate": 20250130,
-      "place" : {
-        "id" : 126997376109,
-        "placeName": "국민대학교",
-        "placeLon": 126.9973,
-        "placeLat": 37.6109
-      },
-      "members": [
-        {
-          "id": 200,
-          "meetingId": 1,
-          "socialId": 20250101005,
-          "nickName": "22학번_김민준",
-          "permission": "OWNER",
-          "profilePicture": "https://cdn-useast1.kapwing.com/static/templates/crying-cat-meme-template-regular-096fc808.webp",
-          "isQuit": false
-        },
-        {
-          "id": 201,
-          "meetingId": 1,
-          "socialId": 20250101000,
-          "nickName": "20학번_이서준",
-          "permission": "OWNER",
-          "profilePicture": "https://cdn-useast1.kapwing.com/static/templates/crying-cat-meme-template-regular-096fc808.webp",
-          "isQuit": false
-        },
-        {
-          "id": 202,
-          "meetingId": 1,
-          "socialId":  20250101006,
-          "nickName": "23학번_박도윤",
-          "permission": "MEMBER",
-          "profilePicture": "https://www.catster.com/wp-content/uploads/2023/11/Beluga-Cat-e1714190563227.webp",
-          "isQuit": false
-        },
-        {
-          "id": 203,
-          "meetingId": 1,
-          "socialId": 20250101007,
-          "nickName": "22학번_이예진",
-          "permission": "MEMBER",
-          "profilePicture": "https://www.cnet.com/a/img/resize/61c44c6765cb6b8529df884935ad7aefc622aeec/hub/2021/11/03/3c2a7d79-770e-4cfa-9847-66b3901fb5d7/c09.jpg?auto=webp&fit=crop&height=675&width=1200",
-          "isQuit": false
-        },
-        {
-          "id": 204,
-          "meetingId": 1,
-          "socialId": 20250101008,
-          "nickName": "24학번_오주원",
-          "permission": "MEMBER",
-          "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
-          "isQuit": false
-        },
-        {
-          "id": 205,
-          "meetingId": 1,
-          "socialId": 20250101009,
-          "nickName": "20학번_민서현",
-          "permission": "MEMBER",
-          "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
-          "isQuit": false
-        }
-      ],
-      "ledger" : {
-        "ledgerId" : 2501301,
-        "balance" : -80000,
-        "kakaoURL" : "www.kakao.com",
-        "tossURL" : "www.toss.com",
-        "bankAccNum" : "20120012341245",
-        "legderDetails" :[
-          {
-            "ledgerDetailsId": 2501301001,
-            "description" : "동아리 지원금",
-            "amount" : 30000
-          },
-          {
-            "ledgerDetailsId": 2501301002,
-            "description" : "식당",
-            "amount" : -80000
-          },
-          {
-            "ledgerDetailsId": 2501301003,
-            "description" : "카페",
-            "amount" : -30000
-          }
-        ]
-      }
+      "title": "WINK 팀회식",
+      "startDate": 20250130,
+      "endDate": 20250130,
+      "isManager" : false
+    },
+    {
+      "id": 3,
+      "title": "WINK 팀회식",
+      "startDate": 20250130,
+      "endDate": 20250130,
+      "isManager" : false
+    },
+    {
+      "id": 4,
+      "title": "WINK 팀회식",
+      "startDate": 20250130,
+      "endDate": 20250130,
+      "isManager" : false
+    },
+    {
+      "id": 5,
+      "title": "WINK 팀회식",
+      "startDate": 20250130,
+      "endDate": 20250130,
+      "isManager" : false
+    },
+    {
+      "id": 6,
+      "title": "WINK 팀회식",
+      "startDate": 20250130,
+      "endDate": 20250130,
+      "isManager" : false
+    },
+    {
+      "id": 7,
+      "title": "WINK 팀회식",
+      "startDate": 20250130,
+      "endDate": 20250130,
+      "isManager" : false
+    }
+  ],
+  "places" : [
+    {
+      "id" : 12638634791,
+      "meetingId" : 1,
+      "placeName": "목포역 관광안내소",
+      "placeLon": 126.386548425986,
+      "placeLat": 34.7910991670854
+    },
+    {
+      "id" : 126997376109,
+      "meetingId" : 2,
+      "placeName": "국민대학교",
+      "placeLon": 126.9973,
+      "placeLat": 37.6109
+    }
+  ],
+  "members" : [
+    {
+      "id": 100,
+      "meetingId": 1,
+      "socialId": 20250101000,
+      "nickName": "가족여행_나",
+      "permission": "OWNER",
+      "profilePicture": "https://cdn-useast1.kapwing.com/static/templates/crying-cat-meme-template-regular-096fc808.webp",
+      "isQuit": false
+    },
+    {
+      "id": 101,
+      "meetingId": 1,
+      "socialId":  20250101001,
+      "nickName": "가족여행_엄마",
+      "permission": "MEMBER",
+      "profilePicture": "https://www.catster.com/wp-content/uploads/2023/11/Beluga-Cat-e1714190563227.webp",
+      "isQuit": false
+    },
+    {
+      "id": 102,
+      "meetingId": 1,
+      "socialId": 20250101002,
+      "nickName": "가족여행_아빠",
+      "permission": "MEMBER",
+      "profilePicture": "https://www.cnet.com/a/img/resize/61c44c6765cb6b8529df884935ad7aefc622aeec/hub/2021/11/03/3c2a7d79-770e-4cfa-9847-66b3901fb5d7/c09.jpg?auto=webp&fit=crop&height=675&width=1200",
+      "isQuit": false
+    },
+    {
+      "id": 103,
+      "meetingId": 1,
+      "socialId": 20250101003,
+      "nickName": "가족여행_형",
+      "permission": "MEMBER",
+      "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
+      "isQuit": false
+    },
+    {
+      "id": 104,
+      "meetingId": 1,
+      "socialId": 20250101004,
+      "nickName": "가족여행_누나",
+      "permission": "MEMBER",
+      "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
+      "isQuit": false
+    },
+
+    {
+      "id": 200,
+      "meetingId": 2,
+      "socialId": 20250101005,
+      "nickName": "22학번_김민준",
+      "permission": "OWNER",
+      "profilePicture": "https://cdn-useast1.kapwing.com/static/templates/crying-cat-meme-template-regular-096fc808.webp",
+      "isQuit": false
+    },
+    {
+      "id": 201,
+      "meetingId": 2,
+      "socialId": 20250101000,
+      "nickName": "20학번_이서준",
+      "permission": "MEMBER",
+      "profilePicture": "https://cdn-useast1.kapwing.com/static/templates/crying-cat-meme-template-regular-096fc808.webp",
+      "isQuit": false
+    },
+    {
+      "id": 202,
+      "meetingId": 2,
+      "socialId":  20250101006,
+      "nickName": "23학번_박도윤",
+      "permission": "MEMBER",
+      "profilePicture": "https://www.catster.com/wp-content/uploads/2023/11/Beluga-Cat-e1714190563227.webp",
+      "isQuit": false
+    },
+    {
+      "id": 203,
+      "meetingId": 2,
+      "socialId": 20250101007,
+      "nickName": "22학번_이예진",
+      "permission": "MEMBER",
+      "profilePicture": "https://www.cnet.com/a/img/resize/61c44c6765cb6b8529df884935ad7aefc622aeec/hub/2021/11/03/3c2a7d79-770e-4cfa-9847-66b3901fb5d7/c09.jpg?auto=webp&fit=crop&height=675&width=1200",
+      "isQuit": false
+    },
+    {
+      "id": 204,
+      "meetingId": 2,
+      "socialId": 20250101008,
+      "nickName": "24학번_오주원",
+      "permission": "MEMBER",
+      "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
+      "isQuit": false
+    },
+    {
+      "id": 205,
+      "meetingId": 2,
+      "socialId": 20250101009,
+      "nickName": "20학번_민서현",
+      "permission": "MEMBER",
+      "profilePicture": "https://t1.daumcdn.net/cafeattach/1IHuH/f59c53457991aae46859fd193e7545491dddae12_re_1619725965605",
+      "isQuit": false
+    }
+  ],
+  "ledgers" : [
+    {
+      "id" : 2501271,
+      "meetingId" : 1,
+      "balance" : 100000,
+      "kakaoURL" : "www.kakao.com",
+      "tossURL" : "www.toss.com",
+      "bankAccNum" : "20120012346875"
+    },
+    {
+      "id" : 2501301,
+      "meetingId" : 2,
+      "balance" : -80000,
+      "kakaoURL" : "www.kakao.com",
+      "tossURL" : "www.toss.com",
+      "bankAccNum" : "20120012341245"
+    }
+  ],
+  "ledgerDetails" : [
+    {
+      "id": 2501271001,
+      "meetingId" : 1,
+      "ledgersId" : 2501271,
+      "description" : "1차 예산 설정금액",
+      "amount" : 1500000
+    },
+    {
+      "id": 2501271002,
+      "meetingId" : 1,
+      "ledgersId" : 2501271,
+      "description" : "기차표 예약",
+      "amount" : -300000
+    },
+    {
+      "id": 2501271003,
+      "meetingId" : 1,
+      "ledgersId" : 2501271,
+      "description" : "호텔 예약",
+      "amount" : -700000
+    },
+    {
+      "id": 2501271004,
+      "meetingId" : 1,
+      "ledgersId" : 2501271,
+      "description" : "렌트카",
+      "amount" : -400000
+    },
+
+    {
+      "id": 2501301001,
+      "meetingId" : 2,
+      "ledgersId" : 2501301,
+      "description" : "동아리 지원금",
+      "amount" : 30000
+    },
+    {
+      "id": 2501301002,
+      "meetingId" : 2,
+      "ledgersId" : 2501301,
+      "description" : "식당",
+      "amount" : -80000
+    },
+    {
+      "id": 2501301003,
+      "meetingId" : 2,
+      "ledgersId" : 2501301,
+      "description" : "카페",
+      "amount" : -30000
     }
   ]
 }
