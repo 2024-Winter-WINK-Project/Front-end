@@ -10,44 +10,49 @@
             2. 데이터 개수 제한 : _limit=제한하고싶은 데이터 개수
             이외는 https://redux-advanced.vlpt.us/3/01.html 참고
             (정렬 조건문은 홈페이지가 아닌 1번에 적힌 것이 최신이라고 함)
+    ** 추가 : json-server를 중첩 라우팅을 하느라 구조변경이 많았습니다.
+    https://velog.io/@sangpok/JSON-Server-%EC%A4%91%EC%B2%A9-%EB%9D%BC%EC%9A%B0%ED%8C%85
+
+
 4. POST : axios.post("http://localhost:8000/groups",{key:value})
                 .then((res) => console.log(res))
 5. 예시 db 구조가 좀 바뀌었습니다. 최대한 ERD와 유사하게 하되, 당장 필요하지 않은 것은 제외했습니다.
     db.json
     |
     |_모임 테이블(meeting)
-      |_모임ID(id)
-      |_모임_이름(title)
-      |_날짜(시작날짜)(startDate)
-      |_날짜(종료날짜)(endDate)
-      |
-      |_장소 테이블(place)
-      |  |_장소ID(id)
-      |  |_장소이름(placeName)
-      |  |_장소경도(placeLon)
-      |  |_장소위도(placeLat)
-      |
-      |_회원 테이블(members)
-      |  |_회원ID(id)
-      |  |_모임ID(meetingId)
-      |  |_소셜ID(socialID)
-      |  |_닉네임(nickName)
-      |  |_권한(permission)
-      |  |_기본프로필사진(profilePicture)
-      |  |_모임탈퇴여부(isQuit)
-      |
-      |_가계부 테이블(ledger)
-      |  |_예산ID(id)
-      |  |_잔고(balance)
-      |  |_카카오송금링크(kakaoURL)
-      |  |_토스송금링크(tossURL)
-      |  |_계좌번호(bankAccNum)
-      |  |_세부기록 테이블(legderDetails)
-      |  |  |_세부기록ID(id)
-      |  |  |_설명(description)
-      |  |  |_금액(amount)
+    |    |_모임ID(id)
+    |    |_모임_이름(title)
+    |    |_날짜(시작날짜)(startDate)
+    |    |_날짜(종료날짜)(endDate)
+    |
+    |_장소 테이블(place)
+    |    |_장소ID(id)
+    |    |_장소이름(placeName)
+    |    |_장소경도(placeLon)
+    |    |_장소위도(placeLat)
+    |
+    |_회원 테이블(members)
+    |    |_회원ID(id)
+    |    |_모임ID(meetingId)
+    |    |_소셜ID(socialID)
+    |    |_닉네임(nickName)
+    |    |_권한(permission)
+    |    |_기본프로필사진(profilePicture)
+    |    |_모임탈퇴여부(isQuit)
+    |
+    |_가계부 테이블(ledger)
+    |    |_예산ID(id)
+    |    |_잔고(balance)
+    |    |_카카오송금링크(kakaoURL)
+    |    |_토스송금링크(tossURL)
+    |    |_계좌번호(bankAccNum)
+    |_세부기록 테이블(legderDetails)
+    |    |_세부기록ID(id)
+    |    |_설명(description)
+    |____|_금액(amount)
 
 6. 예시 데이터는
 - 나 자신이 만든 모임 1개(가족여행)와
 - 초대받은 모임 1개(WINK 팀회식)로 구성되어 있습니다.
 - 여기서 나 자신은 소셜아이디 20250101000 입니다.
+
