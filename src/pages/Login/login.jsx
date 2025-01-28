@@ -21,8 +21,8 @@ export const PC = ({children}) => {
 }
 
 export default function Login() {
-  const REST_API_KEY = '???';
-  const REDIRECT_URI = '???';
+  const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+  const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
   const kakaoLink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const handleLogin = () => {

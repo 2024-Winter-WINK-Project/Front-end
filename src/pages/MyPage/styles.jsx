@@ -6,16 +6,6 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 11vh;
-`;
-
-export const WrapperPC = styled.div`
-    width: 500px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 11vh;    
 `;
 
 export const ProfileContainer = styled.div`

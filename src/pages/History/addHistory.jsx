@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useMediaQuery} from "react-responsive";
-import TopBar from "../../components/TopBar.jsx";
+import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx'
 import Input from '../../components/Input/input.jsx'
 import * as style from './styles.jsx';
@@ -30,7 +30,7 @@ export default function History() {
 
   return (
       <>
-      <TopBar></TopBar>
+      <TopNavBar></TopNavBar>
         <Mobile>
           <style.Wrapper>
             <style.ButtonWrapper>

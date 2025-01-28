@@ -1,10 +1,10 @@
 import React, {useRef, useState} from "react";
 import styled from "styled-components";
 import {useMediaQuery} from "react-responsive";
-import OneButton from "./OneButton.jsx";
-import close from "../icons/close.png";
-import upload from "../icons/upload.png";
-import Html5QrcodePlugin from "./QRConverter/Html5QrcodePlugin";
+import OneButton from "../Button/OneButton.jsx";
+import close from "../../icons/close.png";
+import upload from "../../icons/upload.png";
+import Html5QrcodePlugin from "../QRConverter/Html5QrcodePlugin";
 
 
 export const Mobile = ({children}) => {
@@ -138,7 +138,7 @@ const UploadIcon = styled.img`
 
 
 
-const Modal = ({isOpen, content,onDataChange, onDataChange2}) => {
+const UploadModal = ({isOpen, content,onDataChange, onDataChange2}) => {
     const URL = useRef(null);
     const closeModal = () => {
         onDataChange(false);
@@ -235,4 +235,4 @@ const Modal = ({isOpen, content,onDataChange, onDataChange2}) => {
     );
 };
 
-export default Modal;
+export default UploadModal;

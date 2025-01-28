@@ -1,7 +1,7 @@
-import React, { useEffect, useState} from 'react';
-import { useMediaQuery} from "react-responsive";
+import React, {useEffect, useRef, useState} from 'react';
+import {useMediaQuery} from "react-responsive";
+import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import axios from 'axios';
-import TopBar from "../../components/TopBar.jsx";
 import Profile from '../../assets/MyPage/profile.svg';
 import Button from '../../components/Button/ProfileButton.jsx';
 import SingOutModal from '../../components/Modal/signout.jsx';
@@ -73,22 +73,23 @@ export default function MyPage() {
     }
   };
 
+  const memberId = useRef(20250101000);
   const [profilePicture, setProfilePicture] = useState();
   const [nickName, setNickName] = useState();
   useEffect(() => {
-      fetch("http://localhost:8000/member?id=100")
+      fetch(`http://localhost:8000/members?${memberId.current}`)
           .then((response) => response.json())
           .then((json) => {
               setProfilePicture(json[0].profilePicture);
-              setNickName(json[0].nickName);
+              setNickName(json[0].socialId);
           })
           .catch((error) => console.log(error));
   }, []);
   
   return (
     <>
-      <TopBar></TopBar>
-      <Mobile>
+      <TopNavBar pageName={"마이페이지"}
+                 isBackRequired={true}/>
         <style.Wrapper>
           <style.ProfileContainer>
             <style.ProfileTitle>나의 프로필</style.ProfileTitle>

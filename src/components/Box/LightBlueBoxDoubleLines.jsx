@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import {useMediaQuery} from "react-responsive";
-import calendar from "../icons/calendar.png";
-import add from "../icons/add.png";
-import edit from "../icons/edit.png";
+import calendar from "../../icons/calendar.png";
+import add from "../../icons/add.png";
+import edit from "../../icons/edit.png";
 import 'react-datepicker/dist/react-datepicker.css';
 
 

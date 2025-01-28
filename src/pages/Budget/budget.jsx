@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useMediaQuery} from "react-responsive";
-import TopBar from "../../components/TopBar.jsx";
+import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
 import Withdrawal from '../../assets/Budget/withdrawal.svg';
 import Deposit from '../../assets/Budget/deposit.svg';
@@ -38,7 +38,7 @@ export default function History() {
 
   return (
       <>
-      <TopBar></TopBar>
+      <TopNavBar></TopNavBar>
         <Mobile>
           <style.Wrapper>
           <Button

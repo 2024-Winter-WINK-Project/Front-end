@@ -1,40 +1,48 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home.jsx";
+import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/Login/login.jsx";
-import GroupList from "./pages/GroupList.jsx";
-import CreateGroup from "./pages/CreateGroup.jsx";
-import MovingKakaoMap from "./pages/MovingKakaoMap.jsx";
-import ManageGroup from "./pages/ManageGroup.jsx";
+import MeetingList from "./pages/MeetingList/MeetingList.jsx";
+import CreateMeeting from "./pages/CreateMeeting/CreateMeeting.jsx";
+import MovingKakaoMap from "./pages/MovingKakaoMap/MovingKakaoMap.jsx";
+import ManageMeeting from "./pages/ManageMeeting/ManageMeeting.jsx";
 import MyPage from "./pages/MyPage/myPage.jsx";
 import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
-import BottomNavigation from "./components/BottomNavigation";
+import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
+import {useEffect} from "react";
+import GlobalStyles from "./GlobalStyles";
 
 
-let vh = window.innerHeight * 0.01
 
-document.documentElement.style.setProperty('--vh', `${vh}px`)
-
-window.addEventListener('resize', () => {
-    let vh = window.innerHeight * 0.01
-    document.documentElement.style.setProperty('--vh', `${vh}px`)
-})
 const App = () =>{
+    useEffect(() => {
+        let vh = window.innerHeight * 0.01
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+        window.addEventListener('resize', () => {
+            let vh = window.innerHeight * 0.01
+            document.documentElement.style.setProperty('--vh', `${vh}px`)
+        })
+
+    }, []);
+
     return(
         <>
             <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/login" element={<Login />}></Route>
-                    <Route path="/grouplist" element={<GroupList />}></Route>
-                    <Route path="/creategroup" element={<CreateGroup />}></Route>
-                    <Route path="/managegroup/:groupId" element={<ManageGroup />}></Route>
-                    <Route path="/movingmap" element={<MovingKakaoMap />}></Route>
-                    <Route path="/mypage" element={<MyPage />}></Route>
-                    <Route path="/budget" element={<Budget />}></Route>
-                    <Route path="/addhistory" element={<AddHistory />}></Route>
-                </Routes>
-                <BottomNavigation />
+                <GlobalStyles/>
+                <div className="container">
+                    <Routes>
+                        <Route path="/" element={<Home />}/>
+                        <Route path="/login" element={<Login />}/>
+                        <Route path="/meetinglist" element={<MeetingList />}/>
+                        <Route path="/createmeeting" element={<CreateMeeting />}/>
+                        <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
+                        <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
+                        <Route path="/mypage" element={<MyPage />}/>
+                        <Route path="/budget" element={<Budget />}/>
+                        <Route path="/addhistory" element={<AddHistory />}/>
+                    </Routes>
+                    <BottomNavBar />
+                </div>
             </BrowserRouter>
         </>
 
