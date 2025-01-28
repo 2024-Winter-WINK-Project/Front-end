@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useMediaQuery} from "react-responsive";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import axios from 'axios';
 import Profile from '../../assets/MyPage/profile.svg';
@@ -8,21 +7,6 @@ import SingOutModal from '../../components/Modal/signout.jsx';
 import DeleteModal from '../../components/Modal/delete.jsx';
 import * as style from './styles';
 
-export const Mobile = ({children}) => {
-  const isMobile = useMediaQuery({
-      query : "(max-width : 768px)"
-  });
-
-  return <>{isMobile && children}</>
-}
-
-export const PC = ({children}) => {
-  const isPC = useMediaQuery({
-      query : "(min-width : 769px)"
-  });
-
-  return <>{isPC && children}</>
-}
 
 export default function MyPage() {
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
@@ -85,7 +69,7 @@ export default function MyPage() {
           })
           .catch((error) => console.log(error));
   }, []);
-  
+
   return (
     <>
       <TopNavBar pageName={"마이페이지"}
@@ -115,34 +99,6 @@ export default function MyPage() {
             <style.ProfileTitle>자주 묻는 질문</style.ProfileTitle>
           </style.ProfileContainer>
         </style.Wrapper>
-      </Mobile>
-      <PC>
-        <style.WrapperPC>
-        <style.ProfileContainer>
-            <style.ProfileTitle>나의 프로필</style.ProfileTitle>
-                <style.UserInfoContainer>
-                  <style.Profile>
-                    {profilePicture ?
-                    <img src={profilePicture} alt="프로필 사진" />
-                    :
-                    <img src={Profile} alt="프로필 사진" />
-                  }
-                  </style.Profile>
-                <style.UserInfo>
-                  <span>이름</span>
-                  <span>{nickName}</span>
-                </style.UserInfo>
-              </style.UserInfoContainer>
-              <style.ButtonContainer>
-                <div>
-                  <Button size="big" content="로그아웃" onClick={openSignOutModal} />
-                  <Button size="big" content="탈퇴하기" onClick={openDeleteModal} />
-                </div>
-              </style.ButtonContainer>
-            <style.ProfileTitle>자주 묻는 질문</style.ProfileTitle>
-          </style.ProfileContainer>
-        </style.WrapperPC>
-      </PC>
       <SingOutModal
         isOpen={isSignOutModalOpen}
         handleConfirm={handleSignOutConfirm}

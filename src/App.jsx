@@ -10,7 +10,6 @@ import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
-import GlobalStyles from "./GlobalStyles";
 
 
 
@@ -28,21 +27,18 @@ const App = () =>{
     return(
         <>
             <BrowserRouter>
-                <GlobalStyles/>
-                <div className="container">
-                    <Routes>
-                        <Route path="/" element={<Home />}/>
-                        <Route path="/login" element={<Login />}/>
-                        <Route path="/meetinglist" element={<MeetingList />}/>
-                        <Route path="/createmeeting" element={<CreateMeeting />}/>
-                        <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
-                        <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
-                        <Route path="/mypage" element={<MyPage />}/>
-                        <Route path="/budget" element={<Budget />}/>
-                        <Route path="/addhistory" element={<AddHistory />}/>
-                    </Routes>
-                    <BottomNavBar />
-                </div>
+                <Routes>
+                    <Route path="/" element={<Home />}/>
+                    <Route path="/login" element={<Login />}/>
+                    <Route path="/meetinglist" element={<MeetingList />}/>
+                    <Route path="/createmeeting" element={<CreateMeeting />}/>
+                    <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
+                    <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
+                    <Route path="/mypage" element={<MyPage />}/>
+                    <Route path="/budget" element={<Budget />}/>
+                    <Route path="/addhistory" element={<AddHistory />}/>
+                </Routes>
+                <BottomNavBar />
             </BrowserRouter>
         </>
 

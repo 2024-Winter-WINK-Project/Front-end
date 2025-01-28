@@ -10,8 +10,17 @@ export const BarContainer = styled.nav`
     box-shadow: 0 -10px 5px -4px rgba(86, 86, 86, 0.20);
     position: fixed;
     bottom: 0;
-    right: 0;
-    left: 0;
+
+    @media (max-width: 599px) {
+        right: 0;
+        left: 0;
+    }
+    
+    @media (min-width: 600px){
+        width : 600px;
+    }
+
+
 `;
 
 export const BarContentsContainer = styled.div`
@@ -32,6 +41,10 @@ export const ButtonContainer = styled.div`
 export const ButtonIcons = styled.img`
     width: 25px;
     height: 25px;
+    @media (min-width: 600px){
+        width: 30px;
+        height: 30px;
+    }
 `;
 
 export const ButtonStyles = styled.div`

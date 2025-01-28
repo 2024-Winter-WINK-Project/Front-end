@@ -11,9 +11,16 @@ export const BarContainer = styled.nav`
     justify-content: center;
     position: fixed;
     top: 0;
-    right: 0;
-    left: 0;
     z-index: 1;
+
+    @media (max-width: 599px){
+        right: 0;
+        left: 0;
+    }
+    
+    @media (min-width: 600px){
+        width : 600px;
+    }
 `;
 
 export const BarContentsContainer = styled.div`

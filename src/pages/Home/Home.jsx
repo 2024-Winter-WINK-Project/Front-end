@@ -18,6 +18,7 @@ const Home = () =>{
     }, []);
 
     return (
+
         <styled.BodyContainer>
             <TopNavBar pageName={"홈"}
                        feature={"add"}
@@ -25,7 +26,7 @@ const Home = () =>{
                        isBackRequired={false}
                        dest={"creategroup"}/>
             <styled.TextWrapper>
-                <styled.Text>다가오는 모임 일정이예요</styled.Text>
+                <styled.TextBox>다가오는 모임 일정이예요</styled.TextBox>
             </styled.TextWrapper>
             {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
         </styled.BodyContainer>

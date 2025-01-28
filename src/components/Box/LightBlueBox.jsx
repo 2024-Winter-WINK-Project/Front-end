@@ -9,7 +9,7 @@ const LightBlueBox = ({group,isList}) => {
     return(
         <>
             {group && group.map(elements=>(
-                    <styled.BoxContainerMedium key={elements.id} style={{width : "100vw"}} onClick={() => navigate((`/managegroup/${elements.id}`))}>
+                    <styled.BoxContainerMedium key={elements.id} onClick={() => navigate((`/managegroup/${elements.id}`))}>
                         {isList ?
                             <styled.BoxContentsContainer>
                                 <styled.TextContainer>

@@ -10,12 +10,10 @@ import mypage_filled from "../../icons/mypage_filled.png";
 import {useLocation, useNavigate} from "react-router-dom";
 import * as styled from "./styles";
 
-
 const BottomNavBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname;
-
     return(
         <>
             {currentPath === "/login" ?
@@ -56,10 +54,6 @@ const BottomNavBar = () => {
                 </styled.BarContainer>
             }
         </>
-
-
-
-
     )
 }
 

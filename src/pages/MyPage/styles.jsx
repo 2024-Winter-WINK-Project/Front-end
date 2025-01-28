@@ -6,6 +6,11 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 10vh;
+    
+    @media (min-width: 600px){
+        width : 600px;
+    }
 `;
 
 export const ProfileContainer = styled.div`
