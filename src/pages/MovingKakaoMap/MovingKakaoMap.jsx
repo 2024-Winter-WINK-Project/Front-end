@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
-import LightBlueBoxSingleLine from "../../components/Box/LightBlueBoxSingleLine.jsx";
+import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
 
 const { kakao } = window;
 
-const MovingKakaoMap = ({size}) => {
+const MovingKakaoMap = () => {
     const [place, setPlace] = useState("");
     const [placeName, setPlaceName] = useState("");
     const [placeId, setPlaceId] = useState("");
@@ -71,13 +71,13 @@ const MovingKakaoMap = ({size}) => {
     }, [place]);
 
     return (
-        <styled.MapContainer style={{height: size}}>
-            <TopNavBar pageName={"장소 선택"} feature={"done"} isModalRequired={false}
+        <styled.MapContainer>
+            <TopNavBar pageName={"장소 선택"} feature={"done"} isModalRequired={false} isBackRequired={true}
                        data={[placeId, placeName, placeLat, placeLon]}/>
             <styled.MapContentsContainer>
-                <LightBlueBoxSingleLine feature={"search"} onDataChange={handleDataChange}/>
+                <DarkBlueWriteBox feature={"search"} onDataChange={handleDataChange}/>
                 <div id="map" style={{
-                    width: '100%',
+                    width: '90%',
                     height: '100%',
                     borderRadius: '10px',
                     zIndex: '-1',

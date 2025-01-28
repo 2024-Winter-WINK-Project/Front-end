@@ -4,12 +4,12 @@ import group_manager from "../../icons/group_manager.png";
 import calculate from "../../icons/calculator.png";
 import {useNavigate} from "react-router-dom";
 
-const LightBlueBox = ({group,isList}) => {
+const MeetingListBox = ({group,isList}) => {
     const navigate = useNavigate();
     return(
         <>
             {group && group.map(elements=>(
-                    <styled.BoxContainerMedium key={elements.id} onClick={() => navigate((`/managegroup/${elements.id}`))}>
+                    <styled.BoxContainerMedium key={elements.id} onClick={() => navigate((`/managemeeting/${elements.id}`))}>
                         {isList ?
                             <styled.BoxContentsContainer>
                                 <styled.TextContainer>
@@ -48,4 +48,4 @@ const LightBlueBox = ({group,isList}) => {
 }
 
 
-export default LightBlueBox;
+export default MeetingListBox;

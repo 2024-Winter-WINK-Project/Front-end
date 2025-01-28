@@ -1,12 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
-import LightBlueBoxSingleLine from "../../components/Box/LightBlueBoxSingleLine.jsx";
-import LightBlueBoxDoubleLines from "../../components/Box/LightBlueBoxDoubleLines.jsx";
+import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 import UploadModal from "../../components/Modal/UploadModal";
 import * as styled from "./styles";
+import DarkBlueBox from "../../components/Box/DarkBlueWriteBox";
+import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
+import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
 
 
 const CreateMeeting = () => {
@@ -113,31 +115,31 @@ const CreateMeeting = () => {
                        onDataChange={handleSubmit}
                        dest={"/"}/>
             <styled.FormContainer>
-                <LightBlueBoxSingleLine feature={""}
-                                        boxtitle={"모임명"}
-                                        isEditable={true}
-                                        onDataChange2={handleDataChange2}/>
-                <LightBlueBoxSingleLine feature={"nickname"}
+                <DarkBlueWriteBox feature={""}
+                             boxTitle={"모임명"}
+                             onDataChange2={handleDataChange2}/>
+                <LightBlueWriteBox feature={"nickname"}
                                         boxtitle={"닉네임"}
                                         onDataChange2={handleDataChange5}/>
-                <LightBlueBoxSingleLine feature={"location"}
+                <LightBlueWriteBox feature={"location"}
                                         style={{paddingTop: "none"}}
                                         boxtitle={"모임 장소"}
                                         to={"/movingkakaomap"}/>
                 <KakaoMap lat={placeLat}
                           lon={placeLon}
                           pName={placeName}/>
-                <LightBlueBoxDoubleLines feature={"calendar"}
-                                         firstLine={"모임 시작날짜"}
-                                         secondLine={"모임 종료날짜"}
-                                         isEditable={true}
-                                         onDataChange={handleDataChange3}/>
-                <LightBlueBoxDoubleLines feature={"plus"}
-                                         firstLine={"정산링크 등록"}
-                                         secondLine={"나중에 설정에서 변경할 수 있어요"}
-                                         isEditable={false}
-                                         onDataChange={handleDataChange}
+                <DoubleColumnsBox feature={"calendar"}
+                                  firstLine={"모임 시작날짜"}
+                                  secondLine={"모임 종료날짜"}
+                                  isEditable={true}
+                                  onDataChange={handleDataChange3}/>
+                <DoubleColumnsBox feature={"plus"}
+                                  firstLine={"정산링크 등록"}
+                                  secondLine={"나중에 설정에서 변경할 수 있어요"}
+                                  isEditable={false}
+                                  onDataChange={handleDataChange}
                 />
+
             </styled.FormContainer>
         </styled.BodyContainer>
     )

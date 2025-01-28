@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import LightBlueBox from "../../components/Box/LightBlueBox.jsx";
+import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
 
@@ -18,17 +18,18 @@ const Home = () =>{
     }, []);
 
     return (
-
         <styled.BodyContainer>
             <TopNavBar pageName={"홈"}
                        feature={"add"}
                        isModalRequired={false}
                        isBackRequired={false}
                        dest={"creategroup"}/>
-            <styled.TextWrapper>
-                <styled.TextBox>다가오는 모임 일정이예요</styled.TextBox>
-            </styled.TextWrapper>
-            {latestGroup && <LightBlueBox group={latestGroup} isList={false}/>}
+            <styled.ContentContainer>
+                <styled.TextWrapper>
+                    <styled.TextBox>다가오는 모임 일정이예요</styled.TextBox>
+                </styled.TextWrapper>
+                {latestGroup && <MeetingListBox group={latestGroup} isList={false}/>}
+            </styled.ContentContainer>
         </styled.BodyContainer>
     )
 }

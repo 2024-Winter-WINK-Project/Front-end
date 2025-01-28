@@ -1,49 +1,109 @@
 import styled from "styled-components";
 
 export const BoxContainerSmall = styled.li`
-    width : 100vw;
-    height: 70px;
+    height: 75px;
     display: flex;
     justify-content: center;
-    
+    align-items: center;
     @media (min-width: 600px){
-        width : 600px;
+        width : 550px;
     }
     
 `;
 
 export const BoxContainerMedium = styled.li`
-    width: 100vw;
     height: 110px;
     display: flex;
     justify-content: center;
-    
+    align-items: center;
     @media (min-width: 600px){
-        width : 600px;
+        width : 550px;
     }
 `;
 
 
 export const BoxContainerBig = styled.li`
-    height: 150px;
+    height: 110px;
     display: flex;
     justify-content: center;
-
+    align-items: center;
     @media (min-width: 600px){
-        width : 600px;
+        width : 550px;
+    }
+`;
+
+export const BoxContainerList = styled.li`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (min-width: 600px){
+        width : 550px;
     }
 `;
 
 export const BoxContentsContainer = styled.div`
     border : none;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     height: 100px;
-    //singleLine : 60px
     background-color: #E7EBF7;
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+export const BoxContentsContainerSmall = styled.div`
+    border : none;
+    border-radius: 10px;
+    width: 90vw;
+    height: 60px;
+    background-color: #E7EBF7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+
+
+export const BoxContentsContainerList = styled.div`
+    border : none;
+    border-radius: 10px;
+    width: 90vw;
+    height: 100%;
+
+    background-color: #E7EBF7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ListElement = styled.div`
+    width: 85%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    
+`;
+
+export const ListElements = styled.div`
+    width: 80%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+`;
+
+export const ProfilePicWrapper =styled.div`
+    width : 50px;
+    height : 50px;
+    display : flex;
+    align-items: center;
+`;
+
+export const ProfilePic = styled.img`
+    width: 80%;
+    height: 35px;
+    border-radius: 30px;
+    background-color: black;
 `;
 
 export const InputContainer = styled.div`
@@ -64,7 +124,7 @@ export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 80%;
+    width: 50%;
 `;
 
 export const BoxIcon = styled.img`

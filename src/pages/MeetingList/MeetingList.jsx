@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
-import LightBlueBox from "../../components/Box/LightBlueBox.jsx";
+import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "../Home/styles";
 
 const MeetingList = () =>{
@@ -32,11 +32,11 @@ const MeetingList = () =>{
             <styled.TextWrapper>
                 <styled.TextBox>내가 만든 모임</styled.TextBox>
             </styled.TextWrapper>
-            {createdGroup && <LightBlueBox group={createdGroup} isList={true}/>}
+            {createdGroup && <MeetingListBox group={createdGroup} isList={true}/>}
             <styled.TextWrapper>
                 <styled.TextBox>내가 초대받은 모임</styled.TextBox>
             </styled.TextWrapper>
-            {invitedgroup && <LightBlueBox group={invitedgroup} isList={true}/>}
+            {invitedgroup && <MeetingListBox group={invitedgroup} isList={true}/>}
         </styled.BodyContainer>
     )
 }

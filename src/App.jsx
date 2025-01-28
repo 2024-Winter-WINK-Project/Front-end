@@ -10,6 +10,7 @@ import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
+import GlobalStyles from "./GlobalStyles";
 
 
 
@@ -25,8 +26,8 @@ const App = () =>{
     }, []);
 
     return(
-        <>
-            <BrowserRouter>
+        <BrowserRouter>
+                <GlobalStyles/>
                 <Routes>
                     <Route path="/" element={<Home />}/>
                     <Route path="/login" element={<Login />}/>
@@ -39,11 +40,8 @@ const App = () =>{
                     <Route path="/addhistory" element={<AddHistory />}/>
                 </Routes>
                 <BottomNavBar />
-            </BrowserRouter>
-        </>
-
-
-)
+        </BrowserRouter>
+    )
 }
 
 export default App;

@@ -1,6 +1,6 @@
 {
   "/meeting/:meetingId" : "/meeting/:meetingId",
-  "/meeting/:meetingId/place": "/place?meetingId=:meetingId",
+  "/meeting/:meetingId/places": "/places?meetingId=:meetingId",
   "/meeting/:meetingId/members": "/members?meetingId=:meetingId",
   "/members/:socialId": "/members/:socialId",
   "/meeting/:meetingId/members/:memberId": "/members/:memberId",

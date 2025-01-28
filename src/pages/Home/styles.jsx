@@ -1,17 +1,23 @@
 import styled from "styled-components";
 
 export const BodyContainer = styled.div`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 10vh;
-    
+    //min-height: 80vh;
+    @media (max-height: 670px){
+        min-height: 100vh;
+    }
     @media (min-width: 600px){
         width : 600px;
     }
 
+`;
+
+export const ContentContainer = styled.div`
+    width : 90%;
 `;
 
 export const TextWrapper = styled.div`
@@ -20,6 +26,10 @@ export const TextWrapper = styled.div`
     display: flex;
     justify-content: left;
     align-items: center;
+
+    @media (min-width: 600px){
+        height: 10%;
+    }
 `;
 
 export const TextBox = styled.text`
