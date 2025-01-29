@@ -52,6 +52,17 @@ export const BoxContentsContainer = styled.div`
     justify-content: center;
 `;
 
+export const BoxContentsContainerMedium = styled.div`
+    border : none;
+    border-radius: 10px;
+    width: 100%;
+    height: 100px;
+    background-color: #E7EBF7;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+`;
+
 export const BoxContentsContainerSmall = styled.div`
     border : none;
     border-radius: 10px;
@@ -125,6 +136,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 50%;
+    
 `;
 
 export const BoxIcon = styled.img`

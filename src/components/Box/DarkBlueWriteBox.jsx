@@ -4,23 +4,14 @@ import * as styled from "./styles";
 
 const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, onDataChange2}) => {
     const [place,setPlace] = useState();
-    const groupName = useRef(null);
     const saveData = event => {
         setPlace(event.target.value);
     }
-    const saveData2 = event => {
-        groupName.current = event.target.value;
-        sendDataToParent2();
-    }
 
-    const sendDataToParent = () => {
-        onDataChange(place);
-    }
+    const sendDataToParent = (event) => {
+        onDataChange(event.target.id ,event.target.value);
 
-    const sendDataToParent2 = () => {
-        onDataChange2(groupName);
     }
-
 
     return (
         <styled.BoxContainerSmall>
@@ -33,7 +24,7 @@ const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, onDataChange2}) => {
                         // 검색 박스, 쓰기 전용
                         <styled.InputContainer style={{width: "90%"}}>
                             <styled.InputBox value={place} placeholder={"어디로 떠나볼까요?"} onChange={saveData}/>
-                            <styled.BoxIcon src={search} onClick={sendDataToParent}/>
+                            <styled.BoxIcon id = "place" src={search} onClick={sendDataToParent}/>
                         </styled.InputContainer>
                     :
                         // 모임 제목 입력하는 박스, 쓰기 전용
@@ -46,7 +37,7 @@ const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, onDataChange2}) => {
                                 }}>{boxTitle}
                                 </styled.TextBox>
                             </styled.TextContainer>
-                            <styled.InputBox placeholder={"모임 제목을 입력해 주세요."} onChange={saveData2}/>
+                            <styled.InputBox id = "title" placeholder={"모임 제목을 입력해 주세요."} onChange={sendDataToParent}/>
                         </styled.InputContainer>
                 }
             </styled.BoxContentsContainerSmall>

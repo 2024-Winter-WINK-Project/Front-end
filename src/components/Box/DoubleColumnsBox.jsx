@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import calendar from "../../icons/calendar.png";
 import add from "../../icons/add.png";
 import edit from "../../icons/edit.png";
@@ -9,29 +9,16 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
     const iconSelect = [calendar,add,edit];
     const [resIcon, setResIcon] = useState();
     const [isCalendar, setIsCalendar] = useState(false);
-    const [calendarSwitch,setCalsendarSwitch] = useState(false);
     const [sDate, setSDate] = useState(null);
     const [eDate, setEDate] = useState(null);
-    const saveSDate = useRef(0);
-    const saveEDate = useRef(0);
     const today = new Date();
 
-
-    const saveData = event => {
-        saveSDate.current = Number(event.target.value.replace(/-/g,""));
-        sendDataToParent();
-    }
-    const saveData2 = event => {
-        saveEDate.current = Number(event.target.value.replace(/-/g,""));
-        sendDataToParent();
-    }
-
-    const sendDataToParent = () => {
-        onDataChange(saveSDate, saveEDate);
+    const sendDataToParent = (event) => {
+        onDataChange(event.target.id, event.target.value);
     }
 
     const openModal = () => {
-        onDataChange(true);
+        onDataChange("modal",true);
     }
 
 
@@ -81,7 +68,7 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                                         background: "transparent",
                                         fontSize: "15px"
                                     }}
-                                    onChange={saveData}
+                                    onChange={sendDataToParent}
                                 />
                                 :
                                 <>
@@ -111,7 +98,7 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                                            background: "transparent",
                                            fontSize: "15px",
                                        }}
-                                       onChange={saveData2}
+                                       onChange={sendDataToParent}
                                 />
                                 :
                                 <>
