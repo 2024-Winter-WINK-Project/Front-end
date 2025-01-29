@@ -16,8 +16,6 @@ export default function History() {
     setBtnState(type);
     if (type === 'addHistory') {
       navigate('/addhistory');
-    } else {
-      setBtnState(type);
     }
   };
 
@@ -77,7 +75,15 @@ export default function History() {
         <style.HistoryContainer>
           <style.HistoryTitle>거래 내역</style.HistoryTitle>
             {filteredTransactions.map(({ id, type, image, content1, content2 }) => (
-              <Button key={id} width={'360px'} height={'80px'} name={type} image={image} content1={content1} content2={content2} />
+              <Button 
+                key={id}
+                width={'360px'}
+                height={'80px'}
+                name={type}
+                image={image}
+                content1={content1}
+                content2={content2}
+              />
             ))}
           </style.HistoryContainer>
         </style.Wrapper>
