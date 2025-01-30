@@ -2,12 +2,12 @@ import React from 'react';
 import Button from '../Button/ProfileButton';
 import * as style from './styles';
 
-const DeleteModal = ({ isOpen, handleConfirm, closeModal }) => {
+const SignOutModal = ({ isOpen, handleConfirm, closeModal, message }) => {
   return (
     isOpen && (
       <style.ModalContainer>
         <style.ModalContent>
-          <p>탈퇴 하시겠습니까?</p>
+          <p>{message}</p>
           <style.ButtonContainer>
             <div>
               <Button
@@ -30,4 +30,4 @@ const DeleteModal = ({ isOpen, handleConfirm, closeModal }) => {
   );
 };
 
-export default DeleteModal;
+export default SignOutModal;

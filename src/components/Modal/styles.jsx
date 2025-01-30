@@ -21,6 +21,7 @@ export const ModalContent = styled.div`
     font-weight: 600;
     display: flex;
     justify-content: center;
+    margin-bottom: 4px;
   }
 `;
 
