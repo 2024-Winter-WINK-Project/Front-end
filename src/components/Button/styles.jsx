@@ -103,7 +103,7 @@ export const ButtonContent = styled.div`
     width: 32px;
     margin-left: ${(props) =>
     props.name === 'options'
-      ? '18px'
+      ? '24px'
       : '-156px'};
   }
   >span {

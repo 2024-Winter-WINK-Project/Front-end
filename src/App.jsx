@@ -8,6 +8,7 @@ import ManageMeeting from "./pages/ManageMeeting/ManageMeeting.jsx";
 import MyPage from "./pages/MyPage/myPage.jsx";
 import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
+import HistoryDetail from './pages/History/HistoryDetail.jsx';
 import Nickname from "./pages/Nickname/nickname.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
@@ -40,6 +41,7 @@ const App = () =>{
                     <Route path="/mypage" element={<MyPage />}/>
                     <Route path="/budget" element={<Budget />}/>
                     <Route path="/addhistory" element={<AddHistory />}/>
+                    <Route path="/history/:id" element={<HistoryDetail />} />
                 </Routes>
                 <BottomNavBar />
         </BrowserRouter>
