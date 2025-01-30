@@ -13,7 +13,7 @@ export default function History() {
 
   return (
       <>
-      <TopNavBar></TopNavBar>
+      <TopNavBar pageName={"내역 추가"} feature={"done"} isModalRequired={true}/>
       <style.Wrapper>
         <style.ButtonWrapper>
           <Button

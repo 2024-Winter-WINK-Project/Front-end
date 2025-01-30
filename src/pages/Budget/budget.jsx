@@ -20,10 +20,10 @@ export default function History() {
   };
 
   const transactions = [
-    { id: 1, type: 'income', image: Withdrawal, content1: '1차 회비', content2: '+500,000' },
-    { id: 2, type: 'outcome', image: Deposit, content1: '1일차 점심', content2: '-150,000' },
-    { id: 3, type: 'income', image: Withdrawal, content1: '2차 회비', content2: '+1,500,000' },
-    { id: 4, type: 'income', image: Withdrawal, content1: '호텔 환불', content2: '+800,000' }
+    { id: 1, type: 'income', image: Withdrawal, description: '1차 회비', amount: '+500,000' },
+    { id: 2, type: 'outcome', image: Deposit, description: '1일차 점심', amount: '-150,000', memo: '명동교자 단체 식사'},
+    { id: 3, type: 'income', image: Withdrawal, description: '2차 회비', amount: '+1,500,000' },
+    { id: 4, type: 'income', image: Withdrawal, description: '호텔 환불', amount: '+800,000' }
   ];
 
   const filteredTransactions = btnState === 'all' 
@@ -32,12 +32,12 @@ export default function History() {
 
   return (
       <>
-      <TopNavBar />
+      <TopNavBar pageName={"가계부"} isModalRequired={true}/>
       <style.Wrapper>
         <Button
           name={'budget'}
-          content1={'잔액'}
-          content2={'1,450,000원'}
+          description={'잔액'}
+          amount={'1,450,000원'}
         />
         <style.ButtonWrapper>
           <style.Label>
@@ -74,15 +74,17 @@ export default function History() {
         </style.ButtonWrapper>
         <style.HistoryContainer>
           <style.HistoryTitle>거래 내역</style.HistoryTitle>
-            {filteredTransactions.map(({ id, type, image, content1, content2 }) => (
+          {filteredTransactions.map((transaction) => (
               <Button 
-                key={id}
+                key={transaction.id}
                 width={'360px'}
                 height={'80px'}
-                name={type}
-                image={image}
-                content1={content1}
-                content2={content2}
+                name={transaction.type}
+                image={transaction.image}
+                description={transaction.description}
+                amount={transaction.amount}
+                memo={transaction.memo}
+                onClick={() => navigate(`/history/${transaction.id}`, { state: transaction })}
               />
             ))}
           </style.HistoryContainer>
