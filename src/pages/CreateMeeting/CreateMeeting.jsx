@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
-import {useLocation} from "react-router-dom";
 import axios from "axios";
 import UploadModal from "../../components/Modal/UploadModal";
 import * as styled from "./styles";
@@ -12,33 +11,67 @@ import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
 
 
 const CreateMeeting = () => {
-    const location = useLocation();
     const placeLat = 37.402056;
     const placeLon = 127.108212;
     const placeName = "";
-    const startDate = useRef(null);
-    const endDate = useRef(null);
-    const groupName = useRef(null);
-    const nickName = useRef(null);
-    const settleUpURL = useRef(null);
     const [currId, setCurrId] = useState(null);
     const [open, setOpen] = useState(false);
-    const handleDataChange2 = async (newData) => {
-        groupName.current = newData;
-    }
-    const handleDataChange3 = async (newData, newData2) => {
-        startDate.current = newData;
-        endDate.current = newData2;
-    }
-    const handleDataChange = async (newData) => {
-        setOpen(newData);
-    }
-    const handleDataChange4 = async (newData) => {
-        settleUpURL.current = newData;
-        console.log(settleUpURL.current.current.current);
-    }
-    const handleDataChange5 = async (newData) => {
-        nickName.current = newData;
+    const [basicInfo, setBasicInfo] = useState({
+       id : 0,
+       title : "",
+       startDate : 0,
+       endDate : 0,
+       places : {
+           placeId : 0,
+           placeName : "",
+           placeLon : 0,
+           placeLat : 0
+       },
+       members : {
+           socialId:  0,
+           nickName: "",
+           permission: "",
+           profilePicture: "",
+           isQuit: false
+       },
+        ledgers : {
+            balance : 0,
+            kakaoURL : "",
+            tossURL : "",
+            bankAccNum  : ""
+        }
+    });
+
+
+    useEffect(() => {
+        const savedValues = JSON.parse(localStorage.getItem('multiForm'));
+        if (savedValues) {
+            setBasicInfo(savedValues);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/meeting?_sort=-id&_limit=1`)
+            .then((response) => response.json())
+            .then((json) => setCurrId(Number(json[0].id)+1))
+            .catch((error) => {
+                console.log(error)
+                setCurrId(1)
+            });
+    }, []);
+
+    const handleChange = (e) => {
+        const {key, value} = e.target;
+        const updateValues = {...basicInfo, [key]:value};
+        setBasicInfo(updateValues);
+        localStorage.setItem('multiform', JSON.stringify(updateValues));
+    };
+
+    const handleDataChange = async (id,value) => {
+        console.log(id, ":",value);
+        if (id === "modal"){
+            setOpen(value);
+        }
     }
 
 
@@ -52,33 +85,57 @@ const CreateMeeting = () => {
         //             title:groupName.current.current,
         //             startDate:startDate.current.current,
         //             endDate:endDate.current.current,
-        //             place : {
-        //                 placeName:placeName,
-        //                 placeLon:placeLon,
-        //                 placeLat:placeLat
-        //             },
-        //             members : [
-        //                 {
-        //                     id : Number(String(currId) + "00"),
-        //                     meetingId : currId,
-        //                     socialId : 20250101001,
-        //                     nickName : nickName.current,
-        //                     permission : "OWNER",
-        //                     profilePicture : "",
-        //                     isQuit : false
-        //                 }
-        //             ],
-        //             ledger : {
-        //                 id : Number(String(startDate.current).slice(2)),
-        //                 balance : 0,
-        //                 kakaoURL : settleUpURL.current,
-        //                 tossURL : settleUpURL.current,
-        //                 bankAccNum : "20120012346875",
-        //                 ledgerDetails :[{}]
-        //             }
-        //
+        //             isManager:true
         //         })
-        //         .then((res) => console.log(res));
+        //         .then((res) => {
+        //             console.log(res)
+        //             if (res === 200){
+        //                 axios
+        //                     .post("http://localhost:8000/place",{
+        //                         id:currId,
+        //                         placeId:123456789,
+        //                         placeName : placeName,
+        //                         placeLon:placeLon,
+        //                         placeLat:placeLat
+        //                     })
+        //                     .then((res) => {
+        //                         console.log(res)
+        //                         if(res === 200){
+        //                             axios
+        //                                 .post("http://localhost:8000/members",{
+        //                                     id : currId,
+        //                                     memberId : Number(String(currId) + "00"),
+        //                                     socialId : Number(String(20250101) + "00" + String(1)),
+        //                                     nickName : nickName.current,
+        //                                     permission : "OWNER",
+        //                                     profilePicture : "",
+        //                                     isQuit : false
+        //                                 })
+        //                                 .then((res) => {
+        //                                     console.log(res)
+        //                                     if(res === 200){
+        //                                         axios
+        //                                             .post("http://localhost:8000/ledgers",{
+        //                                                 id : currId,
+        //                                                 ledgersId : Number(String(startDate.current) + "1"),
+        //                                                 balance : 0,
+        //                                                 kakaoURL : settleUpURL.current,
+        //                                                 tossURL : settleUpURL.current,
+        //                                                 bankAccNum : "123456789",
+        //                                                 ledgerDetails : [{}]
+        //                                             })
+        //                                             .then((res) => {
+        //                                                 console.log(res)
+        //                                             })
+        //                                             .catch((err) => {
+        //                                                 console.log(err)
+        //                                             })
+        //                                     }
+        //                                 })
+        //                         }
+        //                     })
+        //             }
+        //         });
         //
         //     return true;
         //
@@ -91,23 +148,11 @@ const CreateMeeting = () => {
 
     }
 
-    useEffect(() => {
-        fetch(`http://localhost:8000/meeting?_sort=-id&_limit=1`)
-            .then((response) => response.json())
-            .then((json) => setCurrId(Number(json[0].id)+1))
-            .catch((error) => {
-                console.log(error)
-                setCurrId(1)
-            });
-    }, []);
-
-
     return (
         <styled.BodyContainer>
             <UploadModal isOpen={open}
-                         content={"sendMoney"}
-                         onDataChange={handleDataChange}
-                         onDataChange2={handleDataChange4}/>
+                         content={"URL"}
+                         onDataChange={handleDataChange}/>
             <TopNavBar pageName={"모임 생성"}
                        feature={"done"}
                        isModalRequired={true}
@@ -117,10 +162,10 @@ const CreateMeeting = () => {
             <styled.FormContainer>
                 <DarkBlueWriteBox feature={""}
                              boxTitle={"모임명"}
-                             onDataChange2={handleDataChange2}/>
+                             onDataChange={handleDataChange}/>
                 <LightBlueWriteBox feature={"nickname"}
                                         boxtitle={"닉네임"}
-                                        onDataChange2={handleDataChange5}/>
+                                        onDataChange={handleDataChange}/>
                 <LightBlueWriteBox feature={"location"}
                                         style={{paddingTop: "none"}}
                                         boxtitle={"모임 장소"}
@@ -132,13 +177,12 @@ const CreateMeeting = () => {
                                   firstLine={"모임 시작날짜"}
                                   secondLine={"모임 종료날짜"}
                                   isEditable={true}
-                                  onDataChange={handleDataChange3}/>
+                                  onDataChange={handleDataChange}/>
                 <DoubleColumnsBox feature={"plus"}
                                   firstLine={"정산링크 등록"}
                                   secondLine={"나중에 설정에서 변경할 수 있어요"}
                                   isEditable={false}
-                                  onDataChange={handleDataChange}
-                />
+                                  onDataChange={handleDataChange}/>
 
             </styled.FormContainer>
         </styled.BodyContainer>

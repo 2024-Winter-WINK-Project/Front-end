@@ -11,8 +11,7 @@ const GlobalStyles = createGlobalStyle`
         border-left: 2px solid #F5F5F5;
         border-right : 2px solid #F5F5F5;
         overflow-x: hidden;
-        
-        @media (min-height: 1080px){
+        @media (min-height: 600px){
             min-height: 100vh;
         }
     }

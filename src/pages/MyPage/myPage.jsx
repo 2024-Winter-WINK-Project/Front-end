@@ -3,20 +3,22 @@ import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import axios from 'axios';
 import Profile from '../../assets/MyPage/profile.svg';
 import Button from '../../components/Button/ProfileButton.jsx';
-import SingOutModal from '../../components/Modal/signout.jsx';
-import DeleteModal from '../../components/Modal/delete.jsx';
+import Modal from '../../components/Modal/modal.jsx';
 import * as style from './styles';
 
 
 export default function MyPage() {
-  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
-  const openSignOutModal = () => setIsSignOutModalOpen(true);
-  const closeSignOutModal = () => setIsSignOutModalOpen(false);
-
-  const openDeleteModal = () => setIsDeleteModalOpen(true);
-  const closeDeleteModal = () => setIsDeleteModalOpen(false);
+  const openModal = (type) => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalType(null);
+    setIsModalOpen(false);
+  };
 
   const handleSignOutConfirm = async () => {
     try {
@@ -25,7 +27,7 @@ export default function MyPage() {
           Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
         },
       });
-        closeSignOutModal();
+      closeModal();
         sessionStorage.removeItem('accessToken');
         alert("로그아웃 완료");
         navigate('/login')
@@ -43,7 +45,7 @@ export default function MyPage() {
             Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
           },
         });
-        closeDeleteModal();
+        closeModal();
         sessionStorage.clear();
         alert("회원 탈퇴 완료");
         navigate('/login')
@@ -72,8 +74,7 @@ export default function MyPage() {
 
   return (
     <>
-      <TopNavBar pageName={"마이페이지"}
-                 isBackRequired={true}/>
+      <TopNavBar pageName={"마이페이지"} isBackRequired={true}/>
         <style.Wrapper>
           <style.ProfileContainer>
             <style.ProfileTitle>나의 프로필</style.ProfileTitle>
@@ -92,22 +93,18 @@ export default function MyPage() {
               </style.UserInfoContainer>
               <style.ButtonContainer>
                 <div>
-                  <Button size="big" content="로그아웃" onClick={openSignOutModal} />
-                  <Button size="big" content="탈퇴하기" onClick={openDeleteModal} />
+                <Button size="big" content="로그아웃" onClick={() => openModal("signout")} />
+                <Button size="big" content="탈퇴하기" onClick={() => openModal("delete")} />
                 </div>
               </style.ButtonContainer>
             <style.ProfileTitle>자주 묻는 질문</style.ProfileTitle>
           </style.ProfileContainer>
         </style.Wrapper>
-      <SingOutModal
-        isOpen={isSignOutModalOpen}
-        handleConfirm={handleSignOutConfirm}
-        closeModal={closeSignOutModal}
-      />
-      <DeleteModal
-        isOpen={isDeleteModalOpen}
-        handleConfirm={handleDeleteConfirm}
-        closeModal={closeDeleteModal}
+        <Modal
+        isOpen={isModalOpen}
+        handleConfirm={modalType === "signout" ? handleSignOutConfirm : handleDeleteConfirm}
+        closeModal={closeModal}
+        message={modalType === "signout" ? "로그아웃 하시겠습니까?" : "탈퇴 하시겠습니까?"}
       />
     </>
   );

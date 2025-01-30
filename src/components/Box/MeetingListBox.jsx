@@ -11,7 +11,7 @@ const MeetingListBox = ({group,isList}) => {
             {group && group.map(elements=>(
                     <styled.BoxContainerMedium key={elements.id} onClick={() => navigate((`/managemeeting/${elements.id}`))}>
                         {isList ?
-                            <styled.BoxContentsContainer>
+                            <styled.BoxContentsContainerMedium>
                                 <styled.TextContainer>
                                     <styled.TextBox style={{
                                         fontSize : '25px',
@@ -21,9 +21,9 @@ const MeetingListBox = ({group,isList}) => {
                                         {elements.endDate}</styled.TextBox>
                                 </styled.TextContainer>
                                 <styled.BoxIcon src={calculate}></styled.BoxIcon>
-                            </styled.BoxContentsContainer>
+                            </styled.BoxContentsContainerMedium>
                             :
-                            <styled.BoxContentsContainer>
+                            <styled.BoxContentsContainerMedium>
                                 <styled.TextContainer>
                                     <styled.TextBox style={{
                                         fontSize : '25px',
@@ -37,7 +37,7 @@ const MeetingListBox = ({group,isList}) => {
                                     :
                                     <div style={{width : "30px", height : "30px", border : 'none'}}></div>
                                 }
-                            </styled.BoxContentsContainer>
+                            </styled.BoxContentsContainerMedium>
                         }
                     </styled.BoxContainerMedium>
             ))}

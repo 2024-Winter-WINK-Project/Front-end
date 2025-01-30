@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
@@ -18,6 +18,7 @@ const ManageMeeting = () => {
     const [memberData, setMemberData] = useState();
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
+
 
 
     useEffect(() => {
@@ -76,7 +77,7 @@ const ManageMeeting = () => {
                                    feature={"done"}
                                    isModalRequired={true}/>
                         <styled.FormContainer>
-                            <DarkBlueReadBox feature={""}
+                            <DarkBlueWriteBox feature={""}
                                               boxtitle={"모임명"}
                                               eventTitle={elements.title}/>
                             <LightBlueWriteBox feature={"location"}

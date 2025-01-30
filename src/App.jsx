@@ -9,6 +9,7 @@ import MyPage from "./pages/MyPage/myPage.jsx";
 import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
 import HistoryDetail from './pages/History/HistoryDetail.jsx';
+import Nickname from "./pages/Nickname/nickname.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
 import GlobalStyles from "./GlobalStyles";
@@ -36,6 +37,7 @@ const App = () =>{
                     <Route path="/createmeeting" element={<CreateMeeting />}/>
                     <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
                     <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
+                    <Route path="/nickname" element={<Nickname />}/>
                     <Route path="/mypage" element={<MyPage />}/>
                     <Route path="/budget" element={<Budget />}/>
                     <Route path="/addhistory" element={<AddHistory />}/>

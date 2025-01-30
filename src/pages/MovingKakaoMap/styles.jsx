@@ -19,7 +19,7 @@ export const MapContainerSmall = styled.div`
     justify-content: center;
 
     @media (min-width: 600px){
-        width : 600px;
+        width : 550px;
     }
 `;
 

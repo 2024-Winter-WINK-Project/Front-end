@@ -29,14 +29,17 @@ const MeetingList = () =>{
         <styled.BodyContainer>
             <TopNavBar pageName={"모임 관리"}
                        feature={"add"}></TopNavBar>
-            <styled.TextWrapper>
-                <styled.TextBox>내가 만든 모임</styled.TextBox>
-            </styled.TextWrapper>
-            {createdGroup && <MeetingListBox group={createdGroup} isList={true}/>}
-            <styled.TextWrapper>
-                <styled.TextBox>내가 초대받은 모임</styled.TextBox>
-            </styled.TextWrapper>
-            {invitedgroup && <MeetingListBox group={invitedgroup} isList={true}/>}
+            <styled.ContentContainer>
+                <styled.TextWrapper>
+                    <styled.TextBox>내가 만든 모임</styled.TextBox>
+                </styled.TextWrapper>
+                {createdGroup && <MeetingListBox group={createdGroup} isList={true}/>}
+                <styled.TextWrapper>
+                    <styled.TextBox>내가 초대받은 모임</styled.TextBox>
+                </styled.TextWrapper>
+                {invitedgroup && <MeetingListBox group={invitedgroup} isList={true}/>}
+            </styled.ContentContainer>
+
         </styled.BodyContainer>
     )
 }
