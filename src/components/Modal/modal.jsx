@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../Button/ProfileButton';
 import * as style from './styles';
 
-const SignOutModal = ({ isOpen, handleConfirm, closeModal, message }) => {
+const Modal = ({ isOpen, handleConfirm, closeModal, message }) => {
   return (
     isOpen && (
       <style.ModalContainer>
@@ -30,4 +30,4 @@ const SignOutModal = ({ isOpen, handleConfirm, closeModal, message }) => {
   );
 };
 
-export default SignOutModal;
+export default Modal;
