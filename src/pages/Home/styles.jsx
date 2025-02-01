@@ -5,11 +5,7 @@ export const BodyContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10vh;
-    //min-height: 80vh;
-    @media (max-height: 670px){
-        min-height: 100vh;
-    }
+    
     @media (min-width: 600px){
         width : 600px;
     }

@@ -23,7 +23,12 @@ const ListBox = ({data}) => {
                         <>
                             <div style={{width : "95%", display: "flex", alignItems : "center"}}>
                                 <styled.ProfilePicWrapper>
-                                    <styled.ProfilePic src={elements.profilePicture}/>
+                                    {elements.profilePicture !== "" ?
+                                        <styled.ProfilePic src={elements.profilePicture}/>
+                                        :
+                                        <div style={{background : `${me}`}}/>
+                                    }
+
                                 </styled.ProfilePicWrapper>
                                 <styled.ListElements>
                                     {elements.nickName}

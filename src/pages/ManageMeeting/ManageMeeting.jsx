@@ -9,6 +9,8 @@ import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
 import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
 import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import ListBox from "../../components/Box/ListBox";
+import TwoButtons from "../../components/Button/TwoButtons";
+import OneButton from "../../components/Button/OneButton";
 
 
 const ManageMeeting = () => {
@@ -77,35 +79,39 @@ const ManageMeeting = () => {
                                    feature={"done"}
                                    isModalRequired={true}/>
                         <styled.FormContainer>
-                            <DarkBlueWriteBox feature={""}
+                            <DarkBlueReadBox feature={""}
                                               boxtitle={"모임명"}
                                               eventTitle={elements.title}/>
                             <LightBlueWriteBox feature={"location"}
                                                     style={{paddingTop : "none"}}
-                                                    boxtitle={"모임 장소 길찾기"}
-                                                    to={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}
-                            />
-                            <LightBlueWriteBox feature={"location"}
-                                                    style={{paddingTop : "none"}}
-                                                    boxtitle={"모임 장소 편집"}
-                                                    to={"/movingkakaomap"}
-                            />
+                                                    boxtitle={"길찾기"}
+                                                    to={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}/>
                             <KakaoMap lat={elements.placeLat}
                                       lon={elements.placeLon}
                                       pName={elements.placeName}/>
                             <DoubleColumnsBox feature={"calendar"}
                                               firstLine={"모임 시작날짜"}
                                               secondLine={"모임 종료날짜"}
-                                              isEditable={true}/>
+                                              isEditable={false}
+                                              startDate={elements.startDate}
+                                              endDate={elements.endDate}/>
                             {memberData && <ListBox data={memberData}/>}
-                            <DoubleColumnsBox feature={"edit"}
-                                              firstLine={"정산링크"}
-                                              secondLine={"옆의 수정버튼을 눌러 변경할 수 있어요"}
-                                              isEditable={true}/>
-                            <DoubleColumnsBox feature={"plus"}
-                                              firstLine={"초대링크 재발급"}
-                                              secondLine={"초대링크는 최대 30분 간 유효해요"}
-                                              isEditable={true}/>
+                            <TwoButtons ButtonColor={"#E7EBF7"}
+                                        TextColor={"black"}
+                                        ButtonText1={"모임 편집"}
+                                        ButtonIcon={"edit"}
+                                        text1To={""}
+                                        ButtonText2={"초대링크 재생성"}
+                                        ButtonIcon2={"add"}
+                                        text2To={""}/>
+                            <TwoButtons ButtonColor={"#F7E7E7"}
+                                        TextColor={"black"}
+                                        ButtonText1={"모임장 위임"}
+                                        ButtonIcon={"change"}
+                                        text1To={""}
+                                        ButtonText2={"모임 삭제"}
+                                        ButtonIcon2={"remove"}
+                                        text2To={""}/>
                         </styled.FormContainer>
                     </>
                     :
@@ -120,7 +126,7 @@ const ManageMeeting = () => {
                                                     eventTitle={elements.title}/>
                             <LightBlueWriteBox feature={"location"}
                                                     style={{paddingTop : "none"}}
-                                                    boxtitle={"모임 장소 길찾기"}
+                                                    boxtitle={"길찾기"}
                                                     to={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}
                             />
                             <KakaoMap lat={elements.placeLat}
@@ -133,10 +139,10 @@ const ManageMeeting = () => {
                                               startDate={elements.startDate}
                                               endDate={elements.endDate}/>
                             {memberData && <ListBox data={memberData}/>}
-                            <DoubleColumnsBox feature={"edit"}
-                                              firstLine={"정산링크"}
-                                              secondLine={"모임장 이외에는 링크를 볼 수만 있어요"}
-                                              isEditable={false}/>
+                            <OneButton ButtonColor={"#F7E7E7"}
+                                        TextColor={"black"}
+                                        ButtonText1={"모임 나가기"}
+                                        text1To={""}/>
 
                         </styled.FormContainer>
                     </>

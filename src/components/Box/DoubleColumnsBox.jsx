@@ -45,7 +45,7 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
         <styled.BoxContainerBig>
             {isCalendar ?
                 <styled.BoxContentsContainer>
-                    <div style={{width: "90%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
+                    <div style={{width: "85%", display: "flex", flexDirection: "column", alignItems: "center"}}>
                         <styled.TextContainer style={{
                             width: "100%",
                             display: "flex",
@@ -71,10 +71,9 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                                     onChange={sendDataToParent}
                                 />
                                 :
-                                <>
+                                <div style={{width : "25%"}}>
                                     <styled.TextBox>{sDate}</styled.TextBox>
-                                    <styled.BoxIcon src={calendar}/>
-                                </>}
+                                </div>}
                         </styled.TextContainer>
                         <styled.DivideLine/>
                         <styled.TextContainer style={{
@@ -82,8 +81,7 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",
-                            alignItems: "center"
-                        }}>
+                            alignItems: "center"}}>
                             <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                 <styled.TextBox>{secondLine}</styled.TextBox>
                             </div>
@@ -101,10 +99,9 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                                        onChange={sendDataToParent}
                                 />
                                 :
-                                <>
+                                <div style={{width : "25%"}}>
                                     <styled.TextBox>{eDate}</styled.TextBox>
-                                    <styled.BoxIcon src={calendar}/>
-                                </>}
+                                </div>}
 
                         </styled.TextContainer>
 
@@ -114,7 +111,7 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                 // 2줄짜리 버튼있는 박스가 아니라 1줄에만 박스가 있는 경우
                 <styled.BoxContentsContainer>
                     <div style={{
-                        width: "90%",
+                        width: "85%",
                         display: "flex", flexDirection: "column", justifyContent: "center"
                     }}>
                         <styled.TextContainer style={{

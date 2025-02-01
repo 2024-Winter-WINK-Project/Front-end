@@ -5,10 +5,6 @@ export const BodyContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top : 10vh;
-    @media (max-height: 740px){
-        min-height: 120vh;
-    }
     @media (min-width: 600px){
         width : 600px;
     }
@@ -19,10 +15,6 @@ export const BodyContainerM = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top : 10vh;
-    @media (max-height: 740px){
-        min-height: 135vh;
-    }
     @media (min-width: 600px){
         width : 600px;
     }

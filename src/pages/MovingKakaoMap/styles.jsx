@@ -4,7 +4,6 @@ export const MapContainer = styled.div`
     width: 100vw;
     height: 80vh;
     display: flex;
-    margin-top: 10vh;
     justify-content: center;
 
     @media (min-width: 600px){
