@@ -12,17 +12,15 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 40px;
-  margin-top: 24px;
-`;
-
 export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
+  > div {
+    font-size: 16px;
+    color: #8D8D8D;
+    margin-top: 40px;
+  }
 `;

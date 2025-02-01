@@ -1,21 +1,15 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    width: 100%;
+    width: 100vw;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 11vh;
-`;
-
-export const WrapperPC = styled.div`
-    width: 500px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 11vh;    
+    padding-top: 10vh;
+    @media (min-width: 600px) {
+        width: 600px;
+    }
 `;
 
 export const ButtonWrapper = styled.div`

@@ -24,18 +24,18 @@ export default function BudgetButton(props) {
       ) : props.name === 'options' ? (
         <style.ButtonContent name={props.name}>
           {props.image && <img src={props.image} alt="icon" />}
-          <span>{props.content1}</span>
+          <span>{props.description}</span>
         </style.ButtonContent>
       ) : props.name === 'budget' ? (
         <style.ButtonContent name={props.name}>
-          <span>{props.content1}</span>
-          <span>{props.content2}</span>
+          <span>{props.description}</span>
+          <span>{props.amount}</span>
         </style.ButtonContent>
       ) : (
         <style.ButtonContent name={props.name}>
           {props.image && <img src={props.image} alt="icon" />}
-          <span>{props.content1}</span>
-          <span>{props.content2}</span>
+          <span>{props.description}</span>
+          <span>{props.amount}</span>
         </style.ButtonContent>
       )}
     </ButtonComponent>
