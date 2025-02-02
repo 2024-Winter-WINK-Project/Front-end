@@ -13,6 +13,9 @@ import Nickname from "./pages/Nickname/nickname.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
 import GlobalStyles from "./GlobalStyles";
+import ChangeManager from "./pages/ManageMeeting/ChangeManager";
+import EditMeeting from "./pages/ManageMeeting/EditMeeting";
+import Transfer from "./pages/Transfer/Transfer";
 
 
 
@@ -36,10 +39,14 @@ const App = () =>{
                     <Route path="/meetinglist" element={<MeetingList />}/>
                     <Route path="/createmeeting" element={<CreateMeeting />}/>
                     <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
+                    <Route path="/managemeeting/:meetingId/edit" element={<EditMeeting />}/>
+                    <Route path="/managemeeting/:meetingId/changemanager" element={<ChangeManager />}/>
+                    <Route path="/managemeeting/:meetingId/removemembers" element={<ChangeManager />}/>
                     <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
                     <Route path="/nickname" element={<Nickname />}/>
                     <Route path="/mypage" element={<MyPage />}/>
-                    <Route path="/budget" element={<Budget />}/>
+                    <Route path="/budget/:meetingId" element={<Budget />}/>
+                    <Route path="/budget/:meetingId/transfer" element={<Transfer />}/>
                     <Route path="/addhistory" element={<AddHistory />}/>
                     <Route path="/history/:id" element={<HistoryDetail />} />
                 </Routes>

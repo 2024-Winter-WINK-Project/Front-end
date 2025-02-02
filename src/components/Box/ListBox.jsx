@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import * as styled from "./styles";
 import me from "../../icons/me.png";
 
-const ListBox = ({data}) => {
+const ListBox = ({data, mode}) => {
     const [boxHeight,setBoxHeight] = useState();
 
     useEffect(() => {
@@ -14,10 +14,13 @@ const ListBox = ({data}) => {
         }
     }, [data.length]);
 
+    const onDataChange = () => {
+
+    }
+
     return (
         <styled.BoxContainerList style={{height : `${boxHeight}px`}}>
             <styled.BoxContentsContainerList>
-
                 <styled.ListElement>
                     {data && data.map(elements => (
                         <>
@@ -33,11 +36,28 @@ const ListBox = ({data}) => {
                                 <styled.ListElements>
                                     {elements.nickName}
                                 </styled.ListElements>
-                                {elements.socialId === 20250101000 ?
-                                    <img src={me} style={{width: "30px", height: "30px"}}></img>
-                                    :
-                                    <div style={{width: "30px", height: "30px"}}></div>
+                                {mode ?
+                                    <>
+                                        {mode === "radio" ?
+                                            <input type="radio"
+                                                   style={{width: "30px", height: "30px"}}
+                                                   onChange={onDataChange}></input>
+                                            :
+                                            <input type="checkbox"
+                                                   style={{width: "30px", height: "30px"}}
+                                            ></input>
+                                        }
+                                    </>
+                                :
+                                    <>
+                                        {elements.socialId === 20250101000 ?
+                                            <img src={me} style={{width: "30px", height: "30px"}}></img>
+                                            :
+                                            <div style={{width: "30px", height: "30px"}}></div>
+                                        }
+                                    </>
                                 }
+
                             </div>
                             <styled.DivideLine/>
                         </>

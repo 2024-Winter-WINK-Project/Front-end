@@ -66,16 +66,15 @@ const ManageMeeting = () => {
     if(meetingData && placeData && memberData){
         Object.assign(meetingData[0],placeData[0],memberData[0]);
     }
-
     return(
         <>
         {meetingData && meetingData.map(elements=>(
-            <styled.BodyContainerM key={elements.id}>
+            <styled.BodyContainer key={elements.id}>
                 {elements.isManager ?
                     // isManager : 모임장인 경우
                     // true : 모임장
                     <>
-                        <TopNavBar pageName={"모임 조회 및 편집"}
+                        <TopNavBar pageName={"모임 조회"}
                                    feature={"done"}
                                    isModalRequired={true}/>
                         <styled.FormContainer>
@@ -85,7 +84,7 @@ const ManageMeeting = () => {
                             <LightBlueWriteBox feature={"location"}
                                                     style={{paddingTop : "none"}}
                                                     boxtitle={"길찾기"}
-                                                    to={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}/>
+                                                    web={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}/>
                             <KakaoMap lat={elements.placeLat}
                                       lon={elements.placeLon}
                                       pName={elements.placeName}/>
@@ -100,18 +99,21 @@ const ManageMeeting = () => {
                                         TextColor={"black"}
                                         ButtonText1={"모임 편집"}
                                         ButtonIcon={"edit"}
-                                        text1To={""}
+                                        Dest={`managemeeting/${elements.id}/edit`}
                                         ButtonText2={"초대링크 재생성"}
                                         ButtonIcon2={"add"}
-                                        text2To={""}/>
+                                        Dest2={""}/>
                             <TwoButtons ButtonColor={"#F7E7E7"}
                                         TextColor={"black"}
                                         ButtonText1={"모임장 위임"}
                                         ButtonIcon={"change"}
-                                        text1To={""}
-                                        ButtonText2={"모임 삭제"}
+                                        Dest={`managemeeting/${elements.id}/changemanager`}
+                                        ButtonText2={"멤버 삭제"}
                                         ButtonIcon2={"remove"}
-                                        text2To={""}/>
+                                        Dest2={`managemeeting/${elements.id}/removemembers`}/>
+                            <OneButton ButtonColor={"#F7E7E7"}
+                                       ButtonIcon={"remove"}
+                                       ButtonText1={"모임 삭제"}/>
                         </styled.FormContainer>
                     </>
                     :
@@ -140,15 +142,14 @@ const ManageMeeting = () => {
                                               endDate={elements.endDate}/>
                             {memberData && <ListBox data={memberData}/>}
                             <OneButton ButtonColor={"#F7E7E7"}
-                                        TextColor={"black"}
-                                        ButtonText1={"모임 나가기"}
-                                        text1To={""}/>
+                                       ButtonIcon={"quit"}
+                                       ButtonText1={"모임 나가기"}/>
 
                         </styled.FormContainer>
                     </>
                 }
 
-            </styled.BodyContainerM>
+            </styled.BodyContainer>
         ))}
         </>
     )

@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import search from "../../icons/search_w.png";
 import * as styled from "./styles";
 
-const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, onDataChange2}) => {
+const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, eventTitle}) => {
     const [place,setPlace] = useState();
     const saveData = event => {
         setPlace(event.target.value);
@@ -12,7 +12,6 @@ const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, onDataChange2}) => {
         onDataChange(event.target.id ,event.target.value);
 
     }
-
     return (
         <styled.BoxContainerSmall>
             {/*파란색 박스*/}
@@ -37,7 +36,7 @@ const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, onDataChange2}) => {
                                 }}>{boxTitle}
                                 </styled.TextBox>
                             </styled.TextContainer>
-                            <styled.InputBox id = "title" placeholder={"모임 제목을 입력해 주세요."} onChange={sendDataToParent}/>
+                            <styled.InputBox id = "title" placeholder={`${eventTitle}`} onChange={sendDataToParent}/>
                         </styled.InputContainer>
                 }
             </styled.BoxContentsContainerSmall>

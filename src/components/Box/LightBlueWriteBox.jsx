@@ -1,22 +1,15 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import location from "../../icons/location.png";
 import * as styled from "./styles";
 import mediaQuery from "react-responsive/src/mediaQuery";
+import {useNavigate} from "react-router-dom";
 
-const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange}) => {
+const LightBLueWriteBox = ({boxtitle, feature, page, web, onDataChange}) => {
 
     const sendDataToParent = (event) => {
         onDataChange(event.target.id, event.target.value);
     }
-
-    let dest = null;
-    if (to !== null){
-        dest = to;
-    }
-    else if (popup !== null){
-        dest = popup;
-    }
-
+    const navigate = useNavigate();
     return(
             <styled.BoxContainerSmall>
                 {feature === "nickname" ?
@@ -48,8 +41,18 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange}) =>
                                     width : '80px'
                                 }}>{boxtitle}</styled.TextBox>
                             </styled.TextContainer>
-                            <styled.BoxIcon src={location}
-                                            onClick={() => {window.open(dest)}}/>
+                            {page !== undefined ?
+                                <styled.BoxIcon src={location}
+                                                onClick={() => {
+                                                    navigate(page)
+                                                }}/>
+                                :
+                                <styled.BoxIcon src={location}
+                                                onClick={() => {
+                                                    window.open(web)
+                                                }}/>
+                            }
+
 
                         </styled.InputContainer>
                     </styled.BoxContentsContainerSmall>
@@ -60,4 +63,4 @@ const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange}) =>
     )
 }
 
-export default LightBlueBoxSingleLine;
+export default LightBLueWriteBox;

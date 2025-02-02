@@ -162,6 +162,7 @@ const CreateMeeting = () => {
             <styled.FormContainer>
                 <DarkBlueWriteBox feature={""}
                              boxTitle={"모임명"}
+                             eventTitle={"모임 제목을 입력해 주세요."}
                              onDataChange={handleDataChange}/>
                 <LightBlueWriteBox feature={"nickname"}
                                         boxtitle={"닉네임"}
@@ -169,7 +170,7 @@ const CreateMeeting = () => {
                 <LightBlueWriteBox feature={"location"}
                                         style={{paddingTop: "none"}}
                                         boxtitle={"모임 장소"}
-                                        to={"/movingkakaomap"}/>
+                                        page={"/movingkakaomap"}/>
                 <KakaoMap lat={placeLat}
                           lon={placeLon}
                           pName={placeName}/>

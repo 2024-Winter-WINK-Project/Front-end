@@ -9,25 +9,29 @@ const MeetingListBox = ({group,isList}) => {
     return(
         <>
             {group && group.map(elements=>(
-                    <styled.BoxContainerMedium key={elements.id} onClick={() => navigate((`/managemeeting/${elements.id}`))}>
+                    <styled.BoxContainerMedium key={elements.id}>
                         {isList ?
                             <styled.BoxContentsContainerMedium>
-                                <styled.TextContainer>
+                                <styled.TextContainer onClick={() => navigate((`/managemeeting/${elements.id}`))}>
                                     <styled.TextBox style={{
-                                        fontSize : '25px',
-                                        fontWeight : 'bold'
+                                        fontSize: '25px',
+                                        fontWeight: 'bold'
                                     }}>{elements.title}</styled.TextBox>
                                     <styled.TextBox>{elements.startDate} ~
                                         {elements.endDate}</styled.TextBox>
                                 </styled.TextContainer>
-                                <styled.BoxIcon src={calculate}></styled.BoxIcon>
+                                <styled.BoxIcon onClick={() => navigate(`/budget/${elements.id}`)}
+                                                src={calculate}></styled.BoxIcon>
                             </styled.BoxContentsContainerMedium>
+
+
                             :
-                            <styled.BoxContentsContainerMedium>
+                            <styled.BoxContentsContainerMedium
+                                onClick={() => navigate((`/managemeeting/${elements.id}`))}>
                                 <styled.TextContainer>
                                     <styled.TextBox style={{
-                                        fontSize : '25px',
-                                        fontWeight : 'bold'
+                                        fontSize: '25px',
+                                        fontWeight: 'bold'
                                     }}>{elements.title}</styled.TextBox>
                                     <styled.TextBox>{elements.startDate} ~
                                         {elements.endDate}</styled.TextBox>
@@ -35,7 +39,7 @@ const MeetingListBox = ({group,isList}) => {
                                 {elements.isManager ?
                                     <styled.BoxIcon src={group_manager}/>
                                     :
-                                    <div style={{width : "30px", height : "30px", border : 'none'}}></div>
+                                    <div style={{width: "30px", height: "30px", border: 'none'}}></div>
                                 }
                             </styled.BoxContentsContainerMedium>
                         }

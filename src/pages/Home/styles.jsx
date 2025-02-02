@@ -30,6 +30,8 @@ export const TextWrapper = styled.div`
 
 export const TextBox = styled.text`
     font-size: 20px;
-
+    line-height: 40px;
 `;
+
+
 
