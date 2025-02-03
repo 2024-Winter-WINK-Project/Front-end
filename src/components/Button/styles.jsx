@@ -117,7 +117,7 @@ export const ButtonContent = styled.div`
     left: ${(props) =>
     props.name === 'budget'
       ? '28px'
-      : '-80px'};
+      : '-112px'};
     white-space: nowrap;
   }
   > span:nth-of-type(2) {

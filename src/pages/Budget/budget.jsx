@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
+import axios from 'axios';
 import Button from '../../components/Button/BudgetButton.jsx';
 import Withdrawal from '../../assets/Budget/withdrawal.svg';
 import Deposit from '../../assets/Budget/deposit.svg';
@@ -10,7 +11,40 @@ import * as style from './styles.jsx';
 
 export default function History() {
   const [btnState, setBtnState] = useState('all');
+  const [balance, setBalance] = useState(0);
+  const [transactions, setTransactions] = useState([]);
   const navigate = useNavigate();
+  const { meetingId } = useParams();
+
+  useEffect(() => {
+    const fetchLedgerData = async () => {
+      try {
+        const ledgerResponse = await axios.get(`http://localhost:8000/ledgers`);
+        const ledger = ledgerResponse.data.find(item => item.meetingId === Number(meetingId));
+
+        if (!ledger) return;
+
+        setBalance(ledger.balance);
+
+        const detailsResponse = await axios.get(`http://localhost:8000/ledgerDetails`);
+        const filteredDetails = detailsResponse.data.filter(item => item.ledgersId === ledger.id);
+        
+        const formattedTransactions = filteredDetails.map(detail => ({
+          id: detail.id,
+          type: detail.amount > 0 ? 'income' : 'outcome',
+          image: detail.amount > 0 ? Withdrawal : Deposit,
+          description: detail.description,
+          amount: detail.amount > 0 ? `+${detail.amount.toLocaleString()}` : `${detail.amount.toLocaleString()}`
+        }));
+
+        setTransactions(formattedTransactions);
+      } catch (error) {
+        console.error("데이터 불러오기 실패:", error);
+      }
+    };
+
+    fetchLedgerData();
+  }, [meetingId]);
 
   const handleButtonClick = (type) => {
     setBtnState(type);
@@ -18,13 +52,6 @@ export default function History() {
       navigate('/addhistory');
     }
   };
-
-  const transactions = [
-    { id: 1, type: 'income', image: Withdrawal, description: '1차 회비', amount: '+500,000' },
-    { id: 2, type: 'outcome', image: Deposit, description: '1일차 점심', amount: '-150,000', memo: '명동교자 단체 식사'},
-    { id: 3, type: 'income', image: Withdrawal, description: '2차 회비', amount: '+1,500,000' },
-    { id: 4, type: 'income', image: Withdrawal, description: '호텔 환불', amount: '+800,000' }
-  ];
 
   const filteredTransactions = btnState === 'all' 
     ? transactions 
@@ -37,7 +64,7 @@ export default function History() {
         <Button
           name={'budget'}
           description={'잔액'}
-          amount={'1,450,000원'}
+          amount={`${balance.toLocaleString()}원`}
         />
         <style.ButtonWrapper>
           <style.Label>
