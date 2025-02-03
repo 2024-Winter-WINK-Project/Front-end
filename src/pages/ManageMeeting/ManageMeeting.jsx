@@ -11,6 +11,9 @@ import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import ListBox from "../../components/Box/ListBox";
 import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
+import DoneModal from "../../components/Modal/DoneModal";
+import ModalTemplate from "../../components/Modal/ModalTemplate";
+import InviteLinkModal from "../../components/Modal/InviteLinkModal";
 
 
 const ManageMeeting = () => {
@@ -20,6 +23,9 @@ const ManageMeeting = () => {
     const [memberData, setMemberData] = useState();
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
+    const [inviteModalOpen, setInviteModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
 
 
 
@@ -76,7 +82,9 @@ const ManageMeeting = () => {
                     <>
                         <TopNavBar pageName={"모임 조회"}
                                    feature={"done"}
-                                   isModalRequired={true}/>
+                                   isModalRequired={false}
+                                   isBackRequired={true}
+                                   dest={"/"}/>
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                               boxtitle={"모임명"}
@@ -102,7 +110,7 @@ const ManageMeeting = () => {
                                         Dest={`managemeeting/${elements.id}/edit`}
                                         ButtonText2={"초대링크 재생성"}
                                         ButtonIcon2={"add"}
-                                        Dest2={""}/>
+                                        isModalRequired={true}/>
                             <TwoButtons ButtonColor={"#F7E7E7"}
                                         TextColor={"black"}
                                         ButtonText1={"모임장 위임"}
@@ -113,9 +121,17 @@ const ManageMeeting = () => {
                                         Dest2={`managemeeting/${elements.id}/removemembers`}/>
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"remove"}
-                                       ButtonText1={"모임 삭제"}/>
+                                       ButtonText1={"모임 삭제"}
+                                       isModalRequired={true}/>
                         </styled.FormContainer>
+                        <ModalTemplate isOpen={inviteModalOpen} onClose={() => setInviteModalOpen(false)}>
+                            <InviteLinkModal onDataChange={() => setInviteModalOpen(false)}/>
+                        </ModalTemplate>
+                        <ModalTemplate isOpen={deleteModalOpen} onClose={() =>setDeleteModalOpen(false)}>
+                            <InviteLinkModal onDataChange={() => setDeleteModalOpen(false)}/>
+                        </ModalTemplate>
                     </>
+
                     :
                     // false : 모임 멤버인 경우
                     <>

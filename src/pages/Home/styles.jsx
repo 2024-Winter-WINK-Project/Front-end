@@ -5,9 +5,9 @@ export const BodyContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     @media (min-width: 600px){
         width : 600px;
+        padding-top: 10vh;
     }
 
 `;

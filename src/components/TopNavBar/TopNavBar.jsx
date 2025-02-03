@@ -18,16 +18,22 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
     const handleConfirm = () => {
         closeModal();
     }
-    const closeModal = () => {
-        setOpen(false);
-        navigate(dest);
-    }
+
     const closeJoinModal = () => {
         setJoinModalOpen(false);
         navigate(dest);
     }
 
+    const openModal = () => {
+        onDataChange("doneModal",true);
+    }
+    const closeModal = (event) => {
+        onDataChange(event.target.id,event.target.value);
+    }
+
     const sendSubmit = () => {
+        navigate(dest);
+
         if (onDataChange && onDataChange(true)) {
             setOpen(true);
         }
@@ -35,7 +41,8 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
             setJoinModalOpen(true);
         }
     };
-    
+
+
     return (
         <>
             {isModalRequired ?
@@ -46,16 +53,10 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>
-                            {feat && <styled.ButtonIcons src={feat} onClick={sendSubmit} /> /* feat이 있을 때만 버튼 표시 */}
+                            {feat && <styled.ButtonIcons src={feat} onClick={openModal} /> /* feat이 있을 때만 버튼 표시 */}
                         </styled.BarContentsContainer>
                     </styled.BarContainer>
-                    <UploadModal
-                        isOpen={open}
-                        confirm={handleConfirm}
-                        closeModal={closeModal}
-                        content={"모임 생성을 완료했어요."}
-                    />
-                    <Modal 
+                    <Modal
                         isOpen={isJoinModalOpen}
                         handleConfirm={closeJoinModal}
                         closeModal={closeJoinModal}
@@ -71,7 +72,7 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>
                             {feat ?
-                                <styled.ButtonIcons src={feat} onClick={() => SendInfo()}/>
+                                <styled.ButtonIcons src={feat} onClick={sendSubmit}/>
                                 :
                                 <div style={{width: "30px", height: "30px"}}/>
                             }

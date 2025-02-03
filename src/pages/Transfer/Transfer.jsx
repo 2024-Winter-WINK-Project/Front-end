@@ -15,7 +15,8 @@ import OneButton from "../../components/Button/OneButton";
 const Transfer = () => {
     const {meetingId} = useParams();
     const [meetingData, setMeetingData] = useState();
-    const [memberData, setMemberData] = useState();
+    const [ledgerData, setLedgerData] = useState();
+    const [ledgerDetailsData, setLedgerDetailsData] = useState();
 
     useEffect(() => {
         fetch(`http://localhost:8000/meeting?id=${meetingId}`)
@@ -27,10 +28,19 @@ const Transfer = () => {
                 console.log(error)
             });
 
-        fetch(`http://localhost:8000/members?id=${meetingId}`)
+        fetch(`http://localhost:8000/ledgers?id=${meetingId}`)
             .then((response) => response.json())
             .then((json) => {
-                setMemberData(json)
+                setLedgerData(json)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
+        fetch(`http://localhost:8000/ledgerDetails?id=${meetingId}`)
+            .then((response) => response.json())
+            .then((json) => {
+                setLedgerDetailsData(json)
             })
             .catch((error) => {
                 console.log(error)
@@ -46,8 +56,8 @@ const Transfer = () => {
         { id: 4, type: 'income', image: Withdrawal, description: '호텔 환불', amount: '+800,000' }
     ];
 
-    if(meetingData && memberData){
-        Object.assign(meetingData[0],memberData[0]);
+    if(ledgerDetailsData && ledgerData && meetingData){
+        Object.assign(meetingData[0], ledgerData[0]);
     }
     return(
         <>
@@ -68,17 +78,17 @@ const Transfer = () => {
                                             <textStyle.TextBox style={{lineHeight: "60px"}}>거래 내역</textStyle.TextBox>
                                         </textStyle.TextWrapper>
                                         <budgetStyle.HistoryContainer style={{width: "100%", gap: "10px"}}>
-                                            {transactions && transactions.map(elements => (
+                                            {ledgerDetailsData && ledgerDetailsData.map(details => (
                                                 <Button
-                                                    key={elements.id}
+                                                    key={details.id}
                                                     width={'100%'}
                                                     height={'80px'}
-                                                    name={elements.type}
-                                                    image={elements.image}
-                                                    description={elements.description}
-                                                    amount={elements.amount}
-                                                    memo={elements.memo}
-                                                    onClick={() => navigate(`/history/${elements.id}`, {state: elements})}
+                                                    name={details.type}
+                                                    image={details.image}
+                                                    description={details.description}
+                                                    amount={details.amount}
+                                                    // memo={details.memo}
+                                                    // onClick={() => navigate(`/history/${details.id}`, {state: details})}
                                                 />
                                             ))}
                                         </budgetStyle.HistoryContainer>
@@ -124,10 +134,10 @@ const Transfer = () => {
                                                     TextColor={"black"}
                                                     ButtonText1={"모두에게"}
                                                     ButtonIcon={"all"}
-                                                    Dest={`managemeeting/${elements.id}/edit`}
+                                                    Dest={""}
                                                     ButtonText2={"선택된 멤버만"}
                                                     ButtonIcon2={"select"}
-                                                    Dest2={""}/>
+                                                    Dest2={`/transfer/${elements.id}/selectmembers`}/>
                                     </>
                                     :
                                     <>
@@ -135,7 +145,8 @@ const Transfer = () => {
                                             <textStyle.TextBox style={{lineHeight: "60px"}}>정산 금액</textStyle.TextBox>
                                         </textStyle.TextWrapper>
                                         <OneButton ButtonColor={"#E7EBF7"}
-                                                   ButtonText1={"5000원"}/>
+                                                   ButtonText1={"5000원"}
+                                                    TextColor={"#0234A8"}/>
                                         <textStyle.TextWrapper style={{height: "80px"}}>
                                             <textStyle.TextBox style={{fontWeight: "bold"}}>송금 방법</textStyle.TextBox>
                                         </textStyle.TextWrapper>
@@ -145,10 +156,12 @@ const Transfer = () => {
                                                     ButtonText1={"토스"}
                                                     Dest={`managemeeting/${elements.id}/edit`}
                                                     ButtonText2={"카카오페이"}
+                                                    isModalRequired={false}
                                                     Dest2={""}/>
                                         <OneButton ButtonColor={"#E7EBF7"}
-                                                   ButtonText1={"계좌이체"}
-                                                   ButtonText2={"계좌번호 복사하기"}/>
+                                                   ButtonText1={"이체"}
+                                                   ButtonText2={"계좌번호 복사하기"}
+                                                   isModalRequired={false}/>
                                         <textStyle.TextWrapper style={{width : "100%",height: "80px"}}>
                                             <textStyle.TextBox style={{lineHeight : "20px",fontSize : "15px", color : "gray"}}>카카오페이 송금코드와 토스 송금코드는 해당 서비스 이용자만 가능해요.</textStyle.TextBox>
                                         </textStyle.TextWrapper>

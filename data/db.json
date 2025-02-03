@@ -137,16 +137,16 @@
   ],
   "ledgers" : [
     {
-      "id" : 2501271,
-      "meetingId" : 1,
+      "id" : 1,
+      "ledgerId" : 2501271,
       "balance" : 100000,
       "kakaoURL" : "www.kakao.com",
       "tossURL" : "www.toss.com",
       "bankAccNum" : "20120012346875"
     },
     {
-      "id" : 2501301,
-      "meetingId" : 2,
+      "id" : 2,
+      "ledgerId" : 2501301,
       "balance" : -80000,
       "kakaoURL" : "www.kakao.com",
       "tossURL" : "www.toss.com",
@@ -155,51 +155,51 @@
   ],
   "ledgerDetails" : [
     {
-      "id": 2501271001,
-      "meetingId" : 1,
+      "id" : 1,
+      "ledgerDetailsId": 2501271001,
       "ledgersId" : 2501271,
       "description" : "1차 예산 설정금액",
       "amount" : 1500000
     },
     {
-      "id": 2501271002,
-      "meetingId" : 1,
+      "id" : 1,
+      "ledgerDetailsId": 2501271002,
       "ledgersId" : 2501271,
       "description" : "기차표 예약",
       "amount" : -300000
     },
     {
-      "id": 2501271003,
-      "meetingId" : 1,
+      "id" : 1,
+      "ledgerDetailsId": 2501271003,
       "ledgersId" : 2501271,
       "description" : "호텔 예약",
       "amount" : -700000
     },
     {
-      "id": 2501271004,
-      "meetingId" : 1,
+      "id" : 1,
+      "ledgerDetailsId": 2501271004,
       "ledgersId" : 2501271,
       "description" : "렌트카",
       "amount" : -400000
     },
 
     {
-      "id": 2501301001,
-      "meetingId" : 2,
+      "id" : 2,
+      "ledgerDetailsId": 2501301001,
       "ledgersId" : 2501301,
       "description" : "동아리 지원금",
       "amount" : 30000
     },
     {
-      "id": 2501301002,
-      "meetingId" : 2,
+      "id" : 2,
+      "ledgerDetailsId": 2501301002,
       "ledgersId" : 2501301,
       "description" : "식당",
       "amount" : -80000
     },
     {
-      "id": 2501301003,
-      "meetingId" : 2,
+      "id" : 2,
+      "ledgerDetailsId": 2501301003,
       "ledgersId" : 2501301,
       "description" : "카페",
       "amount" : -30000

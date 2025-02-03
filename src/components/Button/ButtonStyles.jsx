@@ -9,7 +9,7 @@ export const ButtonContainer = styled.div`
     margin-top : 10px;
     text-align: center;
     @media (min-width: 600px){
-        width : 500px;
+        width : 550px;
     }
 `;
 

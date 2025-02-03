@@ -7,6 +7,8 @@ export const BodyContainer = styled.div`
     align-items: center;
     @media (min-width: 600px){
         width : 600px;
+        padding-top: 10vh;
+        padding-bottom: 10vh;
     }
 `;
 

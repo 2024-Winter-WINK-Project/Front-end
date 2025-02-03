@@ -5,23 +5,23 @@ import add from "../../icons/add.png";
 import all from "../../icons/settle_up_for_all.png";
 import select from "../../icons/settle_up_for_selected_members.png";
 import change from "../../icons/change_manager.png";
+import remove from "../../icons/remove_members.png";
 import {useNavigate} from "react-router-dom";
-import done from "../../icons/done.png";
 
 
-const TwoButtons = ({ButtonColor, ButtonText1,ButtonText2, ButtonIcon, ButtonIcon2, Dest, Dest2}) =>{
+const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonIcon, ButtonIcon2, Dest, Dest2}) =>{
     const navigate = useNavigate();
 
-    const iconList = { add, edit, all, select, change, done };
+    const iconList = { add, edit, all, select, change, remove };
     const feat = iconList[ButtonIcon] || null;
     const feat2 = iconList[ButtonIcon2] || null;
-
     return (
         <styled.ButtonContainer>
+            {/*둘 다 아이콘 있는 버튼*/}
             {feat !== null && feat2 !== null ?
                 <>
                     <styled.ButtonContentContainer
-                        style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                        style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`${Dest}`)}>
                         <styled.TwoButtons>
                             <styled.TextBox>{ButtonText1}</styled.TextBox>
                             <styled.Icon src={feat}/>
@@ -29,7 +29,7 @@ const TwoButtons = ({ButtonColor, ButtonText1,ButtonText2, ButtonIcon, ButtonIco
                     </styled.ButtonContentContainer>
                     <div style={{width: "20px"}}/>
                     <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
-                                                   onClick={() => navigate(`/${Dest2}`)}>
+                                                   onClick={() => navigate(`${Dest2}`)}>
                         <styled.TwoButtons>
                             <styled.TextBox>{ButtonText2}</styled.TextBox>
                             <styled.Icon src={feat2}/>
@@ -38,19 +38,32 @@ const TwoButtons = ({ButtonColor, ButtonText1,ButtonText2, ButtonIcon, ButtonIco
                 </>
                 :
                 <>
-                    <styled.ButtonContentContainer
-                        style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
-                        <styled.TwoButtons style={{display : "flex", justifyContent : 'center'}}>
-                            <styled.TextBox style={{fontWeight : "bold", fontSize  : "20px"}}>{ButtonText1}</styled.TextBox>
-                        </styled.TwoButtons>
-                    </styled.ButtonContentContainer>
-                    <div style={{width: "20px"}}/>
-                    <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
-                                                   onClick={() => navigate(`/${Dest2}`)}>
-                        <styled.TwoButtons style={{display : "flex", justifyContent : 'center'}}>
-                            <styled.TextBox style={{fontWeight : "bold", fontSize  : "20px"}}>{ButtonText2}</styled.TextBox>
-                        </styled.TwoButtons>
-                    </styled.ButtonContentContainer>
+                    {/*아이콘 없는 버튼*/}
+                    {isModalRequired ?
+                        <>
+
+                        </>
+                        :
+                        <>
+                            <styled.ButtonContentContainer
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
+                                    <styled.TextBox
+                                        style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText1}</styled.TextBox>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                            <div style={{width: "20px"}}/>
+                            <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
+                                                           onClick={() => navigate(`/${Dest2}`)}>
+                                <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
+                                    <styled.TextBox
+                                        style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText2}</styled.TextBox>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                        </>
+
+                    }
+
                 </>
             }
         </styled.ButtonContainer>

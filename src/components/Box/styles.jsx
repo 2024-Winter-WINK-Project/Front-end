@@ -66,7 +66,7 @@ export const BoxContentsContainerMedium = styled.div`
 export const BoxContentsContainerSmall = styled.div`
     border : none;
     border-radius: 10px;
-    width: 90vw;
+    width: 100%;
     height: 60px;
     background-color: #E7EBF7;
     display: flex;
@@ -79,7 +79,7 @@ export const BoxContentsContainerSmall = styled.div`
 export const BoxContentsContainerList = styled.div`
     border : none;
     border-radius: 10px;
-    width: 90vw;
+    width: 100%;
     height: 100%;
 
     background-color: #E7EBF7;
@@ -89,7 +89,7 @@ export const BoxContentsContainerList = styled.div`
 `;
 
 export const ListElement = styled.div`
-    width: 85%;
+    width: 90%;
     height: 90%;
     display: flex;
     flex-direction: column;

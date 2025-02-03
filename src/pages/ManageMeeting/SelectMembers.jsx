@@ -13,10 +13,10 @@ import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
 
 
-const ChangeManager = () => {
+const SelectMembers = () => {
     const {meetingId} = useParams();
     const location = useLocation();
-    const currPath = location.pathname.slice(17)
+    const currPath = location.pathname
     const [meetingData, setMeetingData] = useState();
     const [memberData, setMemberData] = useState();
 
@@ -45,14 +45,19 @@ const ChangeManager = () => {
     if(meetingData  && memberData){
         Object.assign(meetingData[0],memberData[0]);
     }
-
     return(
         <>
         {meetingData && meetingData.map(elements=>(
             <styled.BodyContainer key={elements.id}>
-                        <TopNavBar pageName={"모임장 위임"}
-                                   feature={"done"}
-                                   isModalRequired={true}/>
+                {currPath === `/transfer/${elements.id}/selectmembers` ?
+                    <TopNavBar pageName={"멤버 선택"}
+                               feature={"done"}
+                               isModalRequired={true}/>
+                    :
+                    <TopNavBar pageName={"멤버 삭제"}
+                               feature={"done"}
+                               isModalRequired={true}/>}
+
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                              boxtitle={"모임명"}
@@ -60,12 +65,14 @@ const ChangeManager = () => {
 
                             {memberData && <ListBox
                                 data={memberData}
-                                mode={"radio"}/>}
+                                mode={"multiSelect"}/>}
                         </styled.FormContainer>
+
+
             </styled.BodyContainer>
         ))}
         </>
     )
 }
 
-export default ChangeManager;
+export default SelectMembers;

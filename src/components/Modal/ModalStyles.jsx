@@ -1,5 +1,36 @@
 import styled from "styled-components";
 
+export const modalOverlay = styled.div`
+    position : fixed;
+    top : 0;
+    left : 0;
+    width: 100%;
+    height: 100%;
+    background : rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+`;
+
+export const modalContents = styled.div`
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    padding: 20px;
+    position: relative;
+`;
+
+export const modalClose = styled.button`
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 5px;
+    top: 5px;
+
+`;
+
+
 //모달 전체
 export const ModalContainer = styled.div`
     width: 100%;
@@ -48,7 +79,7 @@ export const ModalContent = styled.div`
 `;
 
 export const TitleBoxContainer = styled.div`
-    width : 90%;
+    width : 100%;
     height: 10%;
     display: flex;
     align-items: center;
@@ -76,7 +107,7 @@ export const CloseIcon = styled.img`
 //송금코드 등록 박스
 export const TransferURLBox = styled.div`
     width: 100%;
-    height: 40%;
+    height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;

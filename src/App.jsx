@@ -16,6 +16,7 @@ import GlobalStyles from "./GlobalStyles";
 import ChangeManager from "./pages/ManageMeeting/ChangeManager";
 import EditMeeting from "./pages/ManageMeeting/EditMeeting";
 import Transfer from "./pages/Transfer/Transfer";
+import SelectMembers from "./pages/ManageMeeting/SelectMembers";
 
 
 
@@ -41,7 +42,8 @@ const App = () =>{
                     <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
                     <Route path="/managemeeting/:meetingId/edit" element={<EditMeeting />}/>
                     <Route path="/managemeeting/:meetingId/changemanager" element={<ChangeManager />}/>
-                    <Route path="/managemeeting/:meetingId/removemembers" element={<ChangeManager />}/>
+                    <Route path="/managemeeting/:meetingId/removemembers" element={<SelectMembers />}/>
+                    <Route path="/transfer/:meetingId/selectmembers" element={<SelectMembers />}/>
                     <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
                     <Route path="/nickname" element={<Nickname />}/>
                     <Route path="/mypage" element={<MyPage />}/>

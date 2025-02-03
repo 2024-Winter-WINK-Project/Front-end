@@ -8,6 +8,9 @@ import * as styled from "./styles";
 import DarkBlueBox from "../../components/Box/DarkBlueWriteBox";
 import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
 import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
+import ModalTemplate from "../../components/Modal/ModalTemplate";
+import close from "../../icons/close.png";
+import DoneModal from "../../components/Modal/DoneModal";
 
 
 const CreateMeeting = () => {
@@ -15,7 +18,9 @@ const CreateMeeting = () => {
     const placeLon = 127.108212;
     const placeName = "";
     const [currId, setCurrId] = useState(null);
-    const [open, setOpen] = useState(false);
+    const [uploadModalOpen, setUploadModalOpen] = useState(false);
+    const [doneModalOpen, setDoneModalOpen] = useState(false);
+
     const [basicInfo, setBasicInfo] = useState({
        id : 0,
        title : "",
@@ -69,15 +74,18 @@ const CreateMeeting = () => {
 
     const handleDataChange = async (id,value) => {
         console.log(id, ":",value);
-        if (id === "modal"){
-            setOpen(value);
+        if (id === "uploadModal"){
+            setUploadModalOpen(value);
+        }
+        else if(id === "doneModal"){
+            setDoneModalOpen(value);
         }
     }
 
 
     const handleSubmit = (e) =>{
         // e.preventDefault();
-
+        setDoneModalOpen(true);
         // try{
         //     axios
         //         .post("http://localhost:8000/meeting", {
@@ -147,16 +155,12 @@ const CreateMeeting = () => {
 
 
     }
-
     return (
         <styled.BodyContainer>
-            <UploadModal isOpen={open}
-                         content={"URL"}
-                         onDataChange={handleDataChange}/>
             <TopNavBar pageName={"모임 생성"}
                        feature={"done"}
-                       isModalRequired={true}
                        isBackRequired={true}
+                       isModalRequired={true}
                        onDataChange={handleSubmit}
                        dest={"/"}/>
             <styled.FormContainer>
@@ -184,7 +188,12 @@ const CreateMeeting = () => {
                                   secondLine={"나중에 설정에서 변경할 수 있어요"}
                                   isEditable={false}
                                   onDataChange={handleDataChange}/>
-
+                <ModalTemplate isOpen={uploadModalOpen} onClose={() => setUploadModalOpen(false)}>
+                    <UploadModal onDataChange={() => setUploadModalOpen(false)}/>
+                </ModalTemplate>
+                <ModalTemplate isOpen={doneModalOpen} onClose={() => setDoneModalOpen(false)}>
+                    <DoneModal onDataChange={() => setDoneModalOpen(false)}/>
+                </ModalTemplate>
             </styled.FormContainer>
         </styled.BodyContainer>
     )
