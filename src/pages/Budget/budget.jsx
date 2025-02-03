@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import axios from 'axios';
+import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
 import Withdrawal from '../../assets/Budget/withdrawal.svg';
 import Deposit from '../../assets/Budget/deposit.svg';
@@ -20,14 +20,16 @@ export default function History() {
     const fetchLedgerData = async () => {
       try {
         const ledgerResponse = await axios.get(`http://localhost:8000/ledgers`);
-        const ledger = ledgerResponse.data.find(item => item.meetingId === Number(meetingId));
+        const ledgers = ledgerResponse.data;
+        
+        const ledger = ledgers.find(item => Number(item.id) === Number(meetingId));
 
         if (!ledger) return;
 
         setBalance(ledger.balance);
 
         const detailsResponse = await axios.get(`http://localhost:8000/ledgerDetails`);
-        const filteredDetails = detailsResponse.data.filter(item => item.ledgersId === ledger.id);
+        const filteredDetails = detailsResponse.data.filter(item => item.ledgersId === ledger.ledgerId);
         
         const formattedTransactions = filteredDetails.map(detail => ({
           id: detail.id,
@@ -44,7 +46,7 @@ export default function History() {
     };
 
     fetchLedgerData();
-  }, [meetingId]);
+}, [meetingId]);
 
   const handleButtonClick = (type) => {
     setBtnState(type);
@@ -110,7 +112,6 @@ export default function History() {
                 image={transaction.image}
                 description={transaction.description}
                 amount={transaction.amount}
-                memo={transaction.memo}
                 onClick={() => navigate(`/history/${transaction.id}`, { state: transaction })}
               />
             ))}
