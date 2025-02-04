@@ -8,9 +8,10 @@ import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import TwoButtons from "../../components/Button/TwoButtons";
 import * as style from "../Budget/styles";
 import Button from "../../components/Button/BudgetButton";
-import Withdrawal from "../../assets/Budget/withdrawal.svg";
-import Deposit from "../../assets/Budget/deposit.svg";
 import OneButton from "../../components/Button/OneButton";
+import expenditure from "../../icons/expenditure.png";
+import income from "../../icons/income.png";
+import axios from "axios";
 
 const Transfer = () => {
     const {meetingId} = useParams();
@@ -19,46 +20,32 @@ const Transfer = () => {
     const [ledgerDetailsData, setLedgerDetailsData] = useState();
 
     useEffect(() => {
-        fetch(`http://localhost:8000/meeting?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMeetingData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        fetch(`http://localhost:8000/ledgers?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setLedgerData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        fetch(`http://localhost:8000/ledgerDetails?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setLedgerDetailsData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-
+        const fetchData = async () => {
+            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
+            const getLedgerData = await axios.get(`http://localhost:8000/ledgers?id=${meetingId}`);
+            const getLedgerDataDetails = await axios.get(`http://localhost:8000/ledgerDetails?id=${meetingId}`);
+            if(getMeetingData !== undefined &&
+                getLedgerData !== undefined &&
+                getLedgerDataDetails !== undefined)
+            {
+                setMeetingData(getMeetingData.data);
+                setLedgerData(getLedgerData.data);
+                setLedgerDetailsData(getLedgerDataDetails.data);
+            }
+        }
+        fetchData();
     }, []);
 
-    const transactions = [
-        { id: 1, type: 'income', image: Withdrawal, description: '1차 회비', amount: '+500,000' },
-        { id: 2, type: 'outcome', image: Deposit, description: '1일차 점심', amount: '-150,000', memo: '명동교자 단체 식사'},
-        { id: 3, type: 'income', image: Withdrawal, description: '2차 회비', amount: '+1,500,000' },
-        { id: 4, type: 'income', image: Withdrawal, description: '호텔 환불', amount: '+800,000' }
-    ];
+    const handleCopy = async () => {
+        try {
+            await window.navigator.clipboard.writeText(ledgerData[0].bankAccNum);
+            alert('계좌번호가 복사되었습니다.');
+        } catch (e) {
+            console.error(e);
+            alert('클립보드 복사에 실패했습니다.');
+        }
+    };
 
-    if(ledgerDetailsData && ledgerData && meetingData){
-        Object.assign(meetingData[0], ledgerData[0]);
-    }
     return(
         <>
             {meetingData && meetingData.map(elements=>(
@@ -84,38 +71,42 @@ const Transfer = () => {
                                                     width={'100%'}
                                                     height={'80px'}
                                                     name={details.type}
-                                                    image={details.image}
+                                                    image={details.type === "income" ? income : expenditure}
                                                     description={details.description}
-                                                    amount={details.amount}
+                                                    amount={details.type === "income" ? `+${details.amount.toLocaleString()}원` : `-${details.amount.toLocaleString()}원`}
                                                     // memo={details.memo}
                                                     // onClick={() => navigate(`/history/${details.id}`, {state: details})}
                                                 />
                                             ))}
                                         </budgetStyle.HistoryContainer>
-                                        <textStyle.TextWrapper style={{width : "100%",height: "80px", display : "flex", justifyContent :"space-around"}}>
-                                            <textStyle.TextBox style={{fontWeight: "bold"}}>총 수입</textStyle.TextBox>
-                                            <textStyle.TextBox style={{color: "#0234A8"}}>+1,500,000원</textStyle.TextBox>
+                                        {ledgerData && ledgerData.map(details => (
+                                            <div key={details.id}>
+                                                <textStyle.TextWrapper style={{width : "100%",height: "80px", display : "flex", justifyContent :"space-around"}}>
+                                                    <textStyle.TextBox style={{fontWeight: "bold"}}>총 수입</textStyle.TextBox>
+                                                    <textStyle.TextBox style={{color: "#0234A8"}}>{details.totalIncome.toLocaleString()}원</textStyle.TextBox>
 
-                                        </textStyle.TextWrapper>
+                                                </textStyle.TextWrapper>
 
-                                        <textStyle.TextWrapper style={{width: "100%" , justifyContent :"space-around"}}>
-                                            <textStyle.TextBox style={{fontWeight: "bold"}}>총 지출</textStyle.TextBox>
-                                            <textStyle.TextBox style={{color: "#A80202"}}>-1,650,000원</textStyle.TextBox>
+                                                <textStyle.TextWrapper style={{width: "100%" , justifyContent :"space-around"}}>
+                                                    <textStyle.TextBox style={{fontWeight: "bold"}}>총 지출</textStyle.TextBox>
+                                                    <textStyle.TextBox style={{color: "#A80202"}}>{details.totalExpenditure.toLocaleString()}원</textStyle.TextBox>
 
-                                        </textStyle.TextWrapper>
-                                        <div style={{
-                                            width: "100%",
-                                            height: "30px",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center"
-                                        }}>
-                                            <styled.DivideLine/>
-                                        </div>
-                                        <textStyle.TextWrapper style={{width: "100%", height: "40px" , justifyContent :"space-around"}}>
-                                            <textStyle.TextBox style={{fontWeight: "bold", fontSize: "25px"}}>정산 금액</textStyle.TextBox>
-                                            <textStyle.TextBox style={{color: "#A80202"}}>-150,000원</textStyle.TextBox>
-                                        </textStyle.TextWrapper>
+                                                </textStyle.TextWrapper>
+                                                <div style={{
+                                                    width: "100%",
+                                                    height: "30px",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center"
+                                                }}>
+                                                    <styled.DivideLine/>
+                                                </div>
+                                                <textStyle.TextWrapper style={{width: "100%", height: "40px" , justifyContent :"space-around"}}>
+                                                    <textStyle.TextBox style={{fontWeight: "bold", fontSize: "25px"}}>정산 금액</textStyle.TextBox>
+                                                    <textStyle.TextBox style={{color: "#A80202"}}>{details.balance.toLocaleString()}원</textStyle.TextBox>
+                                                </textStyle.TextWrapper>
+                                            </div>
+                                        ))}
                                         <div style={{
                                             width: "100%",
                                             height: "30px",
@@ -158,10 +149,12 @@ const Transfer = () => {
                                                     ButtonText2={"카카오페이"}
                                                     isModalRequired={false}
                                                     Dest2={""}/>
-                                        <OneButton ButtonColor={"#E7EBF7"}
-                                                   ButtonText1={"이체"}
-                                                   ButtonText2={"계좌번호 복사하기"}
-                                                   isModalRequired={false}/>
+                                        <div onClick={handleCopy}>
+                                            <OneButton ButtonColor={"#E7EBF7"}
+                                                       ButtonText1={"계좌이체"}
+                                                       ButtonText2={"계좌번호 복사하기"}
+                                                       isCopyRequired={true}/>
+                                        </div>
                                         <textStyle.TextWrapper style={{width : "100%",height: "80px"}}>
                                             <textStyle.TextBox style={{lineHeight : "20px",fontSize : "15px", color : "gray"}}>카카오페이 송금코드와 토스 송금코드는 해당 서비스 이용자만 가능해요.</textStyle.TextBox>
                                         </textStyle.TextWrapper>

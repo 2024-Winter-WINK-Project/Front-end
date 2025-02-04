@@ -11,34 +11,31 @@ import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import ListBox from "../../components/Box/ListBox";
 import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
+import AskModal from "../../components/Modal/AskModal";
+import ModalTemplate from "../../components/Modal/ModalTemplate";
 
 
 const ChangeManager = () => {
     const {meetingId} = useParams();
-    const location = useLocation();
-    const currPath = location.pathname.slice(17)
     const [meetingData, setMeetingData] = useState();
     const [memberData, setMemberData] = useState();
+    const [radioModalOpen, setRadioModalOpen] = useState(false);
+    const handleDataChange = async (id, value) => {
+        setRadioModalOpen(value);
+    }
 
     useEffect(() => {
-        fetch(`http://localhost:8000/meeting?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMeetingData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-
-        fetch(`http://localhost:8000/members?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMemberData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+        const fetchData = async () => {
+            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
+            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
+            if(getMeetingData !== undefined &&
+                getMemberData !== undefined)
+            {
+                setMeetingData(getMeetingData.data);
+                setMemberData(getMemberData.data);
+            }
+        }
+        fetchData();
 
     }, []);
 
@@ -50,19 +47,25 @@ const ChangeManager = () => {
         <>
         {meetingData && meetingData.map(elements=>(
             <styled.BodyContainer key={elements.id}>
-                        <TopNavBar pageName={"모임장 위임"}
-                                   feature={"done"}
-                                   isModalRequired={true}/>
-                        <styled.FormContainer>
-                            <DarkBlueReadBox feature={""}
-                                             boxtitle={"모임명"}
-                                             eventTitle={elements.title}/>
+                <TopNavBar pageName={"모임장 위임"}
+                           feature={"done"}
+                           isModalRequired={true}
+                           isBackRequired={true}
+                           onDataChange={handleDataChange}/>
+                <styled.FormContainer>
+                    <DarkBlueReadBox feature={""}
+                                     boxtitle={"모임명"}
+                                     eventTitle={elements.title}/>
 
-                            {memberData && <ListBox
-                                data={memberData}
-                                mode={"radio"}/>}
-                        </styled.FormContainer>
+                    {memberData && <ListBox
+                        data={memberData}
+                        mode={"radio"}/>}
+                </styled.FormContainer>
+                <ModalTemplate isOpen={radioModalOpen} onClose={() => setRadioModalOpen(false)}>
+                    <AskModal mode={"모임장 위임"} onDataChange={() => setRadioModalOpen(false)}/>
+                </ModalTemplate>
             </styled.BodyContainer>
+
         ))}
         </>
     )

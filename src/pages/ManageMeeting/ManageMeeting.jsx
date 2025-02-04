@@ -14,6 +14,7 @@ import OneButton from "../../components/Button/OneButton";
 import DoneModal from "../../components/Modal/DoneModal";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
 import InviteLinkModal from "../../components/Modal/InviteLinkModal";
+import AskModal from "../../components/Modal/AskModal";
 
 
 const ManageMeeting = () => {
@@ -25,48 +26,47 @@ const ManageMeeting = () => {
     const [lon, setLon] = useState(0);
     const [inviteModalOpen, setInviteModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
-
+    const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+    const handleDataChange = async (id,value) => {
+        console.log(id, ":",value);
+        if (id === "inviteModal"){
+            setInviteModalOpen(value);
+        }
+        else if(id === "deleteModal"){
+            setDeleteModalOpen(value);
+        }
+        else if(id === "leaveModal"){
+            setLeaveModalOpen(value);
+        }
+    }
 
 
     useEffect(() => {
-        fetch(`http://localhost:8000/meeting?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMeetingData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        fetch(`http://localhost:8000/places?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setPlaceData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        fetch(`http://localhost:8000/members?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMemberData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        if (navigator.geolocation) {
-            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-            navigator.geolocation.getCurrentPosition(function(position) {
-                setLat(position.coords.latitude);
-                setLon(position.coords.longitude); // 경도
-            });
+        const fetchData = async () => {
+            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
+            const getPlaceData = await axios.get(`http://localhost:8000/places?id=${meetingId}`);
+            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
+            if(getMeetingData !== undefined &&
+                getPlaceData !== undefined &&
+                getMemberData !== undefined)
+            {
+                setMeetingData(getMeetingData.data);
+                setPlaceData(getPlaceData.data);
+                setMemberData(getMemberData.data);
+            }
+            if (navigator.geolocation) {
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    setLat(position.coords.latitude);
+                    setLon(position.coords.longitude); // 경도
+                });
+            }
+            else{
+                alert("현재 위치를 찾을 수 없어요. 위치 권한을 다시 설정해 보세요.");
+            }
         }
-        else{
-            alert("현재 위치를 찾을 수 없어요. 위치 권한을 다시 설정해 보세요.");
-        }
+        fetchData();
+
     }, [lat,lon]);
 
     if(meetingData && placeData && memberData){
@@ -108,8 +108,10 @@ const ManageMeeting = () => {
                                         ButtonText1={"모임 편집"}
                                         ButtonIcon={"edit"}
                                         Dest={`managemeeting/${elements.id}/edit`}
-                                        ButtonText2={"초대링크 재생성"}
+                                        ButtonText2={"초대링크 생성"}
                                         ButtonIcon2={"add"}
+                                        Tag={"inviteModal"}
+                                        onDataChange={handleDataChange}
                                         isModalRequired={true}/>
                             <TwoButtons ButtonColor={"#F7E7E7"}
                                         TextColor={"black"}
@@ -122,13 +124,15 @@ const ManageMeeting = () => {
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"remove"}
                                        ButtonText1={"모임 삭제"}
+                                       onDataChange={handleDataChange}
+                                       Tag={"deleteModal"}
                                        isModalRequired={true}/>
                         </styled.FormContainer>
                         <ModalTemplate isOpen={inviteModalOpen} onClose={() => setInviteModalOpen(false)}>
                             <InviteLinkModal onDataChange={() => setInviteModalOpen(false)}/>
                         </ModalTemplate>
                         <ModalTemplate isOpen={deleteModalOpen} onClose={() =>setDeleteModalOpen(false)}>
-                            <InviteLinkModal onDataChange={() => setDeleteModalOpen(false)}/>
+                            <AskModal mode={"모임 삭제"} onDataChange={() => setDeleteModalOpen(false)}/>
                         </ModalTemplate>
                     </>
 
@@ -145,7 +149,7 @@ const ManageMeeting = () => {
                             <LightBlueWriteBox feature={"location"}
                                                     style={{paddingTop : "none"}}
                                                     boxtitle={"길찾기"}
-                                                    to={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}
+                                                    web={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}
                             />
                             <KakaoMap lat={elements.placeLat}
                                       lon={elements.placeLon}
@@ -159,8 +163,13 @@ const ManageMeeting = () => {
                             {memberData && <ListBox data={memberData}/>}
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"quit"}
-                                       ButtonText1={"모임 나가기"}/>
-
+                                       ButtonText1={"모임 나가기"}
+                                       Tag={"leaveModal"}
+                                       isModalRequired={true}
+                                       onDataChange={handleDataChange}/>
+                            <ModalTemplate isOpen={leaveModalOpen} onClose={() =>setLeaveModalOpen(false)}>
+                                <AskModal mode={"모임 탈퇴"} onDataChange={() => setLeaveModalOpen(false)}/>
+                            </ModalTemplate>
                         </styled.FormContainer>
                     </>
                 }

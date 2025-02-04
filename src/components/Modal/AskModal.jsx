@@ -4,37 +4,38 @@ import close from "../../icons/close.png";
 import upload from "../../icons/upload.png";
 import Html5QrcodePlugin from "../QRConverter/Html5QrcodePlugin";
 import OneButton from "../Button/OneButton";
+import TwoButtons from "../Button/TwoButtons";
 
-const InviteLinkModal = ({onDataChange}) => {
-    const URL = useRef(null);
-
-    const sendDatatoParent = (event) => {
-        onDataChange(event.target.id,event.target.value);
-    }
+const AskModal = ({mode,onDataChange}) => {
     const closeModal = () => {
         onDataChange("doneModal",false);
     }
-    const getURL = (newData) => {
-        URL.current = newData;
-    }
+
     return (
         <>
             <styled.TitleBoxContainer>
                 <styled.TitleBox>
-                    <styled.TextBox style={{fontWeight : "bold"}}>모임 등록</styled.TextBox>
+                    <styled.TextBox style={{fontWeight: "bold"}}>{mode}</styled.TextBox>
                 </styled.TitleBox>
                 <styled.CloseIcon src={close} onClick={closeModal}/>
             </styled.TitleBoxContainer>
-            <styled.TextBox style={{fontSize: "20px", marginTop: "10px", textAlign: "left", width: "90%", lineHeight :"80px"}}>
-                모임 등록을 완료했어요.
-            </styled.TextBox>
-            <OneButton ButtonColor="#E7EBF7"
-                       ButtonText1="홈으로"
-                       TextColor={"Black"}
-                       Dest={"/"}/>
+            <div style={{display: "flex", alignItems: "center", height: "80px"}}>
+                <styled.TextBox
+                    style={{fontSize: "20px", textAlign: "left", width: "90%"}}>
+                    {mode} 후에는 취소가 불가해요. 이대로 진행하시겠어요?
+                </styled.TextBox>
+            </div>
 
+            <TwoButtons ButtonColor={"#F7E7E7"}
+                        TextColor={"black"}
+                        ButtonText1={"예"}
+                        Dest={``}
+                        ButtonColor2={"#E7EBF7"}
+                        ButtonText2={"아니오"}
+                        isModalRequired={true}
+                        Dest2={``}/>
         </>
     );
 };
 
-export default InviteLinkModal;
+export default AskModal;

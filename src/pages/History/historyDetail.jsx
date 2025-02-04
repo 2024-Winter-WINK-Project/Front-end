@@ -26,7 +26,7 @@ export default function ViewHistory() {
           <Button
             width={'168px'}
             height={'68px'}
-            name={'outcome'}
+            name={'expenditure'}
             type={'detail'}
             content={'지출'}
           />

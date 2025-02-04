@@ -2,28 +2,25 @@ import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "../Home/styles";
+import axios from "axios";
 
 const MeetingList = () =>{
     const [createdGroup, setCreatedGroup] = useState(null);
     const [invitedgroup, setInvitedGroup] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/meeting?isManager=true&_sort=startDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                setCreatedGroup(data);
+        const fetchData = async () => {
+            const getCreatedGroup = await axios.get(`http://localhost:8000/meeting?isManager=true&_sort=startDate`);
+            const getInvitedGroup = await axios.get(`http://localhost:8000/meeting?isManager=false&_sort=startDate`);
+            if(getCreatedGroup !== undefined &&
+                getInvitedGroup !== undefined)
+            {
+                setCreatedGroup(getCreatedGroup.data);
+                setInvitedGroup(getInvitedGroup.data);
+            }
+        }
+        fetchData();
 
-            });
-        fetch("http://localhost:8000/meeting?isManager=false&_sort=startDate", {method: 'GET', headers:{'Content-Type' : 'application/json'},})
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                setInvitedGroup(data);
-
-            });
     }, []);
     return (
         <styled.BodyContainer>

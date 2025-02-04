@@ -11,6 +11,9 @@ import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import ListBox from "../../components/Box/ListBox";
 import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
+import DoneModal from "../../components/Modal/DoneModal";
+import ModalTemplate from "../../components/Modal/ModalTemplate";
+import AskModal from "../../components/Modal/AskModal";
 
 
 const SelectMembers = () => {
@@ -19,26 +22,25 @@ const SelectMembers = () => {
     const currPath = location.pathname
     const [meetingData, setMeetingData] = useState();
     const [memberData, setMemberData] = useState();
+    const [memberDeleteModalOpen, setMemberDeleteModalOpen] = useState(false);
+    const [selectModalOpen, setSelectModalOpen] = useState(false);
 
+    const handleDataChange = async (id, value) => {
+        setMemberDeleteModalOpen(value);
+
+    }
     useEffect(() => {
-        fetch(`http://localhost:8000/meeting?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMeetingData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-
-        fetch(`http://localhost:8000/members?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMemberData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+        const fetchData = async () => {
+            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
+            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
+            if(getMeetingData !== undefined &&
+                getMemberData !== undefined)
+            {
+                setMeetingData(getMeetingData.data);
+                setMemberData(getMemberData.data);
+            }
+        }
+        fetchData();
 
     }, []);
 
@@ -49,25 +51,36 @@ const SelectMembers = () => {
         <>
         {meetingData && meetingData.map(elements=>(
             <styled.BodyContainer key={elements.id}>
-                {currPath === `/transfer/${elements.id}/selectmembers` ?
-                    <TopNavBar pageName={"멤버 선택"}
-                               feature={"done"}
-                               isModalRequired={true}/>
-                    :
+                {currPath === `/managemeeting/${elements.id}/removemembers` ?
                     <TopNavBar pageName={"멤버 삭제"}
                                feature={"done"}
-                               isModalRequired={true}/>}
+                               isModalRequired={true}
+                               isBackRequired={true}
+                               onDataChange={handleDataChange}
+                    />
+                    :
+                    <TopNavBar pageName={"멤버 선택"}
+                               feature={"done"}
+                               isModalRequired={true}
+                               isBackRequired={true}
+                               onDataChange={handleDataChange}
+                    />}
 
-                        <styled.FormContainer>
-                            <DarkBlueReadBox feature={""}
-                                             boxtitle={"모임명"}
-                                             eventTitle={elements.title}/>
+                <styled.FormContainer>
+                    <DarkBlueReadBox feature={""}
+                                     boxtitle={"모임명"}
+                                     eventTitle={elements.title}/>
 
-                            {memberData && <ListBox
-                                data={memberData}
-                                mode={"multiSelect"}/>}
-                        </styled.FormContainer>
-
+                    {memberData && <ListBox
+                        data={memberData}
+                        mode={"multiSelect"}/>}
+                </styled.FormContainer>
+                <ModalTemplate isOpen={memberDeleteModalOpen} onClose={() => setMemberDeleteModalOpen(false)}>
+                    <AskModal mode={"멤버 삭제"} onDataChange={() => setMemberDeleteModalOpen(false)}/>
+                </ModalTemplate>
+                <ModalTemplate isOpen={selectModalOpen} onClose={() => setSelectModalOpen(false)}>
+                    <DoneModal onDataChange={() => setSelectModalOpen(false)}/>
+                </ModalTemplate>
 
             </styled.BodyContainer>
         ))}
