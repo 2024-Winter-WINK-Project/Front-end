@@ -1,22 +1,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 11vh;
-`;
-
-export const WrapperPC = styled.div`
-    width: 500px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 11vh;
-    
 `;
 
 export const LoginContainer = styled.div`
@@ -30,7 +18,7 @@ export const TextWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 100px;
-  margin-bottom: 320px;
+  margin-bottom: 360px;
   > span {
     font-size: 20px;
     font-weight: bold;
