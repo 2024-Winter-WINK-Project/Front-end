@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
     align-items: center;
     @media (min-width: 600px) {
         width: 600px;
+        padding-top: 10vh;
     }
 `;
 
