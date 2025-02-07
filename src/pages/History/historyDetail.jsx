@@ -13,6 +13,14 @@ export default function ViewHistory() {
   const transaction = location.state || {};
   const isManager = transaction.isManager || false;
 
+  const [selectedType, setSelectedType] = useState(transaction.type || 'income');
+
+  const handleButtonClick = (type) => {
+    if (isManager) {
+      setSelectedType(type);
+    }
+  };
+
   const [description, setDescription] = useState(transaction.description || '');
   const [amount, setAmount] = useState(transaction.amount || '');
   const [memo, setMemo] = useState(transaction.memo || '');
@@ -54,13 +62,17 @@ export default function ViewHistory() {
             name={'income'}
             type={'detail'}
             content={'수입'}
+            onClick={() => handleButtonClick('income')}
+            isSelected={selectedType === 'income'}
           />
           <Button
             width={'168px'}
             height={'68px'}
-            name={'expenditure'}
+            name={'outcome'}
             type={'detail'}
             content={'지출'}
+            onClick={() => handleButtonClick('outcome')}
+            isSelected={selectedType === 'outcome'}
           />
         </style.ButtonWrapper>
         <style.FormContainer>
@@ -68,7 +80,7 @@ export default function ViewHistory() {
             <Button
               width={'376px'}
               height={'60px'}
-              name={'expenditure'}
+              name={'outcome'}
               type={'detail'}
               content={'삭제'}
               onClick={openModal}
@@ -78,7 +90,7 @@ export default function ViewHistory() {
             width={'376px'}
             height={'60px'}
             type={'text'}
-            name={transaction.type}
+            name={selectedType}
             value={description}
             readOnly={!isManager}
             onChange={(e) => isManager && setDescription(e.target.value)}
@@ -87,7 +99,7 @@ export default function ViewHistory() {
             width={'376px'}
             height={'60px'}
             type={'text'}
-            name={transaction.type}
+            name={selectedType}
             value={amount}
             readOnly={!isManager}
             onChange={(e) => isManager && setAmount(e.target.value)}
@@ -96,7 +108,7 @@ export default function ViewHistory() {
             width={'376px'}
             height={'376px'}
             type={'textarea'}
-            name={transaction.type}
+            name={selectedType}
             value={memo}
             readOnly={!isManager}
             onChange={(e) => isManager && setMemo(e.target.value)}
