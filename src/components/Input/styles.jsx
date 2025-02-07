@@ -9,6 +9,7 @@ export const Input = styled.input`
   border-radius: 10px;
   font-size: 16px;
   padding: 8px;
+  cursor: ${(props) => (props.readOnly ? 'default' : 'text')};
 `;
 
 export const Textarea = styled.textarea`
@@ -20,4 +21,5 @@ export const Textarea = styled.textarea`
   border-radius: 10px;
   font-size: 16px;
   padding: 8px;
+  cursor: ${(props) => (props.readOnly ? 'default' : 'text')};
 `;

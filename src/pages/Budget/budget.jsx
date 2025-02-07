@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import axios from 'axios';
+import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
 import Withdrawal from '../../assets/Budget/withdrawal.svg';
 import Deposit from '../../assets/Budget/deposit.svg';
@@ -13,14 +13,21 @@ export default function History() {
   const [btnState, setBtnState] = useState('all');
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
+  const [isManager, setIsManager] = useState(false);
   const navigate = useNavigate();
   const { meetingId } = useParams();
 
   useEffect(() => {
     const fetchLedgerData = async () => {
       try {
+        // 모임장 여부
+        const meetingResponse = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
+        if (meetingResponse.data.length > 0) {
+          setIsManager(meetingResponse.data[0].isManager);
+        }
+        
+        // 가계부 데이터
         const ledgerResponse = await axios.get(`http://localhost:8000/ledgers?id=${meetingId}`);
-        // const ledger = ledgerResponse.data.find(item => item.meetingId === Number(meetingId));
         const ledger = ledgerResponse.data[0];
 
         if (!ledger) return;
@@ -28,10 +35,7 @@ export default function History() {
         setBalance(ledger.balance);
 
         const detailsResponse = await axios.get(`http://localhost:8000/ledgerDetails?id=${meetingId}`);
-        // const filteredDetails = detailsResponse.data.filter(item => item.ledgersId === ledger.id);
         const filteredDetails = detailsResponse.data;
-        console.log(filteredDetails)
-
 
         const formattedTransactions = filteredDetails.map(detail => ({
           id: detail.id,
@@ -51,18 +55,24 @@ export default function History() {
   }, [meetingId]);
 
   const handleButtonClick = (type) => {
-    setBtnState(type);
     if (type === 'addHistory') {
-      navigate('/addhistory');
+      if (isManager) {
+        setBtnState(type);
+        navigate('/addhistory');
+      } else {
+        alert('모임장만 추가 가능합니다.');
+      }
+    } else {
+      setBtnState(type);
     }
-  };
+  };  
 
   const filteredTransactions = btnState === 'all'
     ? transactions
     : transactions.filter(item => item.type === btnState);
 
   return (
-      <>
+    <>
       <TopNavBar pageName={"가계부"} isModalRequired={true}/>
       <style.Wrapper>
         <Button
@@ -106,20 +116,20 @@ export default function History() {
         <style.HistoryContainer>
           <style.HistoryTitle>거래 내역</style.HistoryTitle>
           {filteredTransactions.map((transaction) => (
-              <Button
-                key={transaction.id}
-                width={'360px'}
-                height={'80px'}
-                name={transaction.type}
-                image={transaction.image}
-                description={transaction.description}
-                amount={transaction.amount}
-                memo={transaction.memo}
-                onClick={() => navigate(`/history/${transaction.id}`, { state: transaction })}
-              />
-            ))}
-          </style.HistoryContainer>
-        </style.Wrapper>
-      </>
-    );
+            <Button
+              key={transaction.id}
+              width={'360px'}
+              height={'80px'}
+              name={transaction.type}
+              image={transaction.image}
+              description={transaction.description}
+              amount={transaction.amount}
+              memo={transaction.memo}
+              onClick={() => navigate(`/history/${transaction.id}`, { state: { ...transaction, isManager } })}
+            />
+          ))}
+        </style.HistoryContainer>
+      </style.Wrapper>
+    </>
+  );
 }
