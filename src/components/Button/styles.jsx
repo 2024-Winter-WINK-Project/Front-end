@@ -124,7 +124,7 @@ export const ButtonContent = styled.div`
     color: ${(props) =>
     props.name === 'income'
       ? '#0234A8'
-      : props.name === 'outcome'
+      : props.name === 'expenditure'
       ? '#C00000'
       : 'white'};
     position: absolute;

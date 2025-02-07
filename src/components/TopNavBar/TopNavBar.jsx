@@ -25,7 +25,7 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
     }
 
     const openModal = () => {
-        onDataChange("doneModal",true);
+        onDataChange(`${feat}Modal`,true);
     }
     const closeModal = (event) => {
         onDataChange(event.target.id,event.target.value);

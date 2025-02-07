@@ -22,43 +22,30 @@ const EditMeeting = () => {
     const [lon, setLon] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:8000/meeting?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMeetingData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        fetch(`http://localhost:8000/places?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setPlaceData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        fetch(`http://localhost:8000/members?id=${meetingId}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setMemberData(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-
-        if (navigator.geolocation) {
-            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-            navigator.geolocation.getCurrentPosition(function(position) {
-                setLat(position.coords.latitude);
-                setLon(position.coords.longitude); // 경도
-            });
+        const fetchData = async () => {
+            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
+            const getPlaceData = await axios.get(`http://localhost:8000/places?id=${meetingId}`);
+            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
+            if(getMeetingData !== undefined &&
+                getPlaceData !== undefined &&
+                getMemberData !== undefined)
+            {
+                setMeetingData(getMeetingData.data);
+                setPlaceData(getPlaceData.data);
+                setMemberData(getMemberData.data);
+            }
+            if (navigator.geolocation) {
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    setLat(position.coords.latitude);
+                    setLon(position.coords.longitude); // 경도
+                });
+            }
+            else{
+                alert("현재 위치를 찾을 수 없어요. 위치 권한을 다시 설정해 보세요.");
+            }
         }
-        else{
-            alert("현재 위치를 찾을 수 없어요. 위치 권한을 다시 설정해 보세요.");
-        }
+        fetchData();
     }, [lat,lon]);
 
     if(meetingData && placeData && memberData){

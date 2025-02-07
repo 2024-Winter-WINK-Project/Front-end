@@ -5,7 +5,8 @@
       "title": "가족여행",
       "startDate": 20250127,
       "endDate": 20250130,
-      "isManager" : true
+      "isManager" : true,
+      "invitationLink" : "www.naver.com"
     },
 
     {
@@ -13,7 +14,9 @@
       "title": "WINK 팀회식",
       "startDate": 20250130,
       "endDate": 20250130,
-      "isManager" : false
+      "isManager" : false,
+      "invitationLink" : "www.kakao.com"
+
     }
 
   ],
@@ -140,6 +143,8 @@
       "id" : 1,
       "ledgerId" : 2501271,
       "balance" : 100000,
+      "totalIncome" : 1500000,
+      "totalExpenditure" : 1400000,
       "kakaoURL" : "www.kakao.com",
       "tossURL" : "www.toss.com",
       "bankAccNum" : "20120012346875"
@@ -148,6 +153,8 @@
       "id" : 2,
       "ledgerId" : 2501301,
       "balance" : -80000,
+      "totalIncome" : 30000,
+      "totalExpenditure" : 80000,
       "kakaoURL" : "www.kakao.com",
       "tossURL" : "www.toss.com",
       "bankAccNum" : "20120012341245"
@@ -156,6 +163,7 @@
   "ledgerDetails" : [
     {
       "id" : 1,
+      "type" : "income",
       "ledgerDetailsId": 2501271001,
       "ledgersId" : 2501271,
       "description" : "1차 예산 설정금액",
@@ -163,28 +171,32 @@
     },
     {
       "id" : 1,
+      "type" : "expenditure",
       "ledgerDetailsId": 2501271002,
       "ledgersId" : 2501271,
       "description" : "기차표 예약",
-      "amount" : -300000
+      "amount" : 300000
     },
     {
       "id" : 1,
+      "type" : "expenditure",
       "ledgerDetailsId": 2501271003,
       "ledgersId" : 2501271,
       "description" : "호텔 예약",
-      "amount" : -700000
+      "amount" : 700000
     },
     {
       "id" : 1,
+      "type" : "expenditure",
       "ledgerDetailsId": 2501271004,
       "ledgersId" : 2501271,
       "description" : "렌트카",
-      "amount" : -400000
+      "amount" : 400000
     },
 
     {
       "id" : 2,
+      "type" : "income",
       "ledgerDetailsId": 2501301001,
       "ledgersId" : 2501301,
       "description" : "동아리 지원금",
@@ -192,17 +204,19 @@
     },
     {
       "id" : 2,
+      "type" : "expenditure",
       "ledgerDetailsId": 2501301002,
       "ledgersId" : 2501301,
       "description" : "식당",
-      "amount" : -80000
+      "amount" : 80000
     },
     {
       "id" : 2,
+      "type" : "expenditure",
       "ledgerDetailsId": 2501301003,
       "ledgersId" : 2501301,
       "description" : "카페",
-      "amount" : -30000
+      "amount" : 30000
     }
   ]
 }

@@ -2,19 +2,19 @@ import React, {useEffect, useState} from "react";
 import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
+import axios from "axios";
 
 const Home = () =>{
     const [latestGroup,setLatestGroup] = useState();
-
     useEffect(() => {
-        fetch(`http://localhost:8000/meeting?_limit=5&_sort=startDate`)
-            .then((response) => response.json())
-            .then((json) => {
-                setLatestGroup(json)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+        const fetchData = async () => {
+            const getLatestGroup = await axios.get(`http://localhost:8000/meeting?_limit=5&_sort=startDate`);
+            if(getLatestGroup !== undefined)
+            {
+                setLatestGroup(getLatestGroup.data);
+            }
+        }
+        fetchData();
     }, []);
 
     return (

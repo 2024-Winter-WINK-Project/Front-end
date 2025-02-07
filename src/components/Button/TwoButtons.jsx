@@ -9,39 +9,81 @@ import remove from "../../icons/remove_members.png";
 import {useNavigate} from "react-router-dom";
 
 
-const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonIcon, ButtonIcon2, Dest, Dest2}) =>{
+const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonColor2, ButtonIcon, ButtonIcon2, Dest, Dest2, onDataChange,Tag}) =>{
     const navigate = useNavigate();
 
     const iconList = { add, edit, all, select, change, remove };
     const feat = iconList[ButtonIcon] || null;
     const feat2 = iconList[ButtonIcon2] || null;
+
+    const openModal = () => {
+        onDataChange(`${Tag}`,true);
+
+    }
     return (
         <styled.ButtonContainer>
             {/*둘 다 아이콘 있는 버튼*/}
             {feat !== null && feat2 !== null ?
                 <>
-                    <styled.ButtonContentContainer
-                        style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`${Dest}`)}>
-                        <styled.TwoButtons>
-                            <styled.TextBox>{ButtonText1}</styled.TextBox>
-                            <styled.Icon src={feat}/>
-                        </styled.TwoButtons>
-                    </styled.ButtonContentContainer>
-                    <div style={{width: "20px"}}/>
-                    <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
-                                                   onClick={() => navigate(`${Dest2}`)}>
-                        <styled.TwoButtons>
-                            <styled.TextBox>{ButtonText2}</styled.TextBox>
-                            <styled.Icon src={feat2}/>
-                        </styled.TwoButtons>
-                    </styled.ButtonContentContainer>
+                    {isModalRequired ?
+                        <>
+                            <styled.ButtonContentContainer
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                <styled.TwoButtons>
+                                    <styled.TextBox>{ButtonText1}</styled.TextBox>
+                                    <styled.Icon src={feat}/>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                            <div style={{width: "20px"}}/>
+                            <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
+                                                           onClick={openModal}>
+                                <styled.TwoButtons>
+                                    <styled.TextBox>{ButtonText2}</styled.TextBox>
+                                    <styled.Icon src={feat2}/>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                        </>
+                        :
+                        <>
+                            <styled.ButtonContentContainer
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                <styled.TwoButtons>
+                                    <styled.TextBox>{ButtonText1}</styled.TextBox>
+                                    <styled.Icon src={feat}/>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                            <div style={{width: "20px"}}/>
+                            <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
+                                                           onClick={() => navigate(`/${Dest2}`)}>
+                                <styled.TwoButtons>
+                                    <styled.TextBox>{ButtonText2}</styled.TextBox>
+                                    <styled.Icon src={feat2}/>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                        </>
+
+                    }
+
                 </>
                 :
                 <>
                     {/*아이콘 없는 버튼*/}
                     {isModalRequired ?
                         <>
-
+                            <styled.ButtonContentContainer
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
+                                    <styled.TextBox
+                                        style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText1}</styled.TextBox>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
+                            <div style={{width: "20px"}}/>
+                            <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor2}`}}>
+                                <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
+                                    <styled.TextBox
+                                        style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText2}</styled.TextBox>
+                                </styled.TwoButtons>
+                            </styled.ButtonContentContainer>
                         </>
                         :
                         <>

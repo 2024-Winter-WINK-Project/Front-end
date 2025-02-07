@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
+import axios from 'axios';
 import Button from '../../components/Button/BudgetButton.jsx';
 import Withdrawal from '../../assets/Budget/withdrawal.svg';
 import Deposit from '../../assets/Budget/deposit.svg';
@@ -19,24 +19,26 @@ export default function History() {
   useEffect(() => {
     const fetchLedgerData = async () => {
       try {
-        const ledgerResponse = await axios.get(`http://localhost:8000/ledgers`);
-        const ledgers = ledgerResponse.data;
-        
-        const ledger = ledgers.find(item => Number(item.id) === Number(meetingId));
+        const ledgerResponse = await axios.get(`http://localhost:8000/ledgers?id=${meetingId}`);
+        // const ledger = ledgerResponse.data.find(item => item.meetingId === Number(meetingId));
+        const ledger = ledgerResponse.data[0];
 
         if (!ledger) return;
 
         setBalance(ledger.balance);
 
-        const detailsResponse = await axios.get(`http://localhost:8000/ledgerDetails`);
-        const filteredDetails = detailsResponse.data.filter(item => item.ledgersId === ledger.ledgerId);
-        
+        const detailsResponse = await axios.get(`http://localhost:8000/ledgerDetails?id=${meetingId}`);
+        // const filteredDetails = detailsResponse.data.filter(item => item.ledgersId === ledger.id);
+        const filteredDetails = detailsResponse.data;
+        console.log(filteredDetails)
+
+
         const formattedTransactions = filteredDetails.map(detail => ({
           id: detail.id,
-          type: detail.amount > 0 ? 'income' : 'outcome',
+          type: detail.type,
           image: detail.amount > 0 ? Withdrawal : Deposit,
           description: detail.description,
-          amount: detail.amount > 0 ? `+${detail.amount.toLocaleString()}` : `${detail.amount.toLocaleString()}`
+          amount: detail.type === "income" ? `+${detail.amount.toLocaleString()}` : `-${detail.amount.toLocaleString()}`
         }));
 
         setTransactions(formattedTransactions);
@@ -46,7 +48,7 @@ export default function History() {
     };
 
     fetchLedgerData();
-}, [meetingId]);
+  }, [meetingId]);
 
   const handleButtonClick = (type) => {
     setBtnState(type);
@@ -55,8 +57,8 @@ export default function History() {
     }
   };
 
-  const filteredTransactions = btnState === 'all' 
-    ? transactions 
+  const filteredTransactions = btnState === 'all'
+    ? transactions
     : transactions.filter(item => item.type === btnState);
 
   return (
@@ -81,7 +83,7 @@ export default function History() {
             <Button
               name={'options'}
               image={Deposit}
-              onClick={() => handleButtonClick('outcome')}
+              onClick={() => handleButtonClick('expenditure')}
             />
             <span>지출만 보기</span>
           </style.Label>
@@ -104,7 +106,7 @@ export default function History() {
         <style.HistoryContainer>
           <style.HistoryTitle>거래 내역</style.HistoryTitle>
           {filteredTransactions.map((transaction) => (
-              <Button 
+              <Button
                 key={transaction.id}
                 width={'360px'}
                 height={'80px'}
@@ -112,6 +114,7 @@ export default function History() {
                 image={transaction.image}
                 description={transaction.description}
                 amount={transaction.amount}
+                memo={transaction.memo}
                 onClick={() => navigate(`/history/${transaction.id}`, { state: transaction })}
               />
             ))}
