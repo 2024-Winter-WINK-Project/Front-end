@@ -12,6 +12,7 @@ export default function Input(props) {
         value={props.value}
         onClick={props.onClick}
         name={props.name}
+        readOnly={props.readOnly}
       />
     ) : (
       <style.Input
@@ -22,6 +23,7 @@ export default function Input(props) {
         value={props.value}
         onClick={props.onClick}
         name={props.name}
+        readOnly={props.readOnly}
       />
     )
   );

@@ -125,7 +125,7 @@ export default function History() {
               description={transaction.description}
               amount={transaction.amount}
               memo={transaction.memo}
-              onClick={() => navigate(`/history/${transaction.id}`, { state: transaction })}
+              onClick={() => navigate(`/history/${transaction.id}`, { state: { ...transaction, isManager } })}
             />
           ))}
         </style.HistoryContainer>
