@@ -27,10 +27,10 @@ export default function History() {
           <Button
             width={'168px'}
             height={'68px'}
-            name={'expenditure'}
+            name={'outcome'}
             type={'detail'}
             content={'지출'}
-            onClick={() => handleButtonClick('expenditure')}
+            onClick={() => handleButtonClick('outcome')}
           />
           </style.ButtonWrapper>
           <style.FormContainer>
