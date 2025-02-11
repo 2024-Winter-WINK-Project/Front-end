@@ -71,8 +71,8 @@ export default function ViewHistory() {
             name={'outcome'}
             type={'detail'}
             content={'지출'}
-            onClick={() => handleButtonClick('outcome')}
-            isSelected={selectedType === 'outcome'}
+            onClick={() => handleButtonClick('expenditure')}
+            isSelected={selectedType === 'expenditure'}
           />
         </style.ButtonWrapper>
         <style.FormContainer>
@@ -80,7 +80,7 @@ export default function ViewHistory() {
             <Button
               width={'376px'}
               height={'60px'}
-              name={'outcome'}
+              name={'expenditure'}
               type={'detail'}
               content={'삭제'}
               onClick={openModal}
