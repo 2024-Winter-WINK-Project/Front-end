@@ -62,6 +62,8 @@ export default function History() {
       } else {
         alert('모임장만 추가 가능합니다.');
       }
+    } else if (type === 'transfer') {
+      navigate(`/budget/${meetingId}/transfer`);
     } else {
       setBtnState(type);
     }
@@ -109,6 +111,7 @@ export default function History() {
             <Button
               name={'options'}
               image={Transfer}
+              onClick={() => handleButtonClick('transfer')}
             />
             <span>송금하기</span>
           </style.Label>
