@@ -24,7 +24,8 @@ export const TextWrapper = styled.div`
     font-weight: bold;
   }
   > img {
-    width: 40px;
+    width: 140px;
+    margin-left: -4px;
   }
 `;
 

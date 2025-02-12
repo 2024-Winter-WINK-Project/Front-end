@@ -7,44 +7,23 @@ const LoginCallback = () => {
 
   useEffect(() => {
     if (code) {
-      // accessToken 요청
-      fetch(`https://kauth.kakao.com/oauth/token`, {
+      // 백엔드로 인가 코드 전달 (url에 포함)
+      fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/auth/kakao/login?code=${code}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+          'Content-Type': 'application/json',
         },
-        body: new URLSearchParams({
-          grant_type: 'authorization_code',
-          client_id: `${process.env.REACT_APP_REST_API_KEY}`,
-          redirect_uri: `${process.env.REACT_APP_REDIRECT_URI}`,
-          code: code,
-        }),
       })
-        .then((res) => res.json())
-        .then((tokenData) => {
-          const accessToken = tokenData.access_token;
-
-          // accessToken을 사용하여 로그인 요청
-          return fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/kakao/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              accessToken: accessToken,
-            }),
-          });
-        })
-        .then((res) => res.json())
-        .then((data) => {
-          localStorage.setItem('token', data.token);
-          navigate('/main');
-        })
-        .catch((error) => {
-          console.log(error);
-          alert('로그인 콜백 오류');
-          navigate('/login');
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem('token', data.token);
+        navigate('/main');
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('로그인 콜백 오류');
+        navigate('/login');
+      });
     }
   }, [code]);
 
