@@ -4,8 +4,8 @@ import kakaoLogo from '../../assets/Login/Kakao.svg'
 import * as style from './styles';
 
 export default function Login() {
-  const REST_API_KEY = import.meta.env.VITE_REACT_APP_REST_API_KEY;
-  const REDIRECT_URI = import.meta.env.VITE_REACT_APP_API_URL;
+  const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
   const kakaoLink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const handleLogin = () => {
