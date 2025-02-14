@@ -3,7 +3,6 @@ import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
 import axios from "axios";
-import {qunit} from "globals";
 
 
 const Home = () =>{

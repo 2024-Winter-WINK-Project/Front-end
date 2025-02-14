@@ -7,13 +7,14 @@ import notifications from "../../icons/notifications.png";
 import notifications_filled from "../../icons/notifications_filled.png";
 import mypage from "../../icons/mypage.png";
 import mypage_filled from "../../icons/mypage_filled.png";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import * as styled from "./styles";
 
 const BottomNavBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname;
+    const userId = localStorage.getItem("userId");
     return(
         <>
             {currentPath === "/login" ?
@@ -21,16 +22,16 @@ const BottomNavBar = () => {
                 :
                 <styled.BarContainer>
                     <styled.BarContentsContainer>
-                        <styled.ButtonContainer onClick={() => navigate("/")}>
-                            {currentPath === "/" ?
+                        <styled.ButtonContainer onClick={() => navigate(`/home/${userId}`)}>
+                            {currentPath === `/home/${userId}` ?
                                 <styled.ButtonIcons src={home_filled}/>
                                 :
                                 <styled.ButtonIcons src={home}/>
                             }
                             <styled.ButtonStyles>홈</styled.ButtonStyles>
                         </styled.ButtonContainer>
-                        <styled.ButtonContainer onClick={() => navigate("/meetinglist")}>
-                            {currentPath === "/meetinglist" ?
+                        <styled.ButtonContainer onClick={() => navigate(`/meetinglist/${userId}`)}>
+                            {currentPath === `/meetinglist/${userId}` ?
                                 <styled.ButtonIcons src={group_setting_filled}/>
                                 :
                                 <styled.ButtonIcons src={group_setting}/>
@@ -38,12 +39,11 @@ const BottomNavBar = () => {
                             <styled.ButtonStyles>모임 관리</styled.ButtonStyles>
                         </styled.ButtonContainer>
                         <styled.ButtonContainer onClick={() => navigate("/")}>
-
                             <styled.ButtonIcons src={notifications}/>
                             <styled.ButtonStyles>받은 알림</styled.ButtonStyles>
                         </styled.ButtonContainer>
-                        <styled.ButtonContainer onClick={() => navigate("/mypage")}>
-                            {currentPath === "/mypage" ?
+                        <styled.ButtonContainer onClick={() => navigate(`/mypage/${userId}`)}>
+                            {currentPath === `/mypage/${userId}` ?
                                 <styled.ButtonIcons src={mypage_filled}/>
                                 :
                                 <styled.ButtonIcons src={mypage}/>

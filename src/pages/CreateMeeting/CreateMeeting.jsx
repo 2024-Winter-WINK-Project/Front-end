@@ -20,6 +20,7 @@ const CreateMeeting = () => {
     const [currId, setCurrId] = useState(null);
     const [uploadModalOpen, setUploadModalOpen] = useState(false);
     const [doneModalOpen, setDoneModalOpen] = useState(false);
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE1LCJpYXQiOjE3Mzk1MjMyNjcsImV4cCI6MTczOTUyNTA2N30.U5v-_ZuKoVDB_LAKdczPZqwJ8ODuHYeYBRgE9NBZ_Dw";
 
     const [basicInfo, setBasicInfo] = useState({
        id : 0,
@@ -85,65 +86,20 @@ const CreateMeeting = () => {
 
     const handleSubmit = (e) =>{
         // e.preventDefault();
-        setDoneModalOpen(true);
+        // setDoneModalOpen(true);
+
         // try{
         //     axios
-        //         .post("http://localhost:8000/meeting", {
+        //         .post("http://localhost:8000/meetings", {
         //             id:currId,
         //             title:groupName.current.current,
         //             startDate:startDate.current.current,
         //             endDate:endDate.current.current,
         //             isManager:true
         //         })
-        //         .then((res) => {
-        //             console.log(res)
-        //             if (res === 200){
-        //                 axios
-        //                     .post("http://localhost:8000/place",{
-        //                         id:currId,
-        //                         placeId:123456789,
-        //                         placeName : placeName,
-        //                         placeLon:placeLon,
-        //                         placeLat:placeLat
-        //                     })
-        //                     .then((res) => {
-        //                         console.log(res)
-        //                         if(res === 200){
-        //                             axios
-        //                                 .post("http://localhost:8000/members",{
-        //                                     id : currId,
-        //                                     memberId : Number(String(currId) + "00"),
-        //                                     socialId : Number(String(20250101) + "00" + String(1)),
-        //                                     nickName : nickName.current,
-        //                                     permission : "OWNER",
-        //                                     profilePicture : "",
-        //                                     isQuit : false
-        //                                 })
-        //                                 .then((res) => {
-        //                                     console.log(res)
-        //                                     if(res === 200){
-        //                                         axios
-        //                                             .post("http://localhost:8000/ledgers",{
-        //                                                 id : currId,
-        //                                                 ledgersId : Number(String(startDate.current) + "1"),
-        //                                                 balance : 0,
-        //                                                 kakaoURL : settleUpURL.current,
-        //                                                 tossURL : settleUpURL.current,
-        //                                                 bankAccNum : "123456789",
-        //                                                 ledgerDetails : [{}]
-        //                                             })
-        //                                             .then((res) => {
-        //                                                 console.log(res)
-        //                                             })
-        //                                             .catch((err) => {
-        //                                                 console.log(err)
-        //                                             })
-        //                                     }
-        //                                 })
-        //                         }
-        //                     })
-        //             }
-        //         });
+        //         .then((res) => {}
+        //
+        //
         //
         //     return true;
         //

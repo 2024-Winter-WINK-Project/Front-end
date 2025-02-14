@@ -22,19 +22,19 @@ const ListBox = ({data, mode}) => {
         <styled.BoxContainerList style={{height : `${boxHeight}px`}}>
             <styled.BoxContentsContainerList>
                 <styled.ListElement>
-                    {data && data.map(elements => (
+                    {data[0] && data[0].map(elements => (
                         <>
                             <div style={{width : "95%", display: "flex", alignItems : "center"}}>
                                 <styled.ProfilePicWrapper>
                                     {elements.profilePicture !== "" ?
-                                        <styled.ProfilePic src={elements.profilePicture}/>
+                                        <styled.ProfilePic src={elements.profileImageUrl}/>
                                         :
                                         <div style={{background : `${me}`}}/>
                                     }
 
                                 </styled.ProfilePicWrapper>
                                 <styled.ListElements>
-                                    {elements.nickName}
+                                    {elements.nickname}
                                 </styled.ListElements>
                                 {mode ?
                                     <>
@@ -59,6 +59,7 @@ const ListBox = ({data, mode}) => {
                                 }
 
                             </div>
+                            
                             <styled.DivideLine/>
                         </>
 

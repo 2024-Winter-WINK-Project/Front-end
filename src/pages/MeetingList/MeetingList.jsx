@@ -7,7 +7,6 @@ import axios from "axios";
 const MeetingList = () =>{
     const [createdGroup, setCreatedGroup] = useState(null);
     const [invitedgroup, setInvitedGroup] = useState(null);
-    
     // 사용자의 브라우저에서 제공받은 쿠키 (크롬 개발자 ->Application/Cookies/jwt라 쓰여진 쿠키 속 jwt access key 사용)
     const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE1LCJpYXQiOjE3Mzk1MjMyNjcsImV4cCI6MTczOTUyNTA2N30.U5v-_ZuKoVDB_LAKdczPZqwJ8ODuHYeYBRgE9NBZ_Dw";
 
@@ -27,11 +26,9 @@ const MeetingList = () =>{
             {
                 var tmpCreatedGroupList = [];
                 var tmpInvitedGroupList = [];
-                console.log(getCreatedGroup)
                 for (var i = 0; i < getCreatedGroup.data.length; i++) {
                     if(getCreatedGroup.data[i].owner === true){
                         Object.assign(tmpCreatedGroupList.push(getCreatedGroup.data[i]));
-                        console.log(getCreatedGroup.data[i])
                     }
                     else{
                         Object.assign(tmpInvitedGroupList.push(getCreatedGroup.data[i]));
@@ -39,7 +36,6 @@ const MeetingList = () =>{
                 }
                 setInvitedGroup(tmpInvitedGroupList);
                 setCreatedGroup(tmpCreatedGroupList);
-                console.log(invitedgroup)
             }
 
         }
