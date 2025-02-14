@@ -4,8 +4,8 @@ import kakaoLogo from '../../assets/Login/Kakao.svg'
 import * as style from './styles';
 
 export default function Login() {
-  const REST_API_KEY = import.meta.env.VITE_REACT_APP_REST_API_KEY;
-  const REDIRECT_URI = import.meta.env.VITE_REACT_APP_API_URL;
+  const REST_API_KEY = '8441f369f9f92e22393e7eadceac3d0c';
+  const REDIRECT_URI = "http://localhost:5173/oauth";
   const kakaoLink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const handleLogin = () => {
@@ -13,19 +13,19 @@ export default function Login() {
   };
 
   return (
-    <>
       <style.Wrapper>
         <style.LoginContainer>
           <style.TextWrapper>
             <span>모임이 쉬워지는</span>
-            <img src={Logo} alt="로고" />
+            <img src={Logo} alt="로고"/>
           </style.TextWrapper>
           <style.KakaoButton onClick={handleLogin}>
-            <img src={kakaoLogo} alt="카카오 로고" />
+            <img src={kakaoLogo} alt="카카오 로고"/>
             <span>카카오로 시작하기</span>
           </style.KakaoButton>
         </style.LoginContainer>
       </style.Wrapper>
-    </>
+
+
   );
 }

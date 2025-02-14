@@ -3,16 +3,32 @@ import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
 import axios from "axios";
+import {qunit} from "globals";
+
 
 const Home = () =>{
     const [latestGroup,setLatestGroup] = useState();
+    const [cookie, setCookie] = useState();
+
+    // 사용자의 브라우저에서 제공받은 쿠키 (크롬 개발자 ->Application/Cookies/jwt라 쓰여진 쿠키 속 jwt access key 사용)
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE1LCJpYXQiOjE3Mzk1MjMyNjcsImV4cCI6MTczOTUyNTA2N30.U5v-_ZuKoVDB_LAKdczPZqwJ8ODuHYeYBRgE9NBZ_Dw";
     useEffect(() => {
         const fetchData = async () => {
-            const getLatestGroup = await axios.get(`http://localhost:8000/meeting?_limit=5&_sort=startDate`);
-            if(getLatestGroup !== undefined)
+            const getLatestGroup = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${token}`,
+                },
+                url: 'http://localhost:8080/meetings/latest',
+
+            });
+            if(getLatestGroup.status === 200)
             {
                 setLatestGroup(getLatestGroup.data);
+                console.log(getLatestGroup);
             }
+
         }
         fetchData();
     }, []);
@@ -28,7 +44,11 @@ const Home = () =>{
                 <styled.TextWrapper>
                     <styled.TextBox>다가오는 모임 일정이예요</styled.TextBox>
                 </styled.TextWrapper>
-                {latestGroup && <MeetingListBox group={latestGroup} isList={false}/>}
+                {latestGroup !== undefined ?
+                    <MeetingListBox group={latestGroup} isList={false}/>
+                    :
+                    <div>아직 등록된 모임이 없어요.</div>
+                }
             </styled.ContentContainer>
         </styled.BodyContainer>
     )

@@ -17,6 +17,7 @@ import ChangeManager from "./pages/ManageMeeting/ChangeManager";
 import EditMeeting from "./pages/ManageMeeting/EditMeeting";
 import Transfer from "./pages/Transfer/Transfer";
 import SelectMembers from "./pages/ManageMeeting/SelectMembers";
+import LoginCallback from "./pages/Login/loginCallback";
 
 
 
@@ -37,6 +38,7 @@ const App = () =>{
                 <Routes>
                     <Route path="/" element={<Home />}/>
                     <Route path="/login" element={<Login />}/>
+                    <Route exact path='/oauth' element={<LoginCallback />} />
                     <Route path="/meetinglist" element={<MeetingList />}/>
                     <Route path="/createmeeting" element={<CreateMeeting />}/>
                     <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>

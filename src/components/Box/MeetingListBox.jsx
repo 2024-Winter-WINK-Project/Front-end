@@ -16,15 +16,13 @@ const MeetingListBox = ({group,isList}) => {
                                     <styled.TextBox style={{
                                         fontSize: '25px',
                                         fontWeight: 'bold'
-                                    }}>{elements.title}</styled.TextBox>
-                                    <styled.TextBox>{elements.startDate} ~
-                                        {elements.endDate}</styled.TextBox>
+                                    }}>{elements.name}</styled.TextBox>
+                                    <styled.TextBox>{elements.startTime.slice(0, 10)} ~ {elements.endTime.slice(0, 10)}</styled.TextBox>
+
                                 </styled.TextContainer>
                                 <styled.BoxIcon onClick={() => navigate(`/budget/${elements.id}`)}
                                                 src={calculate}></styled.BoxIcon>
                             </styled.BoxContentsContainerMedium>
-
-
                             :
                             <styled.BoxContentsContainerMedium
                                 onClick={() => navigate((`/managemeeting/${elements.id}`))}>
@@ -32,11 +30,11 @@ const MeetingListBox = ({group,isList}) => {
                                     <styled.TextBox style={{
                                         fontSize: '25px',
                                         fontWeight: 'bold'
-                                    }}>{elements.title}</styled.TextBox>
-                                    <styled.TextBox>{elements.startDate} ~
-                                        {elements.endDate}</styled.TextBox>
+                                    }}>{elements.name}</styled.TextBox>
+                                    <styled.TextBox>{elements.startTime.slice(0,10)} ~ {elements.endTime.slice(0,10)}</styled.TextBox>
+
                                 </styled.TextContainer>
-                                {elements.isManager ?
+                                {elements.owner ?
                                     <styled.BoxIcon src={group_manager}/>
                                     :
                                     <div style={{width: "30px", height: "30px", border: 'none'}}></div>
