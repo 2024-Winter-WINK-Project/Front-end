@@ -19,6 +19,7 @@ import Transfer from "./pages/Transfer/Transfer";
 import SelectMembers from "./pages/ManageMeeting/SelectMembers";
 import LoginCallback from './pages/Login/loginCallback';
 
+
 const App = () =>{
     useEffect(() => {
         let vh = window.innerHeight * 0.01
@@ -36,7 +37,7 @@ const App = () =>{
                 <Routes>
                     <Route path="/" element={<Home />}/>
                     <Route path="/login" element={<Login />}/>
-                    <Route path="/oauth" element={<LoginCallback />} />
+                    <Route exact path='/oauth' element={<LoginCallback />} />
                     <Route path="/meetinglist" element={<MeetingList />}/>
                     <Route path="/createmeeting" element={<CreateMeeting />}/>
                     <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>

@@ -135,7 +135,7 @@ export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
+    width: 200px;
     
 `;
 
