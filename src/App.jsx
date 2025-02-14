@@ -17,8 +17,7 @@ import ChangeManager from "./pages/ManageMeeting/ChangeManager";
 import EditMeeting from "./pages/ManageMeeting/EditMeeting";
 import Transfer from "./pages/Transfer/Transfer";
 import SelectMembers from "./pages/ManageMeeting/SelectMembers";
-import LoginCallback from "./pages/Login/loginCallback";
-
+import LoginCallback from './pages/Login/loginCallback';
 
 
 const App = () =>{
