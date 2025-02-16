@@ -7,7 +7,7 @@ import UploadModal from "../Modal/UploadModal.jsx";
 import Modal from "../Modal/modal.jsx";
 import * as styled from "./styles";
 
-const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest}) =>{
+const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest, data}) =>{
     const iconList = { add, done };
     const feat = iconList[feature] || null;
     const userId = localStorage.getItem("userId");
@@ -33,7 +33,6 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
 
     const sendSubmit = () => {
         navigate(dest);
-
         if (onDataChange && onDataChange(true)) {
             setOpen(true);
         }

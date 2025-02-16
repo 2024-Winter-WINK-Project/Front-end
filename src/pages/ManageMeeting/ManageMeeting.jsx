@@ -30,9 +30,6 @@ const ManageMeeting = () => {
     const params = useParams();
     const userId = localStorage.getItem("userId");
 
-    // 사용자의 브라우저에서 제공받은 쿠키 (크롬 개발자 ->Application/Cookies/jwt라 쓰여진 쿠키 속 jwt access key 사용)
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE1LCJpYXQiOjE3Mzk1MjMyNjcsImV4cCI6MTczOTUyNTA2N30.U5v-_ZuKoVDB_LAKdczPZqwJ8ODuHYeYBRgE9NBZ_Dw";
-
     const handleDataChange = async (id,value) => {
         console.log(id, ":",value);
         if (id === "inviteModal"){
@@ -52,21 +49,22 @@ const ManageMeeting = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    authorization : `Bearer ${token}`,
+                    authorization : `Bearer ${document.cookie}`,
                 },
                 url: `http://localhost:8080/meetings/${params.meetingId}/members`,
             });
-            console.log(getMemberData)
 
             const getMeetingData = await axios({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    authorization : `Bearer ${token}`,
+                    authorization : `Bearer ${document.cookie}`,
                 },
                 url: `http://localhost:8080/meetings/${params.meetingId}`,
 
             });
+
+
             if(getMeetingData.status === 200 && getMemberData.status === 200)
             {
                 var tmpMeetingData = [];
@@ -123,8 +121,8 @@ const ManageMeeting = () => {
                                               firstLine={"모임 시작일시"}
                                               secondLine={"모임 종료일시"}
                                               isEditable={false}
-                                              startDate={`${elements.startTime.slice(0,10)}  ${elements.startTime.slice(11,16)}`}
-                                              endDate={`${elements.endTime.slice(0,10)}  ${elements.endTime.slice(11,16)}`}/>
+                                              startDate={elements.startTime}
+                                              endDate={elements.endTime}/>
                             {memberData && <ListBox data={memberData}/>}
                             <TwoButtons ButtonColor={"#E7EBF7"}
                                         TextColor={"black"}

@@ -13,15 +13,15 @@ const InviteLinkModal = ({onDataChange}) => {
     const {meetingId} = useParams();
     useEffect(() => {
         const fetchData = async () => {
-            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
-            if (getMeetingData !== undefined) {
-                setInvitation(getMeetingData.data[0].invitationLink);
+            const getMeetingData = await axios.post(`http://localhost:8080/meetings/${meetingId}/invitations`);
+            if (getMeetingData.data.inviteCode){
+                setInvitation(`/meetings/${meetingId}/invitations/${getMeetingData.data.inviteCode}`);
             }
-
+            console.log(getMeetingData.data.expiresAt)
         }
         fetchData();
     },[]);
-    console.log(invitation);
+    console.log(invitation)
     const closeModal = () => {
         onDataChange("doneModal",false);
     }

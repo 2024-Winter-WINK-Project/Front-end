@@ -22,7 +22,7 @@ const LoginCallback = () => {
         .then((backendData) => {
           console.log(backendData);
             // localStorage.setItem('token', backendData.token);
-            localStorage.setItem('userId',backendData.memberId);
+            sessionStorage.setItem('userId',backendData.memberId);
             navigate(`/home/${backendData.memberId}`);
         })
         .catch(() => {

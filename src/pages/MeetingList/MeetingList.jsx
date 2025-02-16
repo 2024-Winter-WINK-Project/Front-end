@@ -7,16 +7,13 @@ import axios from "axios";
 const MeetingList = () =>{
     const [createdGroup, setCreatedGroup] = useState(null);
     const [invitedgroup, setInvitedGroup] = useState(null);
-    // 사용자의 브라우저에서 제공받은 쿠키 (크롬 개발자 ->Application/Cookies/jwt라 쓰여진 쿠키 속 jwt access key 사용)
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE1LCJpYXQiOjE3Mzk1MjMyNjcsImV4cCI6MTczOTUyNTA2N30.U5v-_ZuKoVDB_LAKdczPZqwJ8ODuHYeYBRgE9NBZ_Dw";
-
     useEffect(() => {
         const fetchData = async () => {
             const getCreatedGroup = await axios({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    authorization : `Bearer ${token}`,
+                    authorization : `Bearer ${document.cookie}`,
                 },
                 url: 'http://localhost:8080/meetings',
 
@@ -37,25 +34,10 @@ const MeetingList = () =>{
                 setInvitedGroup(tmpInvitedGroupList);
                 setCreatedGroup(tmpCreatedGroupList);
             }
-
         }
         fetchData();
     }, []);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const getCreatedGroup = await axios.get(`http://localhost:8000/meeting?isManager=true&_sort=startDate`);
-    //         const getInvitedGroup = await axios.get(`http://localhost:8000/meeting?isManager=false&_sort=startDate`);
-    //         if(getCreatedGroup !== undefined &&
-    //             getInvitedGroup !== undefined)
-    //         {
-    //             setCreatedGroup(getCreatedGroup.data);
-    //             setInvitedGroup(getInvitedGroup.data);
-    //         }
-    //     }
-    //     fetchData();
-    //
-    // }, []);
     return (
         <styled.BodyContainer>
             <TopNavBar pageName={"모임 관리"}
