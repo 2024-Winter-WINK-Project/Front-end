@@ -9,9 +9,16 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
     const iconSelect = [calendar,add,edit];
     const [resIcon, setResIcon] = useState();
     const [isCalendar, setIsCalendar] = useState(false);
-    const [sDate, setSDate] = useState(null);
-    const [eDate, setEDate] = useState(null);
-    const today = new Date();
+    const getTimeStamp = (t) => {
+        const date = new Date(t);
+        const year = date.getUTCFullYear();
+        const month = date.getUTCMonth()+1 >= 10 ? date.getUTCMonth()+1 : '0'+(date.getUTCMonth()+1);
+        const day = date.getUTCDate() >= 10 ? date.getUTCDate() : '0'+(date.getUTCDate());
+        const hour = date.getUTCHours() >= 10 ? date.getUTCHours() : '0' +(date.getUTCHours());
+        const minute = date.getUTCMinutes() >= 10 ? date.getUTCMinutes() : '0' + (date.getUTCMinutes());
+        return (year + '-' + month + '-' + day + 'T' + hour + ':' + minute + ':' + "00");
+
+    }
 
     const sendDataToParent = (event) => {
         onDataChange(event.target.id, event.target.value);
@@ -35,8 +42,6 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
             setResIcon(iconSelect[2]);
             setIsCalendar(false);
         }
-        setSDate(startDate);
-        setEDate(endDate);
     }, []);
 
 
@@ -58,21 +63,22 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                             </div>
                             {isEditable ?
                                 <input
-                                    type="date"
-                                    name="startDate"
-                                    id="startDate"
-                                    value={sDate}
-                                    min={today}
+                                    type="datetime-local"
+                                    id="meetingStartTime"
+                                    // value={today.toISOString().slice(0,-8)}
+                                    // min={formattedDate}
                                     style={{
                                         border: "none",
                                         background: "transparent",
-                                        fontSize: "15px"
+                                        fontSize: "10px"
                                     }}
-                                    onChange={sendDataToParent}
+                                    onChange={(e)=>{
+                                        sessionStorage.setItem(e.target.id,getTimeStamp(e.target.valueAsNumber));
+                                    }}
                                 />
                                 :
                                 <div>
-                                    <styled.TextBox>{sDate}</styled.TextBox>
+                                    <styled.TextBox>{startDate}</styled.TextBox>
                                 </div>}
                         </styled.TextContainer>
                         <styled.DivideLine/>
@@ -86,21 +92,21 @@ const DoubleColumnsBox = ({firstLine, secondLine, feature, isEditable, startDate
                                 <styled.TextBox>{secondLine}</styled.TextBox>
                             </div>
                             {isEditable ?
-                                <input type="date"
-                                       name="endDate"
-                                       id="endDate"
-                                       value={eDate}
-                                       min={today}
+                                <input type="datetime-local"
+                                       id="meetingEndTime"
+                                       // min={formattedDate}
                                        style={{
                                            border: "none",
                                            background: "transparent",
-                                           fontSize: "15px",
+                                           fontSize: "10px",
                                        }}
-                                       onChange={sendDataToParent}
+                                       onChange={(e)=>{
+                                           sessionStorage.setItem(e.target.id,getTimeStamp(e.target.valueAsNumber));
+                                       }}
                                 />
                                 :
                                 <div>
-                                    <styled.TextBox>{eDate}</styled.TextBox>
+                                    <styled.TextBox>{endDate}</styled.TextBox>
                                 </div>}
 
                         </styled.TextContainer>

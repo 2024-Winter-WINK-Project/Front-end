@@ -4,13 +4,8 @@ import * as styled from "./styles";
 
 const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, eventTitle}) => {
     const [place,setPlace] = useState();
-    const saveData = event => {
-        setPlace(event.target.value);
-    }
-
-    const sendDataToParent = (event) => {
-        onDataChange(event.target.id ,event.target.value);
-
+    const saveSessionData = (event) => {
+        sessionStorage.setItem(event.target.id, event.target.value);
     }
     return (
         <styled.BoxContainerSmall>
@@ -22,8 +17,16 @@ const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, eventTitle}) => {
                 {feature === "search" ?
                         // 검색 박스, 쓰기 전용
                         <styled.InputContainer style={{width: "90%"}}>
-                            <styled.InputBox value={place} placeholder={"어디로 떠나볼까요?"} onChange={saveData}/>
-                            <styled.BoxIcon id = "place" src={search} onClick={sendDataToParent}/>
+                            <styled.InputBox id = "placeSearch" placeholder={"어디로 떠나볼까요?"} onChange={saveSessionData}/>
+                            <styled.BoxIcon src={search} onClick={()=>{
+                                if(sessionStorage.getItem("placeSearch")) {
+                                    setPlace(sessionStorage.getItem("placeSearch"));
+                                    onDataChange(true);
+                                }
+                                else {
+                                    alert("검색어를 입력해 주세요.");
+                                }
+                            }}/>
                         </styled.InputContainer>
                     :
                         // 모임 제목 입력하는 박스, 쓰기 전용
@@ -36,7 +39,14 @@ const DarkBlueWriteBox = ({boxTitle, feature, onDataChange, eventTitle}) => {
                                 }}>{boxTitle}
                                 </styled.TextBox>
                             </styled.TextContainer>
-                            <styled.InputBox id = "title" placeholder={`${eventTitle}`} onChange={sendDataToParent}/>
+                            <styled.InputBox
+                                id = "meetingName"
+                                placeholder={`${eventTitle}`}
+                                onChange={saveSessionData}
+                                defaultValue={sessionStorage.getItem('meetingName') ?
+                                    sessionStorage.getItem('meetingName')
+                                    :
+                                    ""}/>
                         </styled.InputContainer>
                 }
             </styled.BoxContentsContainerSmall>

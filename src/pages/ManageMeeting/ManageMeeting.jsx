@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import axios from "axios";
 import * as styled from "../CreateMeeting/styles";
 import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
@@ -20,13 +20,16 @@ import AskModal from "../../components/Modal/AskModal";
 const ManageMeeting = () => {
     const {meetingId} = useParams();
     const [meetingData, setMeetingData] = useState();
-    const [placeData, setPlaceData] = useState();
     const [memberData, setMemberData] = useState();
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
     const [inviteModalOpen, setInviteModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const params = useParams();
+    const userId = localStorage.getItem("userId");
+
     const handleDataChange = async (id,value) => {
         console.log(id, ":",value);
         if (id === "inviteModal"){
@@ -40,27 +43,47 @@ const ManageMeeting = () => {
         }
     }
 
-
     useEffect(() => {
         const fetchData = async () => {
-            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
-            const getPlaceData = await axios.get(`http://localhost:8000/places?id=${meetingId}`);
-            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
-            if(getMeetingData !== undefined &&
-                getPlaceData !== undefined &&
-                getMemberData !== undefined)
+            const getMemberData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}/members`,
+            });
+
+            const getMeetingData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}`,
+
+            });
+
+
+            if(getMeetingData.status === 200 && getMemberData.status === 200)
             {
-                setMeetingData(getMeetingData.data);
-                setPlaceData(getPlaceData.data);
-                setMemberData(getMemberData.data);
+                var tmpMeetingData = [];
+                var tmpMemberData = [];
+                tmpMeetingData.push(getMeetingData.data);
+                setMeetingData(tmpMeetingData);
+                tmpMemberData.push(getMemberData.data);
+                setMemberData(tmpMemberData);
             }
+
             if (navigator.geolocation) {
                 // GeoLocation을 이용해서 접속 위치를 얻어옵니다
                 navigator.geolocation.getCurrentPosition(function(position) {
                     setLat(position.coords.latitude);
                     setLon(position.coords.longitude); // 경도
                 });
+                console.log(lat)
             }
+
             else{
                 alert("현재 위치를 찾을 수 없어요. 위치 권한을 다시 설정해 보세요.");
             }
@@ -68,19 +91,17 @@ const ManageMeeting = () => {
         fetchData();
 
     }, [lat,lon]);
+    // console.log(meetingData[0])
 
-    if(meetingData && placeData && memberData){
-        Object.assign(meetingData[0],placeData[0],memberData[0]);
-    }
     return(
         <>
         {meetingData && meetingData.map(elements=>(
             <styled.BodyContainer key={elements.id}>
-                {elements.isManager ?
+                {searchParams.get("owner") === "true" ?
                     // isManager : 모임장인 경우
                     // true : 모임장
                     <>
-                        <TopNavBar pageName={"모임 조회"}
+                        <TopNavBar pageName={"모임 보기"}
                                    feature={"done"}
                                    isModalRequired={false}
                                    isBackRequired={true}
@@ -88,20 +109,20 @@ const ManageMeeting = () => {
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                               boxtitle={"모임명"}
-                                              eventTitle={elements.title}/>
+                                              eventTitle={elements.name}/>
                             <LightBlueWriteBox feature={"location"}
                                                     style={{paddingTop : "none"}}
                                                     boxtitle={"길찾기"}
-                                                    web={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}/>
-                            <KakaoMap lat={elements.placeLat}
-                                      lon={elements.placeLon}
+                                                    web={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.place.name +","+ elements.place.latitude +","+ elements.place.longitude}/>
+                            <KakaoMap lat={elements.place.latitude}
+                                      lon={elements.place.longitude}
                                       pName={elements.placeName}/>
                             <DoubleColumnsBox feature={"calendar"}
-                                              firstLine={"모임 시작날짜"}
-                                              secondLine={"모임 종료날짜"}
+                                              firstLine={"모임 시작일시"}
+                                              secondLine={"모임 종료일시"}
                                               isEditable={false}
-                                              startDate={elements.startDate}
-                                              endDate={elements.endDate}/>
+                                              startDate={elements.startTime}
+                                              endDate={elements.endTime}/>
                             {memberData && <ListBox data={memberData}/>}
                             <TwoButtons ButtonColor={"#E7EBF7"}
                                         TextColor={"black"}
@@ -145,21 +166,21 @@ const ManageMeeting = () => {
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                                     boxtitle={"모임명"}
-                                                    eventTitle={elements.title}/>
+                                                    eventTitle={elements.name}/>
                             <LightBlueWriteBox feature={"location"}
                                                     style={{paddingTop : "none"}}
                                                     boxtitle={"길찾기"}
-                                                    web={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.placeName +","+ elements.placeLat +","+ elements.placeLon}
+                                                    web={"https://map.kakao.com/link/from/현재위치," + lat +","+ lon + "/to/" + elements.place.name +","+ elements.place.latitude +","+ elements.place.longitude}
                             />
-                            <KakaoMap lat={elements.placeLat}
-                                      lon={elements.placeLon}
-                                      pName={elements.placeName}/>
+                            <KakaoMap lat={elements.place.latitude}
+                                      lon={elements.place.longitude}
+                                      pName={elements.place.name}/>
                             <DoubleColumnsBox feature={"calendar"}
                                               firstLine={"모임 시작날짜"}
                                               secondLine={"모임 종료날짜"}
                                               isEditable={false}
-                                              startDate={elements.startDate}
-                                              endDate={elements.endDate}/>
+                                              startDate={`${elements.startTime.slice(0,10)}  ${elements.startTime.slice(11,16)}`}
+                                              endDate={`${elements.endTime.slice(0,10)}  ${elements.endTime.slice(11,16)}`}/>
                             {memberData && <ListBox data={memberData}/>}
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"quit"}

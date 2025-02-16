@@ -3,22 +3,19 @@ import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
 import axios from "axios";
-import {qunit} from "globals";
 
 
 const Home = () =>{
     const [latestGroup,setLatestGroup] = useState();
     const [cookie, setCookie] = useState();
 
-    // 사용자의 브라우저에서 제공받은 쿠키 (크롬 개발자 ->Application/Cookies/jwt라 쓰여진 쿠키 속 jwt access key 사용)
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE1LCJpYXQiOjE3Mzk1MjMyNjcsImV4cCI6MTczOTUyNTA2N30.U5v-_ZuKoVDB_LAKdczPZqwJ8ODuHYeYBRgE9NBZ_Dw";
     useEffect(() => {
         const fetchData = async () => {
             const getLatestGroup = await axios({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    authorization : `Bearer ${token}`,
+                    authorization : `Bearer ${document.cookie}`,
                 },
                 url: 'http://localhost:8080/meetings/latest',
 

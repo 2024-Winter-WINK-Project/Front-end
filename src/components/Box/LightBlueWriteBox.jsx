@@ -22,13 +22,18 @@ const LightBLueWriteBox = ({boxtitle, feature, page, web, onDataChange}) => {
                                 }}>{boxtitle}</styled.TextBox>
                             </styled.TextContainer>
                             <styled.InputBox
-                                             id = "nickName"
+                                             id = "meetingNickname"
                                              style=
                                                  {{backgroundColor : "#E7EBF7",
                                                  color : "black"}}
                                              placeholder={"닉네임을 입력해 주세요."}
-                                             onChange={sendDataToParent}/>
-
+                                             defaultValue={sessionStorage.getItem('meetingNickname') ?
+                                                 sessionStorage.getItem('meetingNickname')
+                                                 :
+                                                 ""}
+                            onChange={(e)=>{
+                                sessionStorage.setItem(e.target.id,e.target.value);
+                            }}/>
                         </styled.InputContainer>
                     </styled.BoxContentsContainerSmall>
                     :

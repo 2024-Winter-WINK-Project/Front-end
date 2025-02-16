@@ -1,7 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
-
 const pname = window.location.pathname;
+console.log(pname)
 const GlobalStyles = createGlobalStyle`
+    
     * {
         margin : 0;
         padding : 0;

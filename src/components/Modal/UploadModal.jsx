@@ -2,43 +2,48 @@ import React, {useRef, useState} from "react";
 import * as styled from "./ModalStyles";
 import close from "../../icons/close.png";
 import upload from "../../icons/upload.png";
+import done from "../../icons/done.png";
 import Html5QrcodePlugin from "../QRConverter/Html5QrcodePlugin";
+
 
 const UploadModal = ({onDataChange}) => {
     const URL = useRef(null);
+    const modalRef = useRef(null);
+    const [isBankNumUploaded, setIsBankNumUploaded] =
+        useState(sessionStorage.getItem("bankAccountNumber") ? true : false);
 
-    const sendDatatoParent = (event) => {
-        onDataChange(event.target.id,event.target.value);
-    }
     const closeModal = () => {
         onDataChange("uploadModal",false);
     }
-    const getURL = (newData) => {
-        URL.current = newData;
-    }
+
     return (
-        <>
+        <div ref={modalRef} onClick={(e) => e.stopPropagation()}>
             <styled.TitleBoxContainer>
                 <styled.TitleBox>
-                    <styled.TextBox style={{fontWeight : "bold"}}>정산링크 등록</styled.TextBox>
+                    <styled.TextBox style={{fontWeight: "bold"}}>정산링크 등록</styled.TextBox>
                 </styled.TitleBox>
                 <styled.CloseIcon src={close} onClick={closeModal}/>
             </styled.TitleBoxContainer>
-            <styled.TextBox style={{fontSize: "19px", marginTop: "10px", textAlign: "left", width: "90%", lineHeight : "40px"}}>정산 방식을 선택해
+            <styled.TextBox
+                style={{fontSize: "19px", marginTop: "10px", textAlign: "left", width: "90%", lineHeight: "40px"}}>정산
+                방식을 선택해
                 주세요.
             </styled.TextBox>
             <styled.TransferURLBox>
                 <styled.UploadURLBox>
                     <styled.TextContainer>
                         <styled.TextBox style={{fontSize: "17px", textAlign: "left"}}>카카오페이 송금코드 등록</styled.TextBox>
-                        <Html5QrcodePlugin onDataGet={sendDatatoParent}/>
+                        <Html5QrcodePlugin label="kakao"/>
                     </styled.TextContainer>
                     <styled.Line/>
                 </styled.UploadURLBox>
                 <styled.UploadURLBox>
                     <styled.TextContainer>
-                        <styled.TextBox style={{fontSize: "17px", textAlign: "left"}}>토스 송금코드 등록</styled.TextBox>
-                        <Html5QrcodePlugin onDataGet={sendDatatoParent}/>
+                        <styled.TextBox
+                            style={{fontSize: "17px",
+                                textAlign: "left"}}>
+                            토스 송금코드 등록</styled.TextBox>
+                        <Html5QrcodePlugin label="toss"/>
                     </styled.TextContainer>
                     <styled.Line/>
                 </styled.UploadURLBox>
@@ -46,19 +51,26 @@ const UploadModal = ({onDataChange}) => {
                     <styled.TextContainer>
                         <styled.TextBox style={{fontSize: "17px", textAlign: "left"}}>계좌번호 등록</styled.TextBox>
                         <div style={{width: "40%", height: "100%", display: "flex", alignItems: "center"}}>
-                            <input id="bankAccNum"
-                                   type="text"
-                                   placeholder="계좌번호를 입력하세요."
-                                   style={{
-                                       border: "none",
-                                       width: "100%",
-                                       fontSize: "15px",
-                                       outline: "none"
-                                   }}
-
+                            <input
+                                type="text"
+                                placeholder="계좌번호 입력"
+                                style={{
+                                    border: "none",
+                                    width: "100%",
+                                    fontSize: "15px",
+                                    outline: "none"
+                                }}
+                                onChange={(e)=>{
+                                    sessionStorage.setItem("bankAccountNumber", e.target.value)
+                                }}
                             />
                         </div>
-                        <styled.UploadIcon src={upload}/>
+                        <styled.UploadIcon src={isBankNumUploaded ? done : upload} onClick={() => {
+                            if (sessionStorage.getItem('bankAccountNumber')) {
+                                setIsBankNumUploaded(true);
+                                alert('등록완료');
+                            }
+                        }}/>
                     </styled.TextContainer>
                     <styled.Line/>
                 </styled.UploadURLBox>
@@ -106,7 +118,7 @@ const UploadModal = ({onDataChange}) => {
                 </styled.TextBox>
 
             </styled.InfoBox>
-        </>
+        </div>
     );
 };
 

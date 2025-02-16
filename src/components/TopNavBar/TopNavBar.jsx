@@ -7,10 +7,10 @@ import UploadModal from "../Modal/UploadModal.jsx";
 import Modal from "../Modal/modal.jsx";
 import * as styled from "./styles";
 
-const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest}) =>{
+const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest, data}) =>{
     const iconList = { add, done };
     const feat = iconList[feature] || null;
-
+    const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [isJoinModalOpen, setJoinModalOpen] = useState(false);
@@ -33,7 +33,6 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
 
     const sendSubmit = () => {
         navigate(dest);
-
         if (onDataChange && onDataChange(true)) {
             setOpen(true);
         }
@@ -49,7 +48,7 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                 <>
                     <styled.BarContainer>
                         <styled.BarContentsContainer>
-                            <styled.ButtonIcons src={back} onClick={() => navigate("/", { replace: true })} />
+                            <styled.ButtonIcons src={back} onClick={() => navigate(`/home/${userId}`, { replace: true })} />
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>
@@ -67,7 +66,7 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                 <styled.BarContainer>
                     {isBackRequired ?
                         <styled.BarContentsContainer>
-                            <styled.ButtonIcons src={back} onClick={() => navigate("/", {replace: true})}/>
+                            <styled.ButtonIcons src={back} onClick={() => navigate(`/home/${userId}`, {replace: true})}/>
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>

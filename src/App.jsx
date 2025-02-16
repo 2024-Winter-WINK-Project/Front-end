@@ -35,10 +35,10 @@ const App = () =>{
         <BrowserRouter>
                 <GlobalStyles/>
                 <Routes>
-                    <Route path="/" element={<Home />}/>
                     <Route path="/login" element={<Login />}/>
                     <Route exact path='/oauth' element={<LoginCallback />} />
-                    <Route path="/meetinglist" element={<MeetingList />}/>
+                    <Route path="/home/:memberId" element={<Home />}/>
+                    <Route path="/meetinglist/:memberId" element={<MeetingList />}/>
                     <Route path="/createmeeting" element={<CreateMeeting />}/>
                     <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
                     <Route path="/managemeeting/:meetingId/edit" element={<EditMeeting />}/>
@@ -47,7 +47,7 @@ const App = () =>{
                     <Route path="/transfer/:meetingId/selectmembers" element={<SelectMembers />}/>
                     <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
                     <Route path="/nickname" element={<Nickname />}/>
-                    <Route path="/mypage" element={<MyPage />}/>
+                    <Route path="/mypage:memberId" element={<MyPage />}/>
                     <Route path="/budget/:meetingId" element={<Budget />}/>
                     <Route path="/budget/:meetingId/transfer" element={<Transfer />}/>
                     <Route path="/addhistory" element={<AddHistory />}/>

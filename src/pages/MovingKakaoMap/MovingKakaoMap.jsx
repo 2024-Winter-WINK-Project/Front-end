@@ -7,14 +7,6 @@ const { kakao } = window;
 
 const MovingKakaoMap = () => {
     const [place, setPlace] = useState("");
-    const [placeName, setPlaceName] = useState("");
-    const [placeId, setPlaceId] = useState("");
-    const [placeLat, setPlaceLat] = useState("");
-    const [placeLon, setPlaceLon] = useState("");
-    const handleDataChange = (newData) => {
-        setPlace(newData);
-    }
-
     useEffect(() => {
         var infowindow = new kakao.maps.InfoWindow({zIndex:1});
         const container = document.getElementById('map');
@@ -26,7 +18,6 @@ const MovingKakaoMap = () => {
         const ps = new kakao.maps.services.Places();
         // 키워드로 장소를 검색합니다
         ps.keywordSearch(place, placesSearchCB);
-
 
         // 키워드 검색 완료 시 호출되는 콜백함수 입니다
         function placesSearchCB (data, status, pagination) {
@@ -53,18 +44,19 @@ const MovingKakaoMap = () => {
                 position: new kakao.maps.LatLng(place.y, place.x)
             });
 
-
-
             // 마커에 클릭이벤트를 등록합니다
             kakao.maps.event.addListener(marker, 'click', function() {
                 // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                 infowindow.setContent('<div style="padding:2px;font-size:12px;" >' + place.place_name + '</div>');
                 infowindow.open(map, marker);
-                setPlaceName(place.place_name);
-                setPlaceId(place.id);
-                setPlaceLat(place.x);
-                setPlaceLon(place.y);
-
+                sessionStorage.setItem('place', JSON.stringify(
+                    {
+                        // id : place.id,
+                        address : place.address_name,
+                        latitude : place.y,
+                        longitude : place.x,
+                        name : place.place_name}))
+                console.log(JSON.parse(sessionStorage.getItem('place')))
             });
 
         }
@@ -72,10 +64,13 @@ const MovingKakaoMap = () => {
 
     return (
         <styled.MapContainer>
-            <TopNavBar pageName={"장소 선택"} feature={"done"} isModalRequired={false} isBackRequired={true}
-                       data={[placeId, placeName, placeLat, placeLon]}/>
+            <TopNavBar pageName={"장소 선택"}
+                       feature={"done"}
+                       dest={-1}
+                       isModalRequired={false}
+                       isBackRequired={true}/>
             <styled.MapContentsContainer>
-                <DarkBlueWriteBox feature={"search"} onDataChange={handleDataChange}/>
+                <DarkBlueWriteBox feature={"search"} onDataChange={() => setPlace(sessionStorage.getItem("placeSearch"))}/>
                 <div id="map" style={{
                     width: '90%',
                     height: '100%',

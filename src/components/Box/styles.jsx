@@ -66,7 +66,7 @@ export const BoxContentsContainerMedium = styled.div`
 export const BoxContentsContainerSmall = styled.div`
     border : none;
     border-radius: 10px;
-    width: 100%;
+    width: 90vw;
     height: 60px;
     background-color: #E7EBF7;
     display: flex;
