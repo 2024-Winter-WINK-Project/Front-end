@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
-import {useParams} from "react-router-dom";
+import {useNavigate,useParams} from "react-router-dom";
 import axios from "axios";
 import * as styled from "../CreateMeeting/styles";
 import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
@@ -16,47 +16,138 @@ import OneButton from "../../components/Button/OneButton";
 const EditMeeting = () => {
     const {meetingId} = useParams();
     const [meetingData, setMeetingData] = useState();
-    const [placeData, setPlaceData] = useState();
-    const [memberData, setMemberData] = useState();
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
-
+    const params = useParams();
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
-            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
-            const getPlaceData = await axios.get(`http://localhost:8000/places?id=${meetingId}`);
-            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
-            if(getMeetingData !== undefined &&
-                getPlaceData !== undefined &&
-                getMemberData !== undefined)
+            const getMeetingData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}`,
+
+            });
+
+            if(getMeetingData.status === 200)
             {
-                setMeetingData(getMeetingData.data);
-                setPlaceData(getPlaceData.data);
-                setMemberData(getMemberData.data);
+                var tmpMeetingData = [];
+                tmpMeetingData.push(getMeetingData.data);
+                setMeetingData(tmpMeetingData);
             }
+
             if (navigator.geolocation) {
                 // GeoLocation을 이용해서 접속 위치를 얻어옵니다
                 navigator.geolocation.getCurrentPosition(function(position) {
                     setLat(position.coords.latitude);
                     setLon(position.coords.longitude); // 경도
                 });
+                console.log(lat)
             }
+
             else{
                 alert("현재 위치를 찾을 수 없어요. 위치 권한을 다시 설정해 보세요.");
             }
         }
         fetchData();
+
     }, [lat,lon]);
 
-    if(meetingData && placeData && memberData){
-        Object.assign(meetingData[0],placeData[0],memberData[0]);
+    const sessionStorageClear = (responseCode) => {
+        sessionStorage.removeItem("meetingStartTime");
+        sessionStorage.removeItem("meetingEndTime");
+        sessionStorage.removeItem("meetingName");
+        sessionStorage.removeItem("place");
+        sessionStorage.removeItem("placeSearch");
+        if (responseCode === 401){
+            sessionStorage.removeItem("userId");
+        }
     }
+
+    const handleSubmit = (e) =>{
+        // e.preventDefault();
+        let editedData = {};
+
+        if (sessionStorage.getItem("meetingName") === ''){
+            editedData.name = meetingData[0].name;
+        }
+        else{
+            editedData.name = sessionStorage.getItem("meetingName");
+        }
+
+        if (sessionStorage.getItem("meetingStartTime") === "NaN-0NaN-0NaNT0NaN:0NaN:00" ||
+            sessionStorage.getItem("meetingStartTime") === ""){
+            editedData.startTime = meetingData[0].startTime;
+        }
+        else{
+            editedData.startTime = sessionStorage.getItem("meetingStartTime");
+        }
+
+        if (sessionStorage.getItem("meetingEndTime") === "NaN-0NaN-0NaNT0NaN:0NaN:00" ||
+            sessionStorage.getItem("meetingEndTime") === ""){
+            editedData.endTime = meetingData[0].endTime;
+        }
+        else{
+            editedData.endTime = sessionStorage.getItem("meetingEndTime");
+        }
+
+        if (sessionStorage.getItem("place") === ""){
+            editedData.place = meetingData[0].place;
+        }
+        else{
+            editedData.place = JSON.parse(sessionStorage.getItem("place"));
+        }
+
+        console.log(editedData);
+        axios(`http://localhost:8080/meetings/${meetingData[0].id}`, {
+            method : 'put',
+            headers : {
+                Authorization : `Bearer ${document.cookie}`,
+                withCredentials : true
+            },
+            data : {
+                name : sessionStorage.getItem("meetingName"),
+                startTime : sessionStorage.getItem("meetingStartTime"),
+                endTime : sessionStorage.getItem("meetingEndTime"),
+                place : JSON.parse(sessionStorage.getItem("place")),
+            }
+        })
+
+            .then(res=>{
+                console.log(res.status);
+                if (res.status === 200){
+                    alert("모임 편집을 완료했어요. 확인 버튼을 누르면 모임조회 페이지로 이동해요.");
+                    sessionStorageClear(e.status);
+                    navigate(`/managemeeting/${meetingData[0].id}?owner=true`);
+                }
+            })
+            .catch(e=>{
+                console.log(e);
+                if (e.status === 401){
+                    alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
+                    sessionStorageClear(e.status);
+                    navigate('/login');
+                }
+                else{
+                    alert("모임 편집에 실패했어요.");
+                }
+
+            });
+    }
+
 
     const handleDataChange = async (id,value) => {
         console.log(id, ":",value);
-        // if (id === "modal"){
-        //     setOpen(value);
-        // }
+        if (id === "modal"){
+            setOpen(value);
+        }
+        else{
+            sessionStorage.setItem(id,`${value}`);
+
+        }
     }
 
     return(
@@ -65,25 +156,41 @@ const EditMeeting = () => {
             <styled.BodyContainer key={elements.id}>
                 <TopNavBar pageName={"모임 편집"}
                            feature={"done"}
+                           onDataChange={handleSubmit}
                            isModalRequired={true}/>
                 <styled.FormContainer>
                     <DarkBlueWriteBox feature={""}
                                      boxTitle={"모임명"}
-                                     eventTitle={elements.title}
+                                     eventTitle={elements.name}
                                      onDataChange={handleDataChange}/>
                     <LightBlueWriteBox feature={"location"}
                                        style={{paddingTop: "none"}}
                                        boxtitle={"모임 장소"}
                                        page={"/movingkakaomap"}/>
-                    <KakaoMap lat={elements.placeLat}
-                              lon={elements.placeLon}
-                              pName={elements.placeName}/>
+                    <KakaoMap lat={sessionStorage.getItem('place') ?
+                                  parseFloat(JSON.parse(sessionStorage.getItem('place')).latitude)
+                                :
+                                elements.place.latitude}
+                              lon={sessionStorage.getItem('place') ?
+                                  parseFloat(JSON.parse(sessionStorage.getItem('place')).longitude)
+                                  :
+                                  elements.place.longitude}
+                              pName={sessionStorage.getItem('place') ?
+                                  JSON.parse(sessionStorage.getItem('place')).name
+                                :
+                                  elements.place.name}/>
                     <DoubleColumnsBox feature={"calendar"}
                                       firstLine={"모임 시작날짜"}
                                       secondLine={"모임 종료날짜"}
                                       isEditable={true}
-                                      startDate={elements.startDate}
-                                      endDate={elements.endDate}/>
+                                      startDate={sessionStorage.getItem('meetingStartTime') ?
+                                          sessionStorage.getItem('meetingStartTime')
+                                          :
+                                          elements.startTime}
+                                      endDate={sessionStorage.getItem('meetingEndTime') ?
+                                          sessionStorage.getItem('meetingEndTime')
+                                          :
+                                          elements.endTime}/>
                 </styled.FormContainer>
             </styled.BodyContainer>
         ))}
