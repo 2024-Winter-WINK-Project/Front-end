@@ -91,14 +91,12 @@ const ManageMeeting = () => {
         fetchData();
 
     }, [lat,lon]);
-    // console.log(meetingData[0])
 
     return(
         <>
         {meetingData && meetingData.map(elements=>(
             <styled.BodyContainer key={elements.id}>
                 {searchParams.get("owner") === "true" ?
-                    // isManager : 모임장인 경우
                     // true : 모임장
                     <>
                         <TopNavBar pageName={"모임 보기"}
@@ -121,8 +119,8 @@ const ManageMeeting = () => {
                                               firstLine={"모임 시작일시"}
                                               secondLine={"모임 종료일시"}
                                               isEditable={false}
-                                              startDate={elements.startTime}
-                                              endDate={elements.endTime}/>
+                                              startDate={elements.startTime.replace('T',' ')}
+                                              endDate={elements.endTime.replace('T', ' ')}/>
                             {memberData && <ListBox data={memberData}/>}
                             <TwoButtons ButtonColor={"#E7EBF7"}
                                         TextColor={"black"}
@@ -179,8 +177,8 @@ const ManageMeeting = () => {
                                               firstLine={"모임 시작날짜"}
                                               secondLine={"모임 종료날짜"}
                                               isEditable={false}
-                                              startDate={`${elements.startTime.slice(0,10)}  ${elements.startTime.slice(11,16)}`}
-                                              endDate={`${elements.endTime.slice(0,10)}  ${elements.endTime.slice(11,16)}`}/>
+                                              startDate={elements.startTime.replace('T',' ')}
+                                              endDate={elements.endTime.replace('T',' ')}/>
                             {memberData && <ListBox data={memberData}/>}
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"quit"}

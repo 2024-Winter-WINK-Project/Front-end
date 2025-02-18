@@ -12,7 +12,7 @@ const MeetingListBox = ({group,isList}) => {
                     <styled.BoxContainerMedium key={elements.id}>
                         {isList ?
                             <styled.BoxContentsContainerMedium>
-                                <styled.TextContainer onClick={() => navigate((`/managemeeting/${elements.id}`))}>
+                                <styled.TextContainer onClick={() => navigate((`/managemeeting/${elements.id}?owner=${elements.owner}`))}>
                                     <styled.TextBox style={{
                                         fontSize: '25px',
                                         fontWeight: 'bold'

@@ -14,31 +14,77 @@ import income from "../../icons/income.png";
 import axios from "axios";
 
 const Transfer = () => {
-    const {meetingId} = useParams();
+    const params = useParams();
     const [meetingData, setMeetingData] = useState();
+    const [memberData, setMemberData] = useState();
+    const [settlementData, setSettlementData] = useState();
     const [ledgerData, setLedgerData] = useState();
-    const [ledgerDetailsData, setLedgerDetailsData] = useState();
-
+    // const [ledgerDetailsData, setLedgerDetailsData] = useState();
     useEffect(() => {
         const fetchData = async () => {
-            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
-            const getLedgerData = await axios.get(`http://localhost:8000/ledgers?id=${meetingId}`);
-            const getLedgerDataDetails = await axios.get(`http://localhost:8000/ledgerDetails?id=${meetingId}`);
-            if(getMeetingData !== undefined &&
-                getLedgerData !== undefined &&
-                getLedgerDataDetails !== undefined)
+            const getMemberData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}/members`,
+            });
+
+            const getMeetingData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}`,
+
+            });
+
+            const getSettlementData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/groups/${params.meetingId}/transfer`,
+            });
+
+            const getLedgerData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/groups/${params.meetingId}/ledger`,
+            });
+
+
+
+            if(getMeetingData.status === 200 && getMemberData.status === 200 && getSettlementData.status === 200 && getLedgerData.status === 200)
             {
-                setMeetingData(getMeetingData.data);
-                setLedgerData(getLedgerData.data);
-                setLedgerDetailsData(getLedgerDataDetails.data);
+                var tmpMeetingData = [];
+                var tmpMemberData = [];
+                var tmpSettlementData = [];
+                var tmpLedgerData = [];
+                tmpMeetingData.push(getMeetingData.data);
+                setMeetingData(tmpMeetingData);
+                tmpMemberData.push(getMemberData.data);
+                setMemberData(tmpMemberData);
+                tmpSettlementData.push(getSettlementData.data);
+                setSettlementData(tmpSettlementData);
+                tmpLedgerData.push(getLedgerData.data);
+                setLedgerData(tmpLedgerData);
+
             }
         }
         fetchData();
+
     }, []);
 
     const handleCopy = async () => {
         try {
-            await window.navigator.clipboard.writeText(ledgerData[0].bankAccNum);
+            await window.navigator.clipboard.writeText(settlementData[0].accountNumber);
             alert('계좌번호가 복사되었습니다.');
         } catch (e) {
             console.error(e);
@@ -58,7 +104,7 @@ const Transfer = () => {
                             <styled.FormContainer>
                                 <DarkBlueReadBox feature={""}
                                                  boxtitle={"모임명"}
-                                                 eventTitle={elements.title}/>
+                                                 eventTitle={elements.name}/>
                                 {elements.isManager ?
                                     <>
                                         <textStyle.TextWrapper>
@@ -145,10 +191,12 @@ const Transfer = () => {
                                         <TwoButtons ButtonColor={"#E7EBF7"}
                                                     TextColor={"black"}
                                                     ButtonText1={"토스"}
-                                                    Dest={`managemeeting/${elements.id}/edit`}
+                                                    Dest={settlementData[0].tossUrl}
                                                     ButtonText2={"카카오페이"}
+                                                    Dest2={settlementData[0].kakaoUrl}
+                                                    Type={"URL"}
                                                     isModalRequired={false}
-                                                    Dest2={""}/>
+                                                    />
                                         <div onClick={handleCopy}>
                                             <OneButton ButtonColor={"#E7EBF7"}
                                                        ButtonText1={"계좌이체"}

@@ -16,37 +16,87 @@ import ModalTemplate from "../../components/Modal/ModalTemplate";
 
 
 const ChangeManager = () => {
-    const {meetingId} = useParams();
+    const params = useParams();
     const [meetingData, setMeetingData] = useState();
     const [memberData, setMemberData] = useState();
     const [radioModalOpen, setRadioModalOpen] = useState(false);
     const handleDataChange = async (id, value) => {
-        setRadioModalOpen(value);
+        if(sessionStorage.getItem("ownerId")){
+            console.log("dd")
+            axios(`http://localhost:8080/meetings/${meetingData[0].id}/delegate`, {
+                method : 'post',
+                headers : {
+                    Authorization : `Bearer ${document.cookie}`,
+                    withCredentials : true
+                },
+            })
+                .then(res=>{
+                    console.log("ds")
+                })
+                // .then(res=>{
+                //     console.log(res.status);
+                //     if (res.status === 200){
+                //         alert("모임 편집을 완료했어요. 확인 버튼을 누르면 모임조회 페이지로 이동해요.");
+                //         sessionStorageClear(e.status);
+                //         navigate(`/managemeeting/${meetingData[0].id}?owner=true`);
+                //     }
+                // })
+                // .catch(e=>{
+                //     console.log(e);
+                //     if (e.status === 401){
+                //         alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
+                //         sessionStorageClear(e.status);
+                //         navigate('/login');
+                //     }
+                //     else{
+                //         alert("모임 편집에 실패했어요.");
+                //     }
+                //
+                // });
+        }
+        // setRadioModalOpen(value);
     }
 
     useEffect(() => {
         const fetchData = async () => {
-            const getMeetingData = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
-            const getMemberData = await axios.get(`http://localhost:8000/members?id=${meetingId}`);
-            if(getMeetingData !== undefined &&
-                getMemberData !== undefined)
+            const getMemberData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}/members`,
+            });
+
+            const getMeetingData = await axios({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : `Bearer ${document.cookie}`,
+                },
+                url: `http://localhost:8080/meetings/${params.meetingId}`,
+
+            });
+
+
+            if(getMeetingData.status === 200 && getMemberData.status === 200)
             {
-                setMeetingData(getMeetingData.data);
-                setMemberData(getMemberData.data);
+                var tmpMeetingData = [];
+                var tmpMemberData = [];
+                tmpMeetingData.push(getMeetingData.data);
+                setMeetingData(tmpMeetingData);
+                tmpMemberData.push(getMemberData.data);
+                setMemberData(tmpMemberData);
             }
         }
         fetchData();
 
     }, []);
 
-    if(meetingData  && memberData){
-        Object.assign(meetingData[0],memberData[0]);
-    }
-
     return(
         <>
         {meetingData && meetingData.map(elements=>(
-            <styled.BodyContainer key={elements.id}>
+            <styled.BodyContainer key={elements.id} style={{height : 'auto'}}>
                 <TopNavBar pageName={"모임장 위임"}
                            feature={"done"}
                            isModalRequired={true}
@@ -55,10 +105,11 @@ const ChangeManager = () => {
                 <styled.FormContainer>
                     <DarkBlueReadBox feature={""}
                                      boxtitle={"모임명"}
-                                     eventTitle={elements.title}/>
+                                     eventTitle={elements.name}/>
 
                     {memberData && <ListBox
                         data={memberData}
+                        owner = {meetingData[0].owner.id}
                         mode={"radio"}/>}
                 </styled.FormContainer>
                 <ModalTemplate isOpen={radioModalOpen} onClose={() => setRadioModalOpen(false)}>
