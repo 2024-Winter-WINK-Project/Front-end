@@ -23,7 +23,7 @@ const ChangeManager = () => {
     const handleDataChange = async (id, value) => {
         if(sessionStorage.getItem("ownerId")){
             console.log("dd")
-            axios(`http://localhost:8080/meetings/${meetingData[0].id}/delegate`, {
+            axios(`http://localhost:8080/meetings/${meetingData[0].id}/delegate?newLeaderAuthId=${sessionStorage.getItem("ownerId")}`, {
                 method : 'post',
                 headers : {
                     Authorization : `Bearer ${document.cookie}`,
