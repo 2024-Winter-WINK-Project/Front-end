@@ -53,7 +53,8 @@ const LoginCallback = () => {
               const data = res?.data;
               console.log(res);
               localStorage.setItem('token', data.token);
-              navigate('/');
+              sessionStorage.setItem('userId',data.memberId);
+              navigate(`/home/${data.memberId}`);
           }
           catch (error) 
           {
