@@ -9,7 +9,7 @@ import remove from "../../icons/remove_members.png";
 import {useNavigate} from "react-router-dom";
 
 
-const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonColor2, ButtonIcon, ButtonIcon2, Dest, Dest2, onDataChange,Tag}) =>{
+const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonColor2, ButtonIcon, ButtonIcon2, Dest, Dest2, onDataChange,Tag, Type}) =>{
     const navigate = useNavigate();
 
     const iconList = { add, edit, all, select, change, remove };
@@ -88,7 +88,14 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                         :
                         <>
                             <styled.ButtonContentContainer
-                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => {
+                                if (Type === 'URL') {
+                                    window.open(`${Dest}`)
+                                }
+                                else {
+                                    navigate(`/${Dest}`)
+                                }
+                            }}>
                                 <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
                                     <styled.TextBox
                                         style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText1}</styled.TextBox>
@@ -96,7 +103,14 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                             </styled.ButtonContentContainer>
                             <div style={{width: "20px"}}/>
                             <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
-                                                           onClick={() => navigate(`/${Dest2}`)}>
+                                                           onClick={() => {
+                                                               if (Type === 'URL') {
+                                                                   window.open(`${Dest2}`)
+                                                               }
+                                                               else {
+                                                                   navigate(`/${Dest2}`)
+                                                               }
+                                                           }}>
                                 <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
                                     <styled.TextBox
                                         style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText2}</styled.TextBox>

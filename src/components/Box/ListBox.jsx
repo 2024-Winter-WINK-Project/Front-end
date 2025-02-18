@@ -2,20 +2,22 @@ import React, {useEffect, useRef, useState} from "react";
 import * as styled from "./styles";
 import me from "../../icons/me.png";
 
-const ListBox = ({data, mode}) => {
+const ListBox = ({data,owner, mode}) => {
     const [boxHeight,setBoxHeight] = useState();
-
+    console.log(owner)
+    console.log(data)
     useEffect(() => {
         if (data.length !== undefined){
-            setBoxHeight(50 + (data.length* 50));
+            setBoxHeight(50 + (data[0].length* 50));
         }
         else{
             setBoxHeight(50);
         }
     }, [data.length]);
 
-    const onDataChange = () => {
-
+    const onDataChange = (selectedMemberId) => {
+        console.log(selectedMemberId)
+        sessionStorage.setItem("ownerId",selectedMemberId);
     }
 
     return (
@@ -26,7 +28,7 @@ const ListBox = ({data, mode}) => {
                         <>
                             <div style={{width : "95%", display: "flex", alignItems : "center"}}>
                                 <styled.ProfilePicWrapper>
-                                    {elements.profilePicture !== "" ?
+                                    {elements.profilePicture !== null ?
                                         <styled.ProfilePic src={elements.profileImageUrl}/>
                                         :
                                         <div style={{background : `${me}`}}/>
@@ -40,8 +42,11 @@ const ListBox = ({data, mode}) => {
                                     <>
                                         {mode === "radio" ?
                                             <input type="radio"
+                                                   name="member"
                                                    style={{width: "30px", height: "30px"}}
-                                                   onChange={onDataChange}></input>
+                                                   onChange={() => onDataChange(elements.memberId)}
+                                                   disabled={elements.memberId === owner ? true : false}
+                                            ></input>
                                             :
                                             <input type="checkbox"
                                                    style={{width: "30px", height: "30px"}}
@@ -59,8 +64,15 @@ const ListBox = ({data, mode}) => {
                                 }
 
                             </div>
-                            
-                            <styled.DivideLine/>
+                            <>
+                                {elements.id === (data[0].length - 2) ?
+                                    <></>
+                                    :
+                                    <styled.DivideLine>
+                                        {elements.id}
+                                    </styled.DivideLine>
+                                }
+                            </>
                         </>
 
 
