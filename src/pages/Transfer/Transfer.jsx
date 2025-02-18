@@ -84,8 +84,14 @@ const Transfer = () => {
 
     const handleCopy = async () => {
         try {
-            await window.navigator.clipboard.writeText(settlementData[0].accountNumber);
-            alert('계좌번호가 복사되었습니다.');
+            if (settlementData[0].accountNumber === null){
+                alert("모임장이 계좌번호를 등록하지 않았어요. 다른 방법으로 시도해 주세요.");
+            }
+            else{
+                await window.navigator.clipboard.writeText(settlementData[0].accountNumber);
+                alert('계좌번호가 복사되었습니다.');
+            }
+
         } catch (e) {
             console.error(e);
             alert('클립보드 복사에 실패했습니다.');
