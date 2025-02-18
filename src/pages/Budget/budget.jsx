@@ -42,7 +42,8 @@ export default function History() {
           type: detail.type,
           image: detail.amount > 0 ? Withdrawal : Deposit,
           description: detail.description,
-          amount: detail.type === "income" ? `+${detail.amount.toLocaleString()}` : `-${detail.amount.toLocaleString()}`
+          amountFormatted: detail.type === "income" ? `+${detail.amount.toLocaleString()}` : `-${detail.amount.toLocaleString()}`,
+          amount: detail.amount
         }));
 
         setTransactions(formattedTransactions);
@@ -126,7 +127,7 @@ export default function History() {
               name={transaction.type}
               image={transaction.image}
               description={transaction.description}
-              amount={transaction.amount}
+              amount={transaction.amountFormatted}
               memo={transaction.memo}
               onClick={() => navigate(`/history/${transaction.id}`, { state: { ...transaction, isManager } })}
             />
