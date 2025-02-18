@@ -12,7 +12,7 @@ const MeetingListBox = ({group,isList}) => {
                     <styled.BoxContainerMedium key={elements.id}>
                         {isList ?
                             <styled.BoxContentsContainerMedium>
-                                <styled.TextContainer onClick={() => navigate((`/managemeeting/${elements.id}`))}>
+                                <styled.TextContainer onClick={() => navigate((`/managemeeting/${elements.id}?owner=${elements.owner}`))}>
                                     <styled.TextBox style={{
                                         fontSize: '25px',
                                         fontWeight: 'bold'
@@ -20,7 +20,7 @@ const MeetingListBox = ({group,isList}) => {
                                     <styled.TextBox>{elements.startTime.slice(0, 10)} ~ {elements.endTime.slice(0, 10)}</styled.TextBox>
 
                                 </styled.TextContainer>
-                                <styled.BoxIcon onClick={() => navigate(`/budget/${elements.id}`)}
+                                <styled.BoxIcon onClick={() => navigate(`/budget/${elements.id}?owner=${elements.owner}`)}
                                                 src={calculate}></styled.BoxIcon>
                             </styled.BoxContentsContainerMedium>
                             :

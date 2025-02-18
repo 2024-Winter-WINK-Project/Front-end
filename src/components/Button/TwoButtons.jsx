@@ -9,7 +9,7 @@ import remove from "../../icons/remove_members.png";
 import {useNavigate} from "react-router-dom";
 
 
-const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonColor2, ButtonIcon, ButtonIcon2, Dest, Dest2, onDataChange,Tag}) =>{
+const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonColor2, ButtonIcon, ButtonIcon2, Dest, Dest2, onDataChange,Tag, Type}) =>{
     const navigate = useNavigate();
 
     const iconList = { add, edit, all, select, change, remove };
@@ -88,7 +88,19 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                         :
                         <>
                             <styled.ButtonContentContainer
-                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => {
+                                if (Type === 'URL') {
+                                    if (Dest === null) {
+                                        alert("모임장이 해당 송금코드를 등록하지 않았어요. 다른 방법으로 시도해 주세요.")
+                                    }
+                                    else {
+                                        window.open(`${Dest}`)
+                                    }
+                                }
+                                else {
+                                    navigate(`/${Dest}`)
+                                }
+                            }}>
                                 <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
                                     <styled.TextBox
                                         style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText1}</styled.TextBox>
@@ -96,7 +108,19 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                             </styled.ButtonContentContainer>
                             <div style={{width: "20px"}}/>
                             <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
-                                                           onClick={() => navigate(`/${Dest2}`)}>
+                                                           onClick={() => {
+                                                               if (Type === 'URL') {
+                                                                   if (Dest2 === null) {
+                                                                       alert("모임장이 해당 송금코드를 등록하지 않았어요. 다른 방법으로 시도해 주세요.")
+                                                                   }
+                                                                   else {
+                                                                       window.open(`${Dest2}`)
+                                                                   }
+                                                               }
+                                                               else {
+                                                                   navigate(`/${Dest2}`)
+                                                               }
+                                                           }}>
                                 <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
                                     <styled.TextBox
                                         style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText2}</styled.TextBox>
