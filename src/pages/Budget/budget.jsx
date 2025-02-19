@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
@@ -13,30 +13,27 @@ export default function History() {
   const [btnState, setBtnState] = useState('all');
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
-  const [isManager, setIsManager] = useState(false);
   const navigate = useNavigate();
   const { meetingId } = useParams();
+  const [searchParams] = useSearchParams();
+  const isOwner = searchParams.get("owner") == "true";
 
   useEffect(() => {
     const fetchLedgerData = async () => {
       try {
-        // 모임장 여부
-        const meetingResponse = await axios.get(`http://localhost:8000/meeting?id=${meetingId}`);
-        if (meetingResponse.data.length > 0) {
-          setIsManager(meetingResponse.data[0].isManager);
-        }
-        
-        // 가계부 데이터
-        const ledgerResponse = await axios.get(`http://localhost:8000/ledgers?id=${meetingId}`);
+        // 가계부 데이터 요청
+        const ledgerResponse = await axios.get(`http://localhost:8000/groups/${meetingId}/ledger`);
         const ledger = ledgerResponse.data[0];
 
         if (!ledger) return;
 
         setBalance(ledger.balance);
 
-        const detailsResponse = await axios.get(`http://localhost:8000/ledgerDetails?id=${meetingId}`);
+        // 거래 내역 데이터 요청
+        const detailsResponse = await axios.get(`http://localhost:8000/groups/${meetingId}/ledger/transactions`);
         const filteredDetails = detailsResponse.data;
 
+        // 거래 내역 데이터 가공
         const formattedTransactions = filteredDetails.map(detail => ({
           id: detail.id,
           type: detail.type,
@@ -57,18 +54,17 @@ export default function History() {
 
   const handleButtonClick = (type) => {
     if (type === 'addHistory') {
-      if (isManager) {
-        setBtnState(type);
+      if(isOwner) {
         navigate('/addhistory');
       } else {
-        alert('모임장만 추가 가능합니다.');
+        alert("모임장만 추가할 수 있습니다.");
       }
     } else if (type === 'transfer') {
       navigate(`/budget/${meetingId}/transfer`);
     } else {
       setBtnState(type);
     }
-  };  
+  };
 
   const filteredTransactions = btnState === 'all'
     ? transactions
@@ -129,7 +125,7 @@ export default function History() {
               description={transaction.description}
               amount={transaction.amountFormatted}
               memo={transaction.memo}
-              onClick={() => navigate(`/history/${transaction.id}`, { state: { ...transaction, isManager } })}
+              onClick={() => navigate(`/history/${transaction.id}`)}
             />
           ))}
         </style.HistoryContainer>
