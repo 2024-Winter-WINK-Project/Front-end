@@ -50,7 +50,7 @@ const App = () =>{
                     <Route path="/mypage:memberId" element={<MyPage />}/>
                     <Route path="/budget/:meetingId" element={<Budget />}/>
                     <Route path="/budget/:meetingId/transfer" element={<Transfer />}/>
-                    <Route path="/addhistory" element={<AddHistory />}/>
+                    <Route path="/budget/:meetingId/addhistory" element={<AddHistory />}/>
                     <Route path="/history/:id" element={<HistoryDetail />} />
                 </Routes>
                 <BottomNavBar />

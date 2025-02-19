@@ -11,8 +11,9 @@ export default function History() {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [memo, setMemo] = useState('');
-  const { meetingId } = useParams();
   const navigate = useNavigate();
+  const { meetingId } = useParams();
+  const groupId = meetingId;
 
   const handleButtonClick = (type) => {
     setBtnState(type);
@@ -25,45 +26,41 @@ export default function History() {
     }
 
     // 숫자로 변환 후, 수입/지출에 따라 부호 적용
-    let numericAmount = Number(String(amount).replace(/[^0-9.]/g, "")); // 숫자로 변환
-  
-    if (btnState === "expenditure") {
-      numericAmount = `-${numericAmount}`;
-    } else {
-      numericAmount = `+${numericAmount}`;
-    }
-  
-    console.log("🔢 변환된 amount 값:", numericAmount);
+    let numericAmount = parseInt(amount, 10) || 0; // 정수 변환, 빈값은 0 처리
+    numericAmount = btnState === "expenditure" ? -numericAmount : numericAmount;
+    console.log("변환된 amount 값:", numericAmount);
 
     // 전송할 데이터 객체
     const requestData = {
-      type: btnState,
+      category: btnState,
       description,
       amount: numericAmount,
-      memo,
+      // memo,
     };
 
     console.log(`추가하려는 데이터:`, requestData);
 
     try {
-      await axios.post(`http://localhost:8000/ledgers/${meetingId}/transaction`, {
-        type: btnState,
-        description,
-        amount: numericAmount,
-        memo,
-      });
-
-      console.log("✅ 내역 추가 성공");
+      const res = await axios.post(
+        `http://localhost:8080/groups/${groupId}/ledger/transactions`,
+        requestData,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${document.cookie}`,
+            },
+        }
+      );
       alert("내역이 추가되었습니다.");
       navigate(`/budget/${meetingId}`);
     } catch (error) {
-      console.error("❌ 내역 추가 실패:", error);
+      console.error("내역 추가 실패:", error);
       alert("내역 추가 실패");
     }
   };
 
   return (
-      <>
+    <>
       <TopNavBar pageName={"내역 추가"} feature={"done"} isModalRequired={true} onDataChange={handleSubmit} dest={"/"}/>
       <style.Wrapper>
         <style.ButtonWrapper>
@@ -83,37 +80,40 @@ export default function History() {
             content={'지출'}
             onClick={() => handleButtonClick('expenditure')}
           />
-          </style.ButtonWrapper>
-          <style.FormContainer>
-            <Input
-              width={'376px'}
-              height={'60px'}
-              type={'text'}
-              placeholder={'거래내역 작성...'}
-              name={btnState}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <Input
-              width={'376px'}
-              height={'60px'}
-              type={'number'}
-              placeholder={'금액 작성...'}
-              name={btnState}
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-            <Input
-              width={'376px'}
-              height={'376px'}
-              type={'textarea'}
-              placeholder={'메모...'}
-              name={btnState}
-              value={memo}
-              onChange={(e) => setMemo(e.target.value)}
-            />
-          </style.FormContainer>
-        </style.Wrapper>
-      </>
-    );
+        </style.ButtonWrapper>
+        <style.FormContainer>
+          <Input
+            width={'376px'}
+            height={'60px'}
+            type={'text'}
+            placeholder={'거래내역 작성...'}
+            name={btnState}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <Input
+            width={'376px'}
+            height={'60px'}
+            type={'text'}
+            placeholder={'금액 작성...'}
+            name={btnState}
+            value={amount}
+            onChange={(e) => {
+              const input = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 허용
+              setAmount(input);
+            }}
+          />
+          <Input
+            width={'376px'}
+            height={'376px'}
+            type={'textarea'}
+            placeholder={'메모...'}
+            name={btnState}
+            value={memo}
+            onChange={(e) => setMemo(e.target.value)}
+          />
+        </style.FormContainer>
+      </style.Wrapper>
+    </>
+  );
 }
