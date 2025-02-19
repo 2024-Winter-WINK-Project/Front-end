@@ -9,125 +9,129 @@ import Add from '../../assets/Budget/history.svg';
 import Transfer from '../../assets/Budget/transfer.svg';
 import * as style from './styles.jsx';
 
-export default function History() {
+export default function Budget() {
   const [btnState, setBtnState] = useState('all');
-  const [balance, setBalance] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const navigate = useNavigate();
-  const { meetingId } = useParams();
   const [searchParams] = useSearchParams();
-  const isOwner = searchParams.get("owner") == "true";
+  const isOwner = searchParams.get("owner") === "true";
+  const { meetingId } = useParams();
+  const groupId = meetingId;
+
+  // 가계부 데이터 가져오는 함수
+  const fetchLedgerData = async () => {
+    try {
+      const ledgerResponse = await axios.get(`http://localhost:8080/groups/${groupId}/ledger`, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${document.cookie}`,
+        },
+      });
+  
+      console.log("API 응답:", ledgerResponse.data);
+  
+      if (ledgerResponse.status === 200) {
+        const { totalAmount, details } = ledgerResponse.data;
+  
+        if (typeof totalAmount !== "undefined") {
+          console.log("가져온 잔액:", totalAmount);
+          setTotalAmount(totalAmount);
+        }
+  
+        if (Array.isArray(details)) {
+          console.log("가져온 거래 내역:", details);
+  
+          // 거래 내역을 가공하여 필요한 데이터 추가
+          const formattedTransactions = details.map(transaction => ({
+            id: transaction.id,
+            category: transaction.category,
+            image: transaction.category === "income" ? Deposit : Withdrawal,
+            description: transaction.description,
+            amountFormatted: transaction.category === "income"
+              ? `+${transaction.amount.toLocaleString()}원`
+              : `-${transaction.amount.toLocaleString()}원`,
+            amount: transaction.amount,
+          }));
+  
+          setTransactions(formattedTransactions);
+        }
+      }
+    } catch (error) {
+      console.error("데이터 불러오기 실패:", error);
+    }
+  };  
 
   useEffect(() => {
-    const fetchLedgerData = async () => {
-      try {
-        // 가계부 데이터 요청
-        const ledgerResponse = await axios.get(`http://localhost:8000/groups/${meetingId}/ledger`);
-        const ledger = ledgerResponse.data[0];
-
-        if (!ledger) return;
-
-        setBalance(ledger.balance);
-
-        // 거래 내역 데이터 요청
-        const detailsResponse = await axios.get(`http://localhost:8000/groups/${meetingId}/ledger/transactions`);
-        const filteredDetails = detailsResponse.data;
-
-        // 거래 내역 데이터 가공
-        const formattedTransactions = filteredDetails.map(detail => ({
-          id: detail.id,
-          type: detail.type,
-          image: detail.amount > 0 ? Withdrawal : Deposit,
-          description: detail.description,
-          amountFormatted: detail.type === "income" ? `+${detail.amount.toLocaleString()}` : `-${detail.amount.toLocaleString()}`,
-          amount: detail.amount
-        }));
-
-        setTransactions(formattedTransactions);
-      } catch (error) {
-        console.error("데이터 불러오기 실패:", error);
-      }
-    };
-
-    fetchLedgerData();
-  }, [meetingId]);
+    if (groupId) {
+      fetchLedgerData();
+    }
+  }, [groupId, totalAmount]);
 
   const handleButtonClick = (type) => {
-    if (type === 'addHistory') {
-      if(isOwner) {
-        navigate('/addhistory');
-      } else {
-        alert("모임장만 추가할 수 있습니다.");
-      }
-    } else if (type === 'transfer') {
-      navigate(`/budget/${meetingId}/transfer`);
+    if (type === "addHistory") {
+        if (isOwner) {
+            navigate(`/budget/${meetingId}/addhistory`);
+        } else {
+            alert("모임장만 추가할 수 있습니다.");
+        }
+    } else if (type === "transfer") {
+        navigate(`/budget/${groupId}/transfer`);
     } else {
-      setBtnState(type);
+        setBtnState(type);
     }
   };
 
   const filteredTransactions = btnState === 'all'
     ? transactions
-    : transactions.filter(item => item.type === btnState);
+    : transactions.filter(item => item.category  === btnState);
+
 
   return (
     <>
-      <TopNavBar pageName={"가계부"} isModalRequired={true}/>
+      <TopNavBar pageName={"가계부"} isModalRequired={true} />
       <style.Wrapper>
         <Button
-          name={'budget'}
-          description={'잔액'}
-          amount={`${balance.toLocaleString()}원`}
+          name={"budget"}
+          description={"잔액"}
+          amount={`${totalAmount.toLocaleString()}원`}
         />
         <style.ButtonWrapper>
           <style.Label>
-            <Button
-              name={'options'}
-              image={Withdrawal}
-              onClick={() => handleButtonClick('income')}
-            />
+            <Button name={"options"} image={Withdrawal} onClick={() => handleButtonClick("income")} />
             <span>수입만 보기</span>
           </style.Label>
           <style.Label>
-            <Button
-              name={'options'}
-              image={Deposit}
-              onClick={() => handleButtonClick('expenditure')}
-            />
+            <Button name={"options"} image={Deposit} onClick={() => handleButtonClick("expenditure")} />
             <span>지출만 보기</span>
           </style.Label>
           <style.Label>
-            <Button
-              name={'options'}
-              image={Add}
-              onClick={() => handleButtonClick('addHistory')}
-            />
+            <Button name={"options"} image={Add} onClick={() => handleButtonClick("addHistory")} />
             <span>내역 추가</span>
           </style.Label>
           <style.Label>
-            <Button
-              name={'options'}
-              image={Transfer}
-              onClick={() => handleButtonClick('transfer')}
-            />
+            <Button name={"options"} image={Transfer} onClick={() => handleButtonClick("transfer")} />
             <span>송금하기</span>
           </style.Label>
         </style.ButtonWrapper>
         <style.HistoryContainer>
           <style.HistoryTitle>거래 내역</style.HistoryTitle>
-          {filteredTransactions.map((transaction) => (
-            <Button
-              key={transaction.id}
-              width={'360px'}
-              height={'80px'}
-              name={transaction.type}
-              image={transaction.image}
-              description={transaction.description}
-              amount={transaction.amountFormatted}
-              memo={transaction.memo}
-              onClick={() => navigate(`/history/${transaction.id}`)}
-            />
-          ))}
+          {filteredTransactions.length > 0 ? (
+            filteredTransactions.map(transaction => (
+              <Button
+                key={transaction.id}
+                width={"360px"}
+                height={"80px"}
+                name={transaction.category}
+                image={transaction.image}
+                description={transaction.description}
+                amount={transaction.amountFormatted}
+                onClick={() => navigate(`/history/${transaction.id}`)}
+              />
+            ))
+          ) : (
+            <p>거래 내역이 없습니다.</p>
+          )}
         </style.HistoryContainer>
       </style.Wrapper>
     </>
