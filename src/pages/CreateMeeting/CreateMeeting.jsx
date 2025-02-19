@@ -54,12 +54,15 @@ const CreateMeeting = () => {
     }
     const handleSubmit = (e) =>{
         // e.preventDefault();
-        if(!(
-            sessionStorage.getItem("meetingName") ||
-            sessionStorage.getItem("meetingStartTime") ||
-            sessionStorage.getItem("meetingEndTime") ||
-            JSON.parse(sessionStorage.getItem("place"))
-        ))
+        if(
+            !(sessionStorage.getItem("meetingName") &&
+            sessionStorage.getItem("meetingStartTime") &&
+            sessionStorage.getItem("meetingEndTime") &&
+            JSON.parse(sessionStorage.getItem("place")))
+            || !(sessionStorage.getItem("kakaoURL")||
+                sessionStorage.getItem("tossURL")||
+                sessionStorage.getItem("bankAccountNumber"))
+        )
         {
             alert("모임 가입에 필요한 필수 정보를 입력해 주세요.");
         }
@@ -88,7 +91,7 @@ const CreateMeeting = () => {
                     console.log(res.status);
                     if (res.status === 200){
                         alert("모임 등록을 완료했어요. 확인 버튼을 누르면 홈으로 이동해요.");
-                        sessionStorageClear(e.status);
+                        sessionStorageClear(res.status);
                         navigate(`/home/${sessionStorage.getItem('userId')}`);
                     }
                 })
@@ -136,7 +139,7 @@ const CreateMeeting = () => {
                                   onDataChange={handleDataChange}/>
                 <DoubleColumnsBox feature={"plus"}
                                   firstLine={"정산링크 등록"}
-                                  secondLine={"나중에 설정에서 변경할 수 있어요"}
+                                  secondLine={"모임 생성 완료 후에는 수정이 불가해요."}
                                   isEditable={false}
                                   onDataChange={handleDataChange}/>
                 <div onClick={(e) => e.stopPropagation()}>

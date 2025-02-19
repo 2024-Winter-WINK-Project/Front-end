@@ -14,7 +14,7 @@ const BottomNavBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname;
-    const userId = localStorage.getItem("userId");
+    const userId = sessionStorage.getItem("userId");
     return(
         <>
             {currentPath === "/login" ?
