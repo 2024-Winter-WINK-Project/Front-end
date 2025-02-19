@@ -90,7 +90,12 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                             <styled.ButtonContentContainer
                                 style={{backgroundColor: `${ButtonColor}`}} onClick={() => {
                                 if (Type === 'URL') {
-                                    window.open(`${Dest}`)
+                                    if (Dest === null) {
+                                        alert("모임장이 해당 송금코드를 등록하지 않았어요. 다른 방법으로 시도해 주세요.")
+                                    }
+                                    else {
+                                        window.open(`${Dest}`)
+                                    }
                                 }
                                 else {
                                     navigate(`/${Dest}`)
@@ -105,7 +110,12 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                             <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor}`}}
                                                            onClick={() => {
                                                                if (Type === 'URL') {
-                                                                   window.open(`${Dest2}`)
+                                                                   if (Dest2 === null) {
+                                                                       alert("모임장이 해당 송금코드를 등록하지 않았어요. 다른 방법으로 시도해 주세요.")
+                                                                   }
+                                                                   else {
+                                                                       window.open(`${Dest2}`)
+                                                                   }
                                                                }
                                                                else {
                                                                    navigate(`/${Dest2}`)
