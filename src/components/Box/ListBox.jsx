@@ -4,8 +4,9 @@ import me from "../../icons/me.png";
 
 const ListBox = ({data,owner, mode}) => {
     const [boxHeight,setBoxHeight] = useState();
-    console.log(owner)
-    console.log(data)
+    // console.log(owner)
+    // console.log(data)
+    var deleteList = new Set([]);
     useEffect(() => {
         if (data.length !== undefined){
             setBoxHeight(50 + (data[0].length* 50));
@@ -44,12 +45,26 @@ const ListBox = ({data,owner, mode}) => {
                                             <input type="radio"
                                                    name="member"
                                                    style={{width: "30px", height: "30px"}}
-                                                   onChange={() => onDataChange(elements.memberId)}
+                                                   onChange={() => {
+                                                       sessionStorage.setItem("ownerId",elements.memberId);
+                                                   }}
                                                    disabled={elements.memberId === owner ? true : false}
                                             ></input>
                                             :
                                             <input type="checkbox"
                                                    style={{width: "30px", height: "30px"}}
+                                                   disabled={elements.memberId === owner ? true : false}
+                                                   id={elements.memberId}
+                                                   onChange={() => {
+                                                       if(document.getElementById(elements.memberId).checked === true){
+                                                            deleteList.add(elements.memberId);
+                                                       }
+                                                       else {
+                                                            deleteList.delete(elements.memberId);
+                                                       }
+                                                       sessionStorage.setItem("deleteMembersId",JSON.stringify(Array.from(deleteList)));
+
+                                                   }}
                                             ></input>
                                         }
                                     </>

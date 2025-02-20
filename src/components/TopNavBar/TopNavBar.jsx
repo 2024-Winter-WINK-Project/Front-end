@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import UploadModal from "../Modal/UploadModal.jsx";
 import Modal from "../Modal/modal.jsx";
 import * as styled from "./styles";
+import * as SessionCleaner from "../../components/SessionStorageCleaner/SessionStorageCleaner";
+
 
 const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest, data}) =>{
     const iconList = { add, done };
@@ -48,7 +50,7 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                 <>
                     <styled.BarContainer>
                         <styled.BarContentsContainer>
-                            <styled.ButtonIcons src={back} onClick={() => navigate(`/home/${userId}`, { replace: true })} />
+                            <styled.ButtonIcons src={back} onClick={() => navigate(-1)} />
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>
@@ -66,7 +68,10 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                 <styled.BarContainer>
                     {isBackRequired ?
                         <styled.BarContentsContainer>
-                            <styled.ButtonIcons src={back} onClick={() => navigate(`/home/${userId}`, {replace: true})}/>
+                            <styled.ButtonIcons src={back} onClick={() => {
+                                SessionCleaner.SessionStorageCleaner();
+                                navigate(-1);
+                            }}/>
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>

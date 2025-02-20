@@ -12,7 +12,6 @@ import ListBox from "../../components/Box/ListBox";
 import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
 
-
 const EditMeeting = () => {
     const {meetingId} = useParams();
     const [meetingData, setMeetingData] = useState();
@@ -21,6 +20,7 @@ const EditMeeting = () => {
     const params = useParams();
     const navigate = useNavigate();
     useEffect(() => {
+
         const fetchData = async () => {
             const getMeetingData = await axios({
                 method: 'GET',
@@ -70,72 +70,86 @@ const EditMeeting = () => {
     const handleSubmit = (e) =>{
         // e.preventDefault();
         let editedData = {};
-
-        if (sessionStorage.getItem("meetingName") === ''){
+        let isEmpty = true;
+        console.log(sessionStorage.getItem("meetingName"));
+        if (sessionStorage.getItem("meetingName") === '' ||
+            sessionStorage.getItem("meetingName") === null){
             editedData.name = meetingData[0].name;
+
         }
         else{
             editedData.name = sessionStorage.getItem("meetingName");
+            isEmpty = false;
         }
 
         if (sessionStorage.getItem("meetingStartTime") === "NaN-0NaN-0NaNT0NaN:0NaN:00" ||
-            sessionStorage.getItem("meetingStartTime") === ""){
+            sessionStorage.getItem("meetingStartTime") === "" ||
+            sessionStorage.getItem("meetingStartTime") === null){
             editedData.startTime = meetingData[0].startTime;
         }
         else{
             editedData.startTime = sessionStorage.getItem("meetingStartTime");
+            isEmpty = false;
         }
 
         if (sessionStorage.getItem("meetingEndTime") === "NaN-0NaN-0NaNT0NaN:0NaN:00" ||
-            sessionStorage.getItem("meetingEndTime") === ""){
+            sessionStorage.getItem("meetingEndTime") === "" ||
+            sessionStorage.getItem("meetingEndTime") === null){
             editedData.endTime = meetingData[0].endTime;
         }
         else{
             editedData.endTime = sessionStorage.getItem("meetingEndTime");
+            isEmpty = false;
         }
 
-        if (sessionStorage.getItem("place") === ""){
+        if (sessionStorage.getItem("place") === "" ||
+            sessionStorage.getItem("place") === null){
             editedData.place = meetingData[0].place;
         }
         else{
             editedData.place = JSON.parse(sessionStorage.getItem("place"));
+            isEmpty = false;
         }
-
-        console.log(editedData);
-        axios(`http://localhost:8080/meetings/${meetingData[0].id}`, {
-            method : 'put',
-            headers : {
-                Authorization : `Bearer ${document.cookie}`,
-                withCredentials : true
-            },
-            data : {
-                name : sessionStorage.getItem("meetingName"),
-                startTime : sessionStorage.getItem("meetingStartTime"),
-                endTime : sessionStorage.getItem("meetingEndTime"),
-                place : JSON.parse(sessionStorage.getItem("place")),
-            }
-        })
-
-            .then(res=>{
-                console.log(res.status);
-                if (res.status === 200){
-                    alert("모임 편집을 완료했어요. 확인 버튼을 누르면 모임조회 페이지로 이동해요.");
-                    sessionStorageClear(e.status);
-                    navigate(`/managemeeting/${meetingData[0].id}?owner=true`);
+        if (isEmpty === true){
+            alert("편집할 내용을 입력해 주세요.");
+        }
+        else{
+            axios(`http://localhost:8080/meetings/${meetingData[0].id}`, {
+                method : 'put',
+                headers : {
+                    Authorization : `Bearer ${document.cookie}`,
+                    withCredentials : true
+                },
+                data : {
+                    name : sessionStorage.getItem("meetingName"),
+                    startTime : sessionStorage.getItem("meetingStartTime"),
+                    endTime : sessionStorage.getItem("meetingEndTime"),
+                    place : JSON.parse(sessionStorage.getItem("place")),
                 }
             })
-            .catch(e=>{
-                console.log(e);
-                if (e.status === 401){
-                    alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
-                    sessionStorageClear(e.status);
-                    navigate('/login');
-                }
-                else{
-                    alert("모임 편집에 실패했어요.");
-                }
 
-            });
+                .then(res=>{
+                    console.log(res.status);
+                    if (res.status === 200){
+                        alert("모임 편집을 완료했어요. 확인 버튼을 누르면 모임조회 페이지로 이동해요.");
+                        sessionStorageClear(res.status);
+                        navigate(`/managemeeting/${meetingData[0].id}?owner=true`);
+                    }
+                })
+                .catch(e=>{
+                    console.log(e);
+                    if (e.status === 401){
+                        alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
+                        sessionStorageClear(e.status);
+                        navigate('/login');
+                    }
+                    else{
+                        alert("모임 편집에 실패했어요.");
+                    }
+
+                });
+        }
+
     }
 
 
@@ -146,7 +160,6 @@ const EditMeeting = () => {
         }
         else{
             sessionStorage.setItem(id,`${value}`);
-
         }
     }
 
