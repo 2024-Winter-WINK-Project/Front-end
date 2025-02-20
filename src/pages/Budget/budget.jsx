@@ -43,7 +43,7 @@ export default function Budget() {
           console.log("가져온 거래 내역:", details);
   
           // 거래 내역을 가공하여 필요한 데이터 추가
-          const formattedTransactions = details.map(transaction => ({
+          const formattedTransactions = details.map((transaction) => ({
             id: transaction.id,
             category: transaction.category,
             image: transaction.category === "income" ? Deposit : Withdrawal,
@@ -126,7 +126,9 @@ export default function Budget() {
                 image={transaction.image}
                 description={transaction.description}
                 amount={transaction.amountFormatted}
-                onClick={() => navigate(`/history/${transaction.id}`)}
+                onClick={() => navigate(`/history/${meetingId}/${transaction.id}?owner=${isOwner}`, {
+                  state: { transaction, groupId, isOwner },
+                })}
               />
             ))
           ) : (

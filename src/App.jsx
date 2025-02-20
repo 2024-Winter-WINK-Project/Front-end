@@ -47,11 +47,11 @@ const App = () =>{
                     <Route path="/transfer/:meetingId/selectmembers" element={<SelectMembers />}/>
                     <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
                     <Route path="/nickname" element={<Nickname />}/>
--                    <Route path="/mypage/:memberId" element={<MyPage />}/>
+                    <Route path="/mypage/:memberId" element={<MyPage />}/>
                     <Route path="/budget/:meetingId" element={<Budget />}/>
                     <Route path="/budget/:meetingId/transfer" element={<Transfer />}/>
                     <Route path="/budget/:meetingId/addhistory" element={<AddHistory />}/>
-                    <Route path="/history/:id" element={<HistoryDetail />} />
+                    <Route path="/history/:meetingId/:transactionId" element={<HistoryDetail />} />
                 </Routes>
                 <BottomNavBar />
         </BrowserRouter>

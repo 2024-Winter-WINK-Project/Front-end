@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
@@ -10,21 +10,28 @@ import * as style from './styles.jsx';
 export default function ViewHistory() {
   const location = useLocation();
   const navigate = useNavigate();
-  const transaction = location.state || {};
-  const isManager = transaction.isManager || false;
+  const [searchParams] = useSearchParams();
+  const isOwner = searchParams.get("owner") === "true";
+  const { meetingId } = useParams();
+  const groupId = meetingId;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [selectedType, setSelectedType] = useState(transaction.type || 'income');
-  const [description, setDescription] = useState(transaction.description || '');
-  const [amount, setAmount] = useState(transaction.amount || '');
-  const [memo, setMemo] = useState(transaction.memo || '');
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const transaction = location.state?.transaction || {};
+  const [transactionId, setTransactionId] = useState(transaction?.id || '');
+  const [selectedType, setSelectedType] = useState(transaction?.category || 'income');
+  const [description, setDescription] = useState(transaction?.description || '');
+  const [amount, setAmount] = useState(transaction?.amount || '');
+  const [memo, setMemo] = useState(transaction?.memo || '');
 
-  const groupId = transaction.groupId;
-  const transactionId = transaction.id;
+  useEffect(() => {
+    if (!transaction || Object.keys(transaction).length === 0) {
+      console.error("거래 데이터가 없습니다.");
+    }
+  }, [transaction]);
 
-  const handleButtonClick = (type) => {
-    if (isManager) {
-      setSelectedType(type);
+  const handleButtonClick = (category) => {
+    if (isOwner) {
+      setSelectedType(category);
     }
   };
 
@@ -36,60 +43,74 @@ export default function ViewHistory() {
     setIsModalOpen(false);
   };
 
-  if (!transaction.id) return <span>거래 내역 없음</span>;
-
   const handleUpdate = async () => {
-    // 숫자로 변환 후, 수입/지출에 따라 부호 적용
-    let numericAmount = Number(String(amount).replace(/[^0-9.]/g, "")); // 숫자로 변환
-  
-    if (selectedType === "expenditure") {
-      numericAmount = `-${numericAmount}`;
-    } else {
-      numericAmount = `+${numericAmount}`;
+    if (!transactionId) {
+      alert("거래 내역을 찾을 수 없습니다.");
+      return;
     }
-  
-    console.log("변환된 amount:", numericAmount);
-  
-    const updatedTransaction = {
-      type: selectedType,
-      description,
-      amount: numericAmount,
-      memo,
-    };
-  
-    console.log("전송할 데이터:", updatedTransaction);
+
+    const parsedAmount = selectedType === 'income' ? Math.abs(Number(amount)) : -Math.abs(Number(amount));
   
     try {
-      const response = await axios.put(
-        `http://localhost:8000/ledgerDetails/${transaction.id}`,
-        updatedTransaction
+      const res = await axios.put(
+        `http://localhost:8080/groups/${groupId}/ledger/transactions/${transactionId}`,
+        {
+          id: transactionId,
+          category: selectedType,
+          description,
+          amount: parsedAmount,
+          memo,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${document.cookie}`,
+          },
+        }
       );
-
-      closeModal();
+  
+      console.log("수정 성공:", res.data);
+      alert("거래 내역이 수정되었습니다.");
       navigate(-1); // 이전 페이지로 이동
     } catch (error) {
       console.error("수정 실패:", error);
-    }
-  };  
-
-  const handleDelete = async () => {
-    console.log(`삭제하려는 데이터:`, transaction);
-
-    try {
-      await axios.delete(`http://localhost:8000/ledgerDetails/${transaction.id}`);
-      closeModal();
-      navigate(-1); // 이전 페이지로 이동
-    } catch (error) {
-      console.error("삭제 실패:", error);
+      alert("수정 중 오류가 발생했습니다.");
     }
   };
 
+  const handleDelete = async () => {
+    if (!transactionId) {
+      alert("거래 내역을 찾을 수 없습니다.");
+      return;
+    }
+  
+    try {
+      await axios.delete(
+        `http://localhost:8080/groups/${groupId}/ledger/transactions/${transactionId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${document.cookie}`,
+          },
+        }
+      );
+  
+      alert("거래 내역이 삭제되었습니다.");
+      navigate(-1); // 이전 페이지로 이동
+    } catch (error) {
+      console.error("삭제 실패:", error);
+      alert("삭제 중 오류가 발생했습니다.");
+    }
+  };
+
+  if (!transaction) return <span>거래 내역 없음</span>;
+
   return (
       <>
-      {isManager ? (
+      {isOwner ? (
         <TopNavBar pageName={"내역 수정"} feature={"done"} isModalRequired={true} onDataChange={handleUpdate} dest={"/"} />
       ) : (
-        <TopNavBar pageName={"내역 보기"} isModalRequired={true} onDataChange={handleDelete} dest={"/"} />
+        <TopNavBar pageName={"내역 보기"} isModalRequired={true} dest={"/"} />
       )}
       <style.Wrapper>
         <style.ButtonWrapper>
@@ -105,7 +126,7 @@ export default function ViewHistory() {
           <Button
             width={'168px'}
             height={'68px'}
-            name={'outcome'}
+            name={'expenditure'}
             type={'detail'}
             content={'지출'}
             onClick={() => handleButtonClick('expenditure')}
@@ -113,7 +134,7 @@ export default function ViewHistory() {
           />
         </style.ButtonWrapper>
         <style.FormContainer>
-          {isManager && (
+          {isOwner && (
             <Button
               width={'376px'}
               height={'60px'}
@@ -129,8 +150,8 @@ export default function ViewHistory() {
             type={'text'}
             name={selectedType}
             value={description}
-            readOnly={!isManager}
-            onChange={(e) => isManager && setDescription(e.target.value)}
+            readOnly={!isOwner}
+            onChange={(e) => isOwner && setDescription(e.target.value)}
           />
           <Input
             width={'376px'}
@@ -138,8 +159,8 @@ export default function ViewHistory() {
             type={'text'}
             name={selectedType}
             value={amount}
-            readOnly={!isManager}
-            onChange={(e) => isManager && setAmount(e.target.value)}
+            readOnly={!isOwner}
+            onChange={(e) => isOwner && setAmount(e.target.value)}
           />
           <Input
             width={'376px'}
@@ -147,8 +168,8 @@ export default function ViewHistory() {
             type={'textarea'}
             name={selectedType}
             value={memo}
-            readOnly={!isManager}
-            onChange={(e) => isManager && setMemo(e.target.value)}
+            readOnly={!isOwner}
+            onChange={(e) => isOwner && setMemo(e.target.value)}
           />
         </style.FormContainer>
       </style.Wrapper>
