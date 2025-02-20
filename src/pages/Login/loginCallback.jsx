@@ -27,8 +27,11 @@ const LoginCallback = () => {
           }
         );
 
-        const data = res?.data;
+        const data = res.data;
         sessionStorage.setItem('userId', data.memberId);
+        sessionStorage.setItem('nickName', data.nickName);
+        sessionStorage.setItem('profileUrl', data.profileUrl);
+        
         navigate(`/home/${data.memberId}`);
       } catch (error) {
         console.error('로그인 오류:', error);
