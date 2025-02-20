@@ -81,7 +81,6 @@ const ManageMeeting = () => {
                     setLat(position.coords.latitude);
                     setLon(position.coords.longitude); // 경도
                 });
-                console.log(lat)
             }
 
             else{
@@ -103,7 +102,7 @@ const ManageMeeting = () => {
                                    feature={"done"}
                                    isModalRequired={false}
                                    isBackRequired={true}
-                                   dest={"/"}/>
+                                   dest={`/home/${sessionStorage.getItem("userId")}`}/>
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                               boxtitle={"모임명"}

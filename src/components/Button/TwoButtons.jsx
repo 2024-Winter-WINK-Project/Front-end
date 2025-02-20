@@ -6,19 +6,32 @@ import all from "../../icons/settle_up_for_all.png";
 import select from "../../icons/settle_up_for_selected_members.png";
 import change from "../../icons/change_manager.png";
 import remove from "../../icons/remove_members.png";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,useLocation} from "react-router-dom";
 
 
-const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, ButtonColor2, ButtonIcon, ButtonIcon2, Dest, Dest2, onDataChange,Tag, Type}) =>{
+const TwoButtons = ({isModalRequired,ButtonColor,
+                        ButtonText1,ButtonText2,
+                        ButtonColor2, ButtonIcon,
+                        ButtonIcon2, Dest, Dest2,
+                        onDataChange,Tag, Type, onSubmit}) =>{
     const navigate = useNavigate();
-
     const iconList = { add, edit, all, select, change, remove };
     const feat = iconList[ButtonIcon] || null;
     const feat2 = iconList[ButtonIcon2] || null;
-
     const openModal = () => {
         onDataChange(`${Tag}`,true);
+    }
 
+    const submitData = () =>{
+        if (Type === '멤버 삭제'){
+            onSubmit('deletemember');
+        }
+        else if (Type === '모임 삭제'){
+            onSubmit('deletemeeting');
+        }
+        else if (Type === '모임 탈퇴'){
+            onSubmit('quitmeeting')
+        }
     }
     return (
         <styled.ButtonContainer>
@@ -71,7 +84,7 @@ const TwoButtons = ({isModalRequired,ButtonColor, ButtonText1,ButtonText2, Butto
                     {isModalRequired ?
                         <>
                             <styled.ButtonContentContainer
-                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => navigate(`/${Dest}`)}>
+                                style={{backgroundColor: `${ButtonColor}`}} onClick={() => submitData()}>
                                 <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
                                     <styled.TextBox
                                         style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText1}</styled.TextBox>
