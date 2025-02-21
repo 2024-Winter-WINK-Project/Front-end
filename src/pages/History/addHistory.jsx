@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
@@ -14,6 +14,8 @@ export default function History() {
   const navigate = useNavigate();
   const { meetingId } = useParams();
   const groupId = meetingId;
+  const [searchParams] = useSearchParams();
+  const isOwner = searchParams.get("owner") === "true";
 
   const handleButtonClick = (type) => {
     setBtnState(type);
@@ -52,7 +54,7 @@ export default function History() {
         }
       );
       alert("내역이 추가되었습니다.");
-      navigate(`/budget/${meetingId}`);
+      navigate(`/budget/${meetingId}?owner=${isOwner}`);
     } catch (error) {
       console.error("내역 추가 실패:", error);
       alert("내역 추가 실패");

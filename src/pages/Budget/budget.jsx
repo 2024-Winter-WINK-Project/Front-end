@@ -71,7 +71,7 @@ export default function Budget() {
   const handleButtonClick = (type) => {
     if (type === "addHistory") {
         if (isOwner) {
-            navigate(`/budget/${meetingId}/addhistory`);
+            navigate(`/budget/${meetingId}/addhistory?owner=${isOwner}`);
         } else {
             alert("모임장만 추가할 수 있습니다.");
         }
