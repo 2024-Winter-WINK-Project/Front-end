@@ -9,6 +9,7 @@ import MyPage from "./pages/MyPage/myPage.jsx";
 import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
 import HistoryDetail from './pages/History/HistoryDetail.jsx';
+import InvitationCallback from './pages/Nickname/checkInvite.jsx';
 import Nickname from "./pages/Nickname/nickname.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
@@ -46,7 +47,8 @@ const App = () =>{
                     <Route path="/managemeeting/:meetingId/removemembers" element={<SelectMembers />}/>
                     <Route path="/transfer/:meetingId/selectmembers" element={<SelectMembers />}/>
                     <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
-                    <Route path="/nickname" element={<Nickname />}/>
+                    <Route path="/meetings/:meetingId/invitations" element={<InvitationCallback />}/>
+                    <Route path="/meetings/:meetingId/invitations/:invitationCod/nickname" element={<Nickname />}/>
                     <Route path="/mypage/:memberId" element={<MyPage />}/>
                     <Route path="/budget/:meetingId" element={<Budget />}/>
                     <Route path="/budget/:meetingId/transfer" element={<Transfer />}/>
