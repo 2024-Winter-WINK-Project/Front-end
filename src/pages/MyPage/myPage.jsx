@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Profile from '../../assets/MyPage/profile.svg';
 import Button from '../../components/Button/ProfileButton.jsx';
@@ -42,38 +43,38 @@ export default function MyPage() {
   const handleSignOutConfirm = async () => {
     try {
       await axios.get(`http://localhost:8080/auth/logout`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+        withCredentials: true,
       });
-
+  
+      sessionStorage.clear();
       alert("로그아웃 완료");
       navigate('/login');
     } catch (error) {
+      console.error("로그아웃 실패:", error.response?.data || error.message);
       alert("로그아웃 실패");
     }
-  };  
+  };
 
   // 탈퇴
   const handleDeleteConfirm = async () => {
-  try {
-    await axios.delete(`http://localhost:8080/auth/withdraw`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    alert("회원 탈퇴 완료");
-    navigate('/login');
-  } catch (error) {
-    console.error(error);
-    if (error.response && error.response.status === 400) {
-      alert("소속된 모임이 있어 탈퇴할 수 없습니다.");
-    } else {
-      alert("회원 탈퇴 실패");
+    try {
+      await axios.delete(`http://localhost:8080/auth/withdraw`, {
+        withCredentials: true,
+      });
+  
+      sessionStorage.clear();
+      alert("회원 탈퇴 완료");
+      navigate('/login');
+    } catch (error) {
+      console.error("탈퇴 실패:", error.response?.data || error.message);
+  
+      if (error.response?.status === 400) {
+        alert("소속된 모임이 있어 탈퇴할 수 없습니다.");
+      } else {
+        alert("회원 탈퇴 실패");
+      }
     }
-  }
-};
+  };
 
 return (
   <>
