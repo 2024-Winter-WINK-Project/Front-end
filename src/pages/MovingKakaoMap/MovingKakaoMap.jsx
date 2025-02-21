@@ -56,7 +56,6 @@ const MovingKakaoMap = () => {
                         latitude : place.y,
                         longitude : place.x,
                         name : place.place_name}))
-                console.log(JSON.parse(sessionStorage.getItem('place')))
             });
 
         }

@@ -18,7 +18,8 @@ import EditMeeting from "./pages/ManageMeeting/EditMeeting";
 import Transfer from "./pages/Transfer/Transfer";
 import SelectMembers from "./pages/ManageMeeting/SelectMembers";
 import LoginCallback from './pages/Login/loginCallback';
-
+import {PrivateRoute} from './components/Session/PrivateRoute';
+import NotFound from "./pages/NotFound/NotFound";
 
 const App = () =>{
     useEffect(() => {
@@ -35,23 +36,25 @@ const App = () =>{
         <BrowserRouter>
                 <GlobalStyles/>
                 <Routes>
-                    <Route path="/login" element={<Login />}/>
+                    <Route index element={<Login />}/>
                     <Route exact path='/oauth' element={<LoginCallback />} />
-                    <Route path="/home/:memberId" element={<Home />}/>
-                    <Route path="/meetinglist/:memberId" element={<MeetingList />}/>
-                    <Route path="/createmeeting" element={<CreateMeeting />}/>
-                    <Route path="/managemeeting/:meetingId" element={<ManageMeeting />}/>
-                    <Route path="/managemeeting/:meetingId/edit" element={<EditMeeting />}/>
-                    <Route path="/managemeeting/:meetingId/changemanager" element={<ChangeManager />}/>
-                    <Route path="/managemeeting/:meetingId/removemembers" element={<SelectMembers />}/>
-                    <Route path="/transfer/:meetingId/selectmembers" element={<SelectMembers />}/>
-                    <Route path="/movingkakaomap" element={<MovingKakaoMap />}/>
-                    <Route path="/nickname" element={<Nickname />}/>
--                    <Route path="/mypage/:memberId" element={<MyPage />}/>
-                    <Route path="/budget/:meetingId" element={<Budget />}/>
-                    <Route path="/budget/:meetingId/transfer" element={<Transfer />}/>
-                    <Route path="/addhistory" element={<AddHistory />}/>
-                    <Route path="/history/:id" element={<HistoryDetail />} />
+                    <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>}/>
+                    <Route path="/meetinglist" element={<PrivateRoute><MeetingList /></PrivateRoute>}/>
+                    <Route path="/createmeeting" element={<PrivateRoute><CreateMeeting /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/:skey" element={<PrivateRoute><ManageMeeting /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/:skey/edit" element={<PrivateRoute><EditMeeting /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/:skey/changemanager" element={<PrivateRoute><ChangeManager /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/:skey/removemembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
+                    <Route path="/transfer/:meetingId/selectmembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
+                    <Route path="/movingkakaomap" element={<PrivateRoute><MovingKakaoMap /></PrivateRoute>}/>
+                    <Route path="/nickname" element={<PrivateRoute><Nickname /></PrivateRoute>}/>
+                    <Route path="/mypage/:memberId" element={<PrivateRoute><MyPage /></PrivateRoute>}/>
+                    <Route path="/budget/:meetingId" element={<PrivateRoute><Budget /></PrivateRoute>}/>
+                    <Route path="/budget/:meetingId/transfer" element={<PrivateRoute><Transfer /></PrivateRoute>}/>
+                    <Route path="/addhistory" element={<PrivateRoute><AddHistory /></PrivateRoute>}/>
+                    <Route path="/history/:id" element={<PrivateRoute><HistoryDetail /></PrivateRoute>} />
+                    <Route path="*" element={<NotFound />} />
+
                 </Routes>
                 <BottomNavBar />
         </BrowserRouter>

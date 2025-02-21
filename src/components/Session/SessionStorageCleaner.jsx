@@ -6,5 +6,4 @@ export function SessionStorageCleaner(response_status){
     if (response_status !== 401){
         sessionStorage.setItem("userId",tmpData);
     }
-    alert("클리너 끝")
 }

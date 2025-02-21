@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 const pname = window.location.pathname;
-console.log(pname)
 const GlobalStyles = createGlobalStyle`
     
     * {
@@ -15,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
         overflow-x: hidden;
 
         @media (max-width: 699px){
-            margin-top: ${pname === "/login" ? '0' : '5vh'};
+            margin-top: ${pname === "/" ? '0' : '5vh'};
             margin-bottom: 6vh;
         }
         

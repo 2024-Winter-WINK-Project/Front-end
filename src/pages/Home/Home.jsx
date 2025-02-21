@@ -1,21 +1,26 @@
 import React, {useEffect, useState} from "react";
+import {useLocation, useSearchParams, useNavigate} from "react-router-dom";
 import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "./styles";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
 import axios from "axios";
-
+import * as crypto from "../../components/Others/Crypto";
+import * as ValuesCheck from "../../components/Others/ValuesCheck";
 
 const Home = () =>{
     const [latestGroup,setLatestGroup] = useState();
-    const [cookie, setCookie] = useState();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id');
+    
 
     useEffect(() => {
+        ValuesCheck.ValuesCheck("userId",id);
         const fetchData = async () => {
             const getLatestGroup = await axios({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    authorization : `Bearer ${document.cookie}`,
+                    authorization : `Bearer ${document.cookie}`
                 },
                 url: 'http://localhost:8080/meetings/latest',
 
@@ -23,11 +28,11 @@ const Home = () =>{
             if(getLatestGroup.status === 200)
             {
                 setLatestGroup(getLatestGroup.data);
-                console.log(getLatestGroup);
             }
 
         }
         fetchData();
+
     }, []);
 
     return (
