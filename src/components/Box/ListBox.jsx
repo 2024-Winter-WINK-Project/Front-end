@@ -4,8 +4,6 @@ import me from "../../icons/me.png";
 
 const ListBox = ({data,owner, mode}) => {
     const [boxHeight,setBoxHeight] = useState();
-    // console.log(owner)
-    // console.log(data)
     var deleteList = new Set([]);
     useEffect(() => {
         if (data.length !== undefined){
@@ -17,22 +15,20 @@ const ListBox = ({data,owner, mode}) => {
     }, [data.length]);
 
     const onDataChange = (selectedMemberId) => {
-        console.log(selectedMemberId)
         sessionStorage.setItem("ownerId",selectedMemberId);
     }
-
     return (
         <styled.BoxContainerList style={{height : `${boxHeight}px`}}>
             <styled.BoxContentsContainerList>
                 <styled.ListElement>
-                    {data[0] && data[0].map(elements => (
+                    {data[0] && data[0].map((elements, index) => (
                         <>
                             <div style={{width : "95%", display: "flex", alignItems : "center"}}>
                                 <styled.ProfilePicWrapper>
                                     {elements.profilePicture !== null ?
                                         <styled.ProfilePic src={elements.profileImageUrl}/>
                                         :
-                                        <div style={{background : `${me}`}}/>
+                                        <div style={{background : `black` }}/>
                                     }
 
                                 </styled.ProfilePicWrapper>
@@ -70,7 +66,7 @@ const ListBox = ({data,owner, mode}) => {
                                     </>
                                 :
                                     <>
-                                        {elements.socialId === 20250101000 ?
+                                        {elements.memberId === 1 ?
                                             <img src={me} style={{width: "30px", height: "30px"}}></img>
                                             :
                                             <div style={{width: "30px", height: "30px"}}></div>
@@ -79,15 +75,11 @@ const ListBox = ({data,owner, mode}) => {
                                 }
 
                             </div>
-                            <>
-                                {elements.id === (data[0].length - 2) ?
-                                    <></>
-                                    :
-                                    <styled.DivideLine>
-                                        {elements.id}
-                                    </styled.DivideLine>
-                                }
-                            </>
+                            {index !== data[0].length - 1 && (
+                                <styled.DivideLine>
+                                    {elements.id}
+                                </styled.DivideLine>
+                            )}
                         </>
 
 

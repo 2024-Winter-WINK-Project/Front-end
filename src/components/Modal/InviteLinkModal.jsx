@@ -21,7 +21,6 @@ const InviteLinkModal = ({onDataChange}) => {
         }
         fetchData();
     },[]);
-    console.log(invitation)
     const closeModal = () => {
         onDataChange("doneModal",false);
     }
@@ -30,7 +29,6 @@ const InviteLinkModal = ({onDataChange}) => {
             await window.navigator.clipboard.writeText(invitation);
             alert('링크가 복사되었습니다.');
         } catch (e) {
-            console.error(e);
             alert('클립보드 복사에 실패했습니다.');
         }
     };
@@ -39,23 +37,30 @@ const InviteLinkModal = ({onDataChange}) => {
         <>
             <styled.TitleBoxContainer>
                 <styled.TitleBox>
-                    <styled.TextBox style={{fontWeight : "bold"}}>초대링크 생성</styled.TextBox>
+                    <styled.TextBox style={{fontWeight: "bold"}}>초대링크 생성</styled.TextBox>
                 </styled.TitleBox>
                 <styled.CloseIcon src={close} onClick={closeModal}/>
             </styled.TitleBoxContainer>
-            <styled.TextBox style={{fontSize: "20px", marginTop: "10px", textAlign: "left", width: "90%", lineHeight :"80px"}}>
-                초대 링크 생성이 완료되었어요.
-            </styled.TextBox>
-            <div id={invitation} onClick={handleCopy}>
-                <OneButton ButtonColor="#E7EBF7"
-                           ButtonText1="클립보드에 복사하기"
-                           TextColor={"Black"}
-                           isCopyRequired={true}/>
-            </div>
+            <styled.TitleBoxContainer style={{display : 'flex', flexDirection : 'column'}}>
+                <styled.TextBox
+                    style={{fontSize: "20px", marginTop: "10px", textAlign: "left", width: "90%", lineHeight: "25px"}}>
+                    초대 링크 생성이 완료되었어요.
+                </styled.TextBox>
+                <styled.TextBox
+                    style={{fontSize: "20px", marginTop: "10px", textAlign: "left", width: "90%", lineHeight: "25px"}}>
+                    링크는 24시간이 지나면 쓸 수 없어요.
+                </styled.TextBox>
+            </styled.TitleBoxContainer>
+                <div id={invitation} onClick={handleCopy}>
+                    <OneButton ButtonColor="#E7EBF7"
+                               ButtonText1="클립보드에 복사하기"
+                               TextColor={"Black"}
+                               isCopyRequired={true}/>
+                </div>
 
 
-        </>
-    );
-};
+            </>
+            );
+            };
 
-export default InviteLinkModal;
+            export default InviteLinkModal;

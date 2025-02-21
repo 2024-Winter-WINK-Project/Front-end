@@ -3,16 +3,20 @@ import * as styled from "./styles";
 import group_manager from "../../icons/group_manager.png";
 import calculate from "../../icons/calculator.png";
 import {useNavigate} from "react-router-dom";
+import * as crypto from "../Others/Crypto";
+
 
 const MeetingListBox = ({group,isList}) => {
     const navigate = useNavigate();
+
     return(
         <>
             {group && group.map(elements=>(
                     <styled.BoxContainerMedium key={elements.id}>
                         {isList ?
                             <styled.BoxContentsContainerMedium>
-                                <styled.TextContainer onClick={() => navigate((`/managemeeting/${elements.id}?owner=${elements.owner}`))}>
+                                <styled.TextContainer onClick={() => {
+                                    navigate((`/managemeeting/${elements.id}/` + crypto.encrypt(`${elements.owner}`)))}}>
                                     <styled.TextBox style={{
                                         fontSize: '25px',
                                         fontWeight: 'bold'
@@ -25,7 +29,7 @@ const MeetingListBox = ({group,isList}) => {
                             </styled.BoxContentsContainerMedium>
                             :
                             <styled.BoxContentsContainerMedium
-                                onClick={() => navigate((`/managemeeting/${elements.id}?owner=${elements.owner}`))}>
+                                onClick={() => navigate((`/managemeeting/${elements.id}/` + crypto.encrypt(`${elements.owner}`)))}>
                                 <styled.TextContainer>
                                     <styled.TextBox style={{
                                         fontSize: '25px',

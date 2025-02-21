@@ -7,22 +7,20 @@ import OneButton from "../Button/OneButton";
 import TwoButtons from "../Button/TwoButtons";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
+import * as crypto from "../Others/Crypto";
 
 const AskModal = ({mode,onDataChange}) => {
     const closeModal = () => {
         onDataChange("doneModal",false);
     }
     const params = useParams();
+    console.log(params)
     const sessionStorageClear = (status) =>{
         if (status === 401){
             sessionStorage.removeItem("userId");
         }
     }
     const navigate = useNavigate();
-    const stringToArr = (string) => {
-        console.log(JSON.parse(sessionStorage.getItem("deleteMembersId")).length);
-
-    }
     const submitData = (operations) =>{
         if (operations === "deletemember"){
             var tmpArr = JSON.parse(sessionStorage.getItem("deleteMembersId"));
@@ -36,13 +34,12 @@ const AskModal = ({mode,onDataChange}) => {
                     }
                 }
             }
-            stringToArr();
             alert("모임 멤버 삭제를 완료했어요. 확인 버튼을 누르면 모임 조회 화면으로 이동해요.");
-            navigate(`/managemeeting/${params.meetingId}?owner=true`);
+            navigate(`/managemeeting/${params.meetingId}/kjbbY3zR3mFD79QsAvJztw~~`);
 
         }
         else if (operations === "deletemeeting"){
-            axios(`http://localhost:8080/meetings/${window.location.pathname.slice(15)}`, {
+            axios(`http://localhost:8080/meetings/${params.meetingId}`, {
                 method : 'DELETE',
                 headers : {
                     Authorization : `Bearer ${document.cookie}`,
@@ -53,7 +50,7 @@ const AskModal = ({mode,onDataChange}) => {
                     console.log(res.status);
                     if (res.status === 200){
                         alert("모임 삭제를 완료했어요. 확인 버튼을 누르면 홈화면으로 이동해요.");
-                        navigate(`/home/${sessionStorage.getItem("userId")}`);
+                        navigate(`/home?id=${sessionStorage.getItem("userId")}`);
                     }
                 })
                 .catch(e=>{
@@ -70,7 +67,7 @@ const AskModal = ({mode,onDataChange}) => {
                 });
         }
         else if (operations === "quitmeeting"){
-            axios(`http://localhost:8080/meetings/${window.location.pathname.slice(15)}/members`, {
+            axios(`http://localhost:8080/meetings/${params.meetingId}/members`, {
                 method : 'DELETE',
                 headers : {
                     Authorization : `Bearer ${document.cookie}`,
@@ -81,7 +78,7 @@ const AskModal = ({mode,onDataChange}) => {
                     console.log(res.status);
                     if (res.status === 200){
                         alert("모임 탈퇴를 완료했어요. 모임 재가입은 초대 코드를 받으면 가능해요. 확인 버튼을 누르면 홈화면으로 이동해요.");
-                        navigate(`/home/${sessionStorage.getItem("userId")}`);
+                        navigate(`/home?id=${sessionStorage.getItem("userId")}`);
                     }
                 })
                 .catch(e=>{

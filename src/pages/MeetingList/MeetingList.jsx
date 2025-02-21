@@ -50,9 +50,11 @@ const MeetingList = () =>{
                 <styled.TextWrapper>
                     <styled.TextBox>내가 초대받은 모임</styled.TextBox>
                 </styled.TextWrapper>
-                {invitedgroup && <MeetingListBox group={invitedgroup} isList={true}/>}
+                {invitedgroup !== undefined ?
+                    <MeetingListBox group={invitedgroup} isList={true}/>
+                :
+                    <div>아직 등록된 모임이 없어요.</div>}
             </styled.ContentContainer>
-
         </styled.BodyContainer>
     )
 }

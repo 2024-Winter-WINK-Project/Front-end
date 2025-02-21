@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import * as styled from "./styles";
 import * as budgetStyle from "../Budget/styles";
 import * as textStyle from "../Home/styles";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import TopNavBar from "../../components/TopNavBar/TopNavBar";
 import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import TwoButtons from "../../components/Button/TwoButtons";
@@ -11,15 +11,19 @@ import Button from "../../components/Button/BudgetButton";
 import OneButton from "../../components/Button/OneButton";
 import expenditure from "../../icons/expenditure.png";
 import income from "../../icons/income.png";
+import DoneModal from "../../components/Modal/DoneModal";
+import ModalTemplate from "../../components/Modal/ModalTemplate";
 import axios from "axios";
 
 const Transfer = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const [meetingData, setMeetingData] = useState();
     const [memberData, setMemberData] = useState();
     const [settlementData, setSettlementData] = useState();
     const [ledgerData, setLedgerData] = useState();
-    // const [ledgerDetailsData, setLedgerDetailsData] = useState();
+    const [doneModalOpen, setDoneModalOpen] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             const getMemberData = await axios({
@@ -75,7 +79,17 @@ const Transfer = () => {
                 setSettlementData(tmpSettlementData);
                 tmpLedgerData.push(getLedgerData.data);
                 setLedgerData(tmpLedgerData);
-
+                sessionStorage.setItem("income",0);
+                sessionStorage.setItem("expenditure",0);
+                for (let i = 0; i < getLedgerData.data.details.length; i++) {
+                    if (getLedgerData.data.details[i].category === 'income'){
+                        sessionStorage.setItem("income",parseInt(sessionStorage.getItem("income"))+getLedgerData.data.details[i].amount);
+                    }
+                    else{
+                        sessionStorage.setItem("expenditure",parseInt(sessionStorage.getItem("expenditure"))+getLedgerData.data.details[i].amount);
+                    }
+                }
+                sessionStorage.setItem("total",parseInt(sessionStorage.getItem("income"))-parseInt(sessionStorage.getItem("expenditure")));
             }
         }
         fetchData();
@@ -102,47 +116,47 @@ const Transfer = () => {
         <>
             {meetingData && meetingData.map(elements=>(
                 <styled.BodyContainer key={elements.id}>
-                            <TopNavBar pageName={"정산하기"}
-                                       feature={""}
-                                       isModalRequired={false}
+                            <TopNavBar pageName={"정산 요청하기"}
+                                       feature={"done"}
+                                       isModalRequired={true}
                                        isBackRequired={true}/>
 
                             <styled.FormContainer>
                                 <DarkBlueReadBox feature={""}
                                                  boxtitle={"모임명"}
                                                  eventTitle={elements.name}/>
-                                {elements.isManager ?
-                                    <>
-                                        <textStyle.TextWrapper>
+                                {elements.isManager !== false ?
+                                    <div style={{display : 'flex',flexDirection : "column", alignItems : "center"}}>
+                                        <textStyle.TextWrapper style={{width : "100%"}}>
                                             <textStyle.TextBox style={{lineHeight: "60px"}}>거래 내역</textStyle.TextBox>
                                         </textStyle.TextWrapper>
                                         <budgetStyle.HistoryContainer style={{width: "100%", gap: "10px"}}>
-                                            {ledgerDetailsData && ledgerDetailsData.map(details => (
+                                            {ledgerData !== undefined ? ledgerData[0].details.map(details => (
                                                 <Button
                                                     key={details.id}
                                                     width={'100%'}
                                                     height={'80px'}
-                                                    name={details.type}
-                                                    image={details.type === "income" ? income : expenditure}
+                                                    name={details.category}
+                                                    image={details.category === "income" ? income : expenditure}
                                                     description={details.description}
-                                                    amount={details.type === "income" ? `+${details.amount.toLocaleString()}원` : `-${details.amount.toLocaleString()}원`}
+                                                    amount={details.category === "income" ? `+${details.amount.toLocaleString()}원` : `-${details.amount.toLocaleString()}원`}
                                                     // memo={details.memo}
                                                     // onClick={() => navigate(`/history/${details.id}`, {state: details})}
                                                 />
-                                            ))}
+                                            )) :
+                                                <div>dd</div>
+                                            }
                                         </budgetStyle.HistoryContainer>
+                                        <div style={{width : '100%'}}>
                                         {ledgerData && ledgerData.map(details => (
-                                            <div key={details.id}>
-                                                <textStyle.TextWrapper style={{width : "100%",height: "80px", display : "flex", justifyContent :"space-around"}}>
+                                            <div style={{display : "flex", flexDirection : "column", alignItems : "center"}}>
+                                                <textStyle.TextWrapper style={{width : "95%",height: "60px", display : "flex", justifyContent :"space-between"}}>
                                                     <textStyle.TextBox style={{fontWeight: "bold"}}>총 수입</textStyle.TextBox>
-                                                    <textStyle.TextBox style={{color: "#0234A8"}}>{details.totalIncome.toLocaleString()}원</textStyle.TextBox>
-
+                                                    <textStyle.TextBox style={{color: "#0234A8"}}>+{parseInt(sessionStorage.getItem("income")).toLocaleString()}원</textStyle.TextBox>
                                                 </textStyle.TextWrapper>
-
-                                                <textStyle.TextWrapper style={{width: "100%" , justifyContent :"space-around"}}>
+                                                <textStyle.TextWrapper style={{width: "95%", display: "flex", justifyContent: "space-between"}}>
                                                     <textStyle.TextBox style={{fontWeight: "bold"}}>총 지출</textStyle.TextBox>
-                                                    <textStyle.TextBox style={{color: "#A80202"}}>{details.totalExpenditure.toLocaleString()}원</textStyle.TextBox>
-
+                                                    <textStyle.TextBox style={{color: "#A80202"}}>-{parseInt(sessionStorage.getItem("expenditure")).toLocaleString()}원</textStyle.TextBox>
                                                 </textStyle.TextWrapper>
                                                 <div style={{
                                                     width: "100%",
@@ -153,12 +167,13 @@ const Transfer = () => {
                                                 }}>
                                                     <styled.DivideLine/>
                                                 </div>
-                                                <textStyle.TextWrapper style={{width: "100%", height: "40px" , justifyContent :"space-around"}}>
+                                                <textStyle.TextWrapper style={{width: "95%", height: "40px" , justifyContent :"space-between"}}>
                                                     <textStyle.TextBox style={{fontWeight: "bold", fontSize: "25px"}}>정산 금액</textStyle.TextBox>
-                                                    <textStyle.TextBox style={{color: "#A80202"}}>{details.balance.toLocaleString()}원</textStyle.TextBox>
+                                                    <textStyle.TextBox style={{fontWeight: "bold", fontSize: "25px",color: "#A80202"}}>{parseInt(sessionStorage.getItem("total")).toLocaleString()}원</textStyle.TextBox>
                                                 </textStyle.TextWrapper>
                                             </div>
                                         ))}
+                                        </div>
                                         <div style={{
                                             width: "100%",
                                             height: "30px",
@@ -168,20 +183,61 @@ const Transfer = () => {
                                         }}>
                                             <styled.DivideLine/>
                                         </div>
-                                        <textStyle.TextWrapper style={{width: "100%", justifyContent: "center"}}>
-                                            <textStyle.TextBox style={{fontWeight: "bold"}}>누구에게 정산요청 할까요?
-                                            </textStyle.TextBox>
-                                        </textStyle.TextWrapper>
 
-                                        <TwoButtons ButtonColor={"#E7EBF7"}
-                                                    TextColor={"black"}
-                                                    ButtonText1={"모두에게"}
-                                                    ButtonIcon={"all"}
-                                                    Dest={""}
-                                                    ButtonText2={"선택된 멤버만"}
-                                                    ButtonIcon2={"select"}
-                                                    Dest2={`/transfer/${elements.id}/selectmembers`}/>
-                                    </>
+                                        <>
+                                        {parseInt(sessionStorage.getItem("total")) > 0?
+                                            <>
+                                                <div style={{width: "95%", lineHeight : "25px"}}>정산해야할 금액이 없거나 0보다 크면 정산을 할 수 없어요.
+                                                    <button style={{marginLeft : "5px",width : "20px",height : "20px",border : "none", borderRadius : "20px",backgroundColor :"grey",color : "white"}} onClick={() => setDoneModalOpen(true)}>?</button>
+                                                </div>
+
+                                                <ModalTemplate isOpen={doneModalOpen} onClose={() => setDoneModalOpen(false)}>
+                                                    <DoneModal onDataChange={() => setDoneModalOpen(false)} isNotify={true}/>
+                                                </ModalTemplate>
+                                            </>
+
+                                            :
+
+                                            <>
+                                                <textStyle.TextWrapper style={{
+                                                    width: "95%",
+                                                    height: "40px",
+                                                    justifyContent: "space-between"
+                                                }}>
+                                                    <textStyle.TextBox style={{fontWeight: "bold"}}>1인 당 정산 금액
+                                                    </textStyle.TextBox>
+                                                </textStyle.TextWrapper>
+                                                <textStyle.TextWrapper style={{
+                                                    width: "95%",
+                                                    height: "40px",
+                                                }}>
+                                                    <textStyle.TextBox
+                                                        style={{color: "#A80202"}}>{Math.abs(parseInt(sessionStorage.getItem("total"))).toLocaleString()}원
+                                                        / {settlementData[0].memberID.length}명
+                                                        = {Math.abs(parseInt(sessionStorage.getItem("total"))) / settlementData[0].memberID.length}원
+                                                    </textStyle.TextBox>
+                                                </textStyle.TextWrapper>
+                                                <textStyle.TextWrapper style={{
+                                                    width: "95%",
+                                                    height: "80px",
+                                                }}>
+                                                    <textStyle.TextBox style={{height : '90px',fontSize : "15px", color: "grey", display : "flex", alignItems : "center"}}>
+                                                        체크 버튼을 누르면 모임 멤버(들)에게 정산 요청이 전달돼요.
+                                                    </textStyle.TextBox>
+                                                </textStyle.TextWrapper>
+
+                                                {/*<TwoButtons ButtonColor={"#E7EBF7"}*/}
+                                                {/*            TextColor={"black"}*/}
+                                                {/*            ButtonText1={"모두에게"}*/}
+                                                {/*            ButtonIcon={"all"}*/}
+                                                {/*            Dest={""}*/}
+                                                {/*            ButtonText2={"선택된 멤버만"}*/}
+                                                {/*            ButtonIcon2={"select"}*/}
+                                                {/*            Dest2={`/transfer/${elements.id}/selectmembers`}/>*/}
+                                            </>
+                                        }
+                                        </>
+                                    </div>
                                     :
                                     <>
                                         <textStyle.TextWrapper>
@@ -189,7 +245,7 @@ const Transfer = () => {
                                         </textStyle.TextWrapper>
                                         <OneButton ButtonColor={"#E7EBF7"}
                                                    ButtonText1={"5000원"}
-                                                    TextColor={"#0234A8"}/>
+                                                   TextColor={"#0234A8"}/>
                                         <textStyle.TextWrapper style={{height: "80px"}}>
                                             <textStyle.TextBox style={{fontWeight: "bold"}}>송금 방법</textStyle.TextBox>
                                         </textStyle.TextWrapper>

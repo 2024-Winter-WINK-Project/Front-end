@@ -17,21 +17,21 @@ const BottomNavBar = () => {
     const userId = sessionStorage.getItem("userId");
     return(
         <>
-            {currentPath === "/login" ?
+            {currentPath === "/" ?
                 <></>
                 :
                 <styled.BarContainer>
                     <styled.BarContentsContainer>
-                        <styled.ButtonContainer onClick={() => navigate(`/home/${userId}`)}>
-                            {currentPath === `/home/${userId}` ?
+                        <styled.ButtonContainer onClick={() => navigate(`/home?id=${userId}`)}>
+                            {currentPath === `/home` ?
                                 <styled.ButtonIcons src={home_filled}/>
                                 :
                                 <styled.ButtonIcons src={home}/>
                             }
                             <styled.ButtonStyles>홈</styled.ButtonStyles>
                         </styled.ButtonContainer>
-                        <styled.ButtonContainer onClick={() => navigate(`/meetinglist/${userId}`)}>
-                            {currentPath === `/meetinglist/${userId}` ?
+                        <styled.ButtonContainer onClick={() => navigate(`/meetinglist?id=${userId}`)}>
+                            {currentPath === `/meetinglist` ?
                                 <styled.ButtonIcons src={group_setting_filled}/>
                                 :
                                 <styled.ButtonIcons src={group_setting}/>

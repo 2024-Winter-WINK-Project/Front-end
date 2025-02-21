@@ -13,7 +13,8 @@ import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
 import AskModal from "../../components/Modal/AskModal";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
-
+import * as SessionCleaner from "../../components/Session/SessionStorageCleaner";
+import {useNavigateBack} from "../../components/Others/useNavigateBack";
 
 const ChangeManager = () => {
     const params = useParams();
@@ -21,7 +22,7 @@ const ChangeManager = () => {
     const [memberData, setMemberData] = useState();
     const [radioModalOpen, setRadioModalOpen] = useState(false);
     const navigate = useNavigate();
-
+    const navigateBack = useNavigateBack();
     const sessionStorageClear = (responseCode) => {
         sessionStorage.removeItem("ownerId");
         if (responseCode === 401){
@@ -32,7 +33,6 @@ const ChangeManager = () => {
 
     const handleDataChange = async (id, value) => {
         if(sessionStorage.getItem("ownerId")){
-
             axios(`http://localhost:8080/meetings/${meetingData[0].id}/delegate?newLeaderMemeberId=${sessionStorage.getItem("ownerId")}`, {
                 method : 'post',
                 headers : {
@@ -44,16 +44,16 @@ const ChangeManager = () => {
                     console.log(res.status);
                     if (res.status === 200){
                         alert("모임장 위임을 완료했어요. 확인 버튼을 누르면 모임조회 페이지로 이동해요.");
-                        sessionStorageClear(res.status);
-                        navigate(`/managemeeting/${meetingData[0].id}?owner=false`);
+                        SessionCleaner.SessionStorageCleaner(res.status);
+                        navigate(`/managemeeting/${meetingData[0].id}/${params.skey}`);
                     }
                 })
                 .catch(e=>{
                     console.log(e);
                     if (e.status === 401){
                         alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
-                        sessionStorageClear(e.status);
-                        navigate('/login');
+                        SessionCleaner.SessionStorageCleaner(e.status);
+                        navigate('/');
                     }
                     else{
                         alert(`${e}모임장 위임에 실패했어요.`);
@@ -85,7 +85,6 @@ const ChangeManager = () => {
 
             });
 
-
             if(getMeetingData.status === 200 && getMemberData.status === 200)
             {
                 var tmpMeetingData = [];
@@ -96,7 +95,7 @@ const ChangeManager = () => {
                 setMemberData(tmpMemberData);
                 if (getMemberData.data.length === 1){
                     alert("모임장을 위임할 멤버가 없습니다.");
-                    navigate(-1);
+                    navigateBack();
                 }
             }
         }

@@ -15,7 +15,8 @@ import DoneModal from "../../components/Modal/DoneModal";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
 import InviteLinkModal from "../../components/Modal/InviteLinkModal";
 import AskModal from "../../components/Modal/AskModal";
-
+import * as crypto from "../../components/Others/Crypto";
+import * as ValuesCheck from "../../components/Others/ValuesCheck";
 
 const ManageMeeting = () => {
     const {meetingId} = useParams();
@@ -29,9 +30,7 @@ const ManageMeeting = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const params = useParams();
     const userId = localStorage.getItem("userId");
-
     const handleDataChange = async (id,value) => {
-        console.log(id, ":",value);
         if (id === "inviteModal"){
             setInviteModalOpen(value);
         }
@@ -42,8 +41,8 @@ const ManageMeeting = () => {
             setLeaveModalOpen(value);
         }
     }
-
     useEffect(() => {
+        ValuesCheck.ValuesCheck("isOwner",params.skey);
         const fetchData = async () => {
             const getMemberData = await axios({
                 method: 'GET',
@@ -63,7 +62,6 @@ const ManageMeeting = () => {
                 url: `http://localhost:8080/meetings/${params.meetingId}`,
 
             });
-
 
             if(getMeetingData.status === 200 && getMemberData.status === 200)
             {
@@ -95,14 +93,14 @@ const ManageMeeting = () => {
         <>
         {meetingData && meetingData.map(elements=>(
             <styled.BodyContainer key={elements.id}>
-                {searchParams.get("owner") === "true" ?
+                {crypto.decrypt(params.skey) === "true" ?
                     // true : 모임장
                     <>
                         <TopNavBar pageName={"모임 보기"}
                                    feature={"done"}
                                    isModalRequired={false}
                                    isBackRequired={true}
-                                   dest={`/home/${sessionStorage.getItem("userId")}`}/>
+                                   dest={`/home?id=${sessionStorage.getItem("userId")}`}/>
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                               boxtitle={"모임명"}
@@ -125,7 +123,7 @@ const ManageMeeting = () => {
                                         TextColor={"black"}
                                         ButtonText1={"모임 편집"}
                                         ButtonIcon={"edit"}
-                                        Dest={`managemeeting/${elements.id}/edit`}
+                                        Dest={`managemeeting/${elements.id}/${params.skey}/edit`}
                                         ButtonText2={"초대링크 생성"}
                                         ButtonIcon2={"add"}
                                         Tag={"inviteModal"}
@@ -135,10 +133,10 @@ const ManageMeeting = () => {
                                         TextColor={"black"}
                                         ButtonText1={"모임장 위임"}
                                         ButtonIcon={"change"}
-                                        Dest={`managemeeting/${elements.id}/changemanager`}
+                                        Dest={`managemeeting/${elements.id}/${params.skey}/changemanager`}
                                         ButtonText2={"멤버 삭제"}
                                         ButtonIcon2={"remove"}
-                                        Dest2={`managemeeting/${elements.id}/removemembers`}/>
+                                        Dest2={`managemeeting/${elements.id}/${params.skey}/removemembers`}/>
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"remove"}
                                        ButtonText1={"모임 삭제"}
@@ -159,7 +157,9 @@ const ManageMeeting = () => {
                     <>
                         <TopNavBar pageName={"모임 보기"}
                                    feature={"done"}
-                                   isModalRequired={true}/>
+                                   isModalRequired={false}
+                                   isBackRequired={true}
+                                    dest={`/home/${sessionStorage.getItem("userId")}`}/>
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                                     boxtitle={"모임명"}
