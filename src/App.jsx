@@ -9,6 +9,7 @@ import MyPage from "./pages/MyPage/myPage.jsx";
 import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
 import HistoryDetail from './pages/History/HistoryDetail.jsx';
+import InvitationCallback from './pages/Nickname/checkInvite.jsx';
 import Nickname from "./pages/Nickname/nickname.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
@@ -54,7 +55,6 @@ const App = () =>{
                     <Route path="/addhistory" element={<PrivateRoute><AddHistory /></PrivateRoute>}/>
                     <Route path="/history/:id" element={<PrivateRoute><HistoryDetail /></PrivateRoute>} />
                     <Route path="*" element={<NotFound />} />
-
                 </Routes>
                 <BottomNavBar />
         </BrowserRouter>
