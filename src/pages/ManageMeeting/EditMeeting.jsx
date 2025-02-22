@@ -42,7 +42,6 @@ const EditMeeting = () => {
                     setLat(position.coords.latitude);
                     setLon(position.coords.longitude); // 경도
                 });
-                console.log(lat)
             }
 
             else{
@@ -57,7 +56,6 @@ const EditMeeting = () => {
         // e.preventDefault();
         let editedData = {};
         let isEmpty = true;
-        console.log(sessionStorage.getItem("meetingName"));
         if (sessionStorage.getItem("meetingName") === '' ||
             sessionStorage.getItem("meetingName") === null){
             editedData.name = meetingData[0].name;
@@ -138,7 +136,6 @@ const EditMeeting = () => {
 
 
     const handleDataChange = async (id,value) => {
-        console.log(id, ":",value);
         if (id === "modal"){
             setOpen(value);
         }

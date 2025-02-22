@@ -25,8 +25,7 @@ const Transfer = () => {
     const [settlementData, setSettlementData] = useState();
     const [ledgerData, setLedgerData] = useState();
     const [doneModalOpen, setDoneModalOpen] = useState(false);
-    const isOwner = Boolean(crypto.decrypt(params.skey));
-
+    const isOwner = crypto.decrypt(params.skey) === 'true' ? true : false;
     useEffect(() => {
         const fetchData = async () => {
             const getMemberData = await axios({
@@ -109,7 +108,6 @@ const Transfer = () => {
             }
 
         } catch (e) {
-            console.error(e);
             alert('클립보드 복사에 실패했습니다.');
         }
     };
@@ -117,7 +115,7 @@ const Transfer = () => {
         <>
             {meetingData && meetingData.map(elements=>(
                 <styled.BodyContainer key={elements.id}>
-                            <TopNavBar pageName={"정산"}
+                            <TopNavBar pageName={"정산하기"}
                                        feature={"done"}
                                        isModalRequired={false}
                                        isBackRequired={true}
@@ -126,7 +124,7 @@ const Transfer = () => {
                                 <DarkBlueReadBox feature={""}
                                                  boxtitle={"모임명"}
                                                  eventTitle={elements.name}/>
-                                {isOwner === true ?
+                                {isOwner !== true ?
                                     <styled.FormBoxContainer style={{display : 'flex',flexDirection : "column", alignItems : "center"}}>
                                         <styled.TextWrapper>
                                             <textStyle.TextBox style={{lineHeight: "60px"}}>거래 내역</textStyle.TextBox>
@@ -194,7 +192,7 @@ const Transfer = () => {
                                             <>
                                                 {parseInt(sessionStorage.getItem("total")) > 0?
                                                     <>
-                                                        <div style={{width: "95%", lineHeight : "25px"}}>정산해야할 금액이 없거나 0보다 크면 정산을 할 수 없어요.
+                                                        <div style={{width: "95%", lineHeight : "25px"}}>️⚠️ 정산해야할 금액이 없거나 0보다 크면 정산을 할 수 없어요.
                                                             <button style={{marginLeft : "5px",width : "20px",height : "20px",border : "none", borderRadius : "20px",backgroundColor :"grey",color : "white"}} onClick={() => setDoneModalOpen(true)}>?</button>
                                                         </div>
 
@@ -259,31 +257,62 @@ const Transfer = () => {
                                         <>
                                             {ledgerData && ledgerData[0].details.length !== 0 ?
                                                 <>
-                                                    <OneButton ButtonColor={"#E7EBF7"}
-                                                               ButtonText1={`${(Math.abs(ledgerData[0].totalAmount) / settlementData[0].memberID.length).toLocaleString()}원`}
-                                                               TextColor={"#0234A8"}/>
-                                                    <styled.TextWrapper style={{lineHeight: "80px"}}>
-                                                        <textStyle.TextBox style={{fontWeight: "bold"}}>송금 방법</textStyle.TextBox>
-                                                    </styled.TextWrapper>
+                                                    {parseInt(sessionStorage.getItem("total")) > 0 ?
+                                                        <>
+                                                            <OneButton ButtonColor={"#E7EBF7"}
+                                                                       ButtonText1={`-`}
+                                                                       TextColor={"#0234A8"}/>
+                                                            <div style={{marginTop : "30px", width: "95%", lineHeight: "25px"}}>⚠️ 정산해야할 금액이
+                                                                없거나 0보다 크면 정산을 할 수 없어요.
+                                                                <button style={{
+                                                                    marginLeft: "5px",
+                                                                    width: "20px",
+                                                                    height: "20px",
+                                                                    border: "none",
+                                                                    borderRadius: "20px",
+                                                                    backgroundColor: "grey",
+                                                                    color: "white"
+                                                                }} onClick={() => setDoneModalOpen(true)}>?</button>
+                                                            </div>
 
-                                                    <TwoButtons ButtonColor={"#E7EBF7"}
-                                                                TextColor={"black"}
-                                                                ButtonText1={"토스"}
-                                                                Dest={settlementData[0].tossUrl}
-                                                                ButtonText2={"카카오페이"}
-                                                                Dest2={settlementData[0].kakaoUrl}
-                                                                Type={"URL"}
-                                                                isModalRequired={false}
-                                                    />
-                                                    <div onClick={handleCopy}>
-                                                        <OneButton ButtonColor={"#E7EBF7"}
-                                                                   ButtonText1={"계좌이체"}
-                                                                   ButtonText2={"계좌번호 복사하기"}
-                                                                   isCopyRequired={true}/>
-                                                    </div>
-                                                    <textStyle.TextWrapper style={{width : "100%",height: "80px"}}>
-                                                        <textStyle.TextBox style={{lineHeight : "20px",fontSize : "15px", color : "gray"}}>⚠️ 카카오페이 송금코드와 토스 송금코드는 해당 서비스 이용자만 가능해요.</textStyle.TextBox>
-                                                    </textStyle.TextWrapper>
+                                                            <ModalTemplate isOpen={doneModalOpen}
+                                                                           onClose={() => setDoneModalOpen(false)}>
+                                                                <DoneModal onDataChange={() => setDoneModalOpen(false)}
+                                                                           isNotify={true}/>
+                                                            </ModalTemplate>
+                                                        </>
+
+                                                        :
+                                                        <>
+                                                            <OneButton ButtonColor={"#E7EBF7"}
+                                                                       ButtonText1={`${(Math.abs(ledgerData[0].totalAmount) / settlementData[0].memberID.length).toLocaleString()}원`}
+                                                                       TextColor={"#0234A8"}/>
+                                                            <styled.TextWrapper style={{lineHeight: "80px"}}>
+                                                                <textStyle.TextBox style={{fontWeight: "bold"}}>송금 방법</textStyle.TextBox>
+                                                            </styled.TextWrapper>
+                                                            <TwoButtons ButtonColor={"#E7EBF7"}
+                                                                        TextColor={"black"}
+                                                                        ButtonText1={"토스"}
+                                                                        Dest={settlementData[0].tossUrl}
+                                                                        ButtonText2={"카카오페이"}
+                                                                        Dest2={settlementData[0].kakaoUrl}
+                                                                        Type={"URL"}
+                                                                        isModalRequired={false}
+                                                            />
+                                                            <div onClick={handleCopy}>
+                                                                <OneButton ButtonColor={"#E7EBF7"}
+                                                                           ButtonText1={"계좌이체"}
+                                                                           ButtonText2={"계좌번호 복사하기"}
+                                                                           isCopyRequired={true}/>
+                                                            </div>
+                                                            <textStyle.TextWrapper style={{width : "100%",height: "80px"}}>
+                                                                <textStyle.TextBox style={{lineHeight : "20px",fontSize : "15px", color : "gray"}}>⚠️ 카카오페이 송금코드와 토스 송금코드는 해당 서비스 이용자만 가능해요.</textStyle.TextBox>
+                                                            </textStyle.TextWrapper>
+                                                        </>
+
+
+                                                    }
+
                                                 </>
                                                 :
                                                 <div>아직 정산할 금액이 없어요.</div>

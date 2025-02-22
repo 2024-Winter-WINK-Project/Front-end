@@ -98,7 +98,6 @@ const AskModal = ({mode,onDataChange}) => {
                     }
                 })
                 .catch(e=>{
-                    console.log(e);
                     if (e.status === 401){
                         alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
                         SStorageCleaner.SessionStorageCleaner(e.status);

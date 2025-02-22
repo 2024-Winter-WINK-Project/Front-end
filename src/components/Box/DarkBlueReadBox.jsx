@@ -9,6 +9,7 @@ import search from "../../icons/search_w.png";
 import {useNavigate} from "react-router-dom";
 import * as styled from "./styles";
 
+
 const LightBlueBoxSingleLine = ({boxtitle, feature, to, popup, onDataChange, onDataChange2, isEditable, eventTitle}) => {
     const iconList = [location,edit,search];
     const [place,setPlace] = useState();

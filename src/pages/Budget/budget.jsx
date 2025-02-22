@@ -20,8 +20,9 @@ export default function Budget() {
   // const isOwner = searchParams.get("owner") === "true";
   const { meetingId } = useParams();
   const groupId = meetingId;
-  const isOwner  = crypto.decrypt(useParams().skey);
-  
+  const params = useParams();
+  const isOwner  = crypto.decrypt(useParams().skey) === 'true' ? true : false;
+
   // 가계부 데이터 가져오는 함수
   const fetchLedgerData = async () => {
     try {
@@ -70,16 +71,15 @@ export default function Budget() {
       fetchLedgerData();
     }
   }, [groupId, totalAmount]);
-  console.log(Boolean(crypto.decrypt(`${isOwner}`)))
   const handleButtonClick = (type) => {
     if (type === "addHistory") {
-        if (Boolean(crypto.decrypt(`${isOwner}`)) === true) {
-            navigate(`/budget/${meetingId}/addhistory/` + `${isOwner}`);
+        if (isOwner === true) {
+            navigate(`/budget/${meetingId}/addhistory/` + `${params.skey}`);
         } else {
             alert("모임장만 추가할 수 있습니다.");
         }
     } else if (type === "transfer") {
-        navigate(`/budget/${groupId}/transfer/` + `${isOwner}`);
+        navigate(`/budget/${groupId}/transfer/` + `${params.skey}`);
     } else {
         setBtnState(type);
     }

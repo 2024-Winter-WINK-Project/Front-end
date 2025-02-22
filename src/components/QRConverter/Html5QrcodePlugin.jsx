@@ -36,7 +36,6 @@ const Html5QrcodePlugin = (label) => {
         e.stopPropagation();  // 이벤트 전파 방지
         const imageFile = e.target.files[0];
         if (!imageFile) return;
-        console.log(value)
         try {
             if (html5QrCode.current) {
                 await html5QrCode.current.clear();
