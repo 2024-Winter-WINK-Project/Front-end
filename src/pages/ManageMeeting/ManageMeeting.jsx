@@ -2,16 +2,14 @@ import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
-import {useParams, useSearchParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from "axios";
 import * as styled from "../CreateMeeting/styles";
-import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
 import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
 import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import ListBox from "../../components/Box/ListBox";
 import TwoButtons from "../../components/Button/TwoButtons";
 import OneButton from "../../components/Button/OneButton";
-import DoneModal from "../../components/Modal/DoneModal";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
 import InviteLinkModal from "../../components/Modal/InviteLinkModal";
 import AskModal from "../../components/Modal/AskModal";
@@ -19,7 +17,6 @@ import * as crypto from "../../components/Others/Crypto";
 import * as ValuesCheck from "../../components/Others/ValuesCheck";
 
 const ManageMeeting = () => {
-    const {meetingId} = useParams();
     const [meetingData, setMeetingData] = useState();
     const [memberData, setMemberData] = useState();
     const [lat, setLat] = useState(0);
@@ -27,9 +24,7 @@ const ManageMeeting = () => {
     const [inviteModalOpen, setInviteModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [leaveModalOpen, setLeaveModalOpen] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams();
     const params = useParams();
-    const userId = localStorage.getItem("userId");
     const handleDataChange = async (id,value) => {
         if (id === "inviteModal"){
             setInviteModalOpen(value);
@@ -100,6 +95,7 @@ const ManageMeeting = () => {
                                    feature={"done"}
                                    isModalRequired={false}
                                    isBackRequired={true}
+                                   mode={"모임장 위임"}
                                    dest={`/home?id=${sessionStorage.getItem("userId")}`}/>
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}

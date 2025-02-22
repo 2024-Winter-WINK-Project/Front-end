@@ -7,7 +7,7 @@ import notifications from "../../icons/notifications.png";
 import notifications_filled from "../../icons/notifications_filled.png";
 import mypage from "../../icons/mypage.png";
 import mypage_filled from "../../icons/mypage_filled.png";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as styled from "./styles";
 
 const BottomNavBar = () => {

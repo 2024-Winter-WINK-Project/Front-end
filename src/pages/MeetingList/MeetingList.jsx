@@ -3,11 +3,16 @@ import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import MeetingListBox from "../../components/Box/MeetingListBox.jsx";
 import * as styled from "../Home/styles";
 import axios from "axios";
+import {useSearchParams} from "react-router-dom";
+import * as ValuesCheck from "../../components/Others/ValuesCheck";
 
 const MeetingList = () =>{
     const [createdGroup, setCreatedGroup] = useState(null);
     const [invitedgroup, setInvitedGroup] = useState(null);
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id');
     useEffect(() => {
+        ValuesCheck.ValuesCheck("userId",id);
         const fetchData = async () => {
             const getCreatedGroup = await axios({
                 method: 'GET',

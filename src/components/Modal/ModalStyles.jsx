@@ -15,67 +15,14 @@ export const modalOverlay = styled.div`
 
 export const modalContents = styled.div`
     background: white;
-    border-radius: 8px;
+    border-radius: 10px;
+    border: 2px solid black;
     width: 90%;
     padding: 20px;
     position: relative;
-`;
-
-export const modalClose = styled.button`
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: 5px;
-    top: 5px;
-
-`;
-
-
-//모달 전체
-export const ModalContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color : rgb(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-    position: fixed;
-    margin-top: -10vh;
-`;
-
-// 모달 흰박스 위치..?
-export const ModalBoxContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-// 모달 흰박스
-export const ModalContentContainer = styled.div`
-    width : 90%;
-    height: 65%;
-    background-color: white;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    @media (min-width : 600px) {
-        width : 500px;
+    @media (min-width: 600px){
+        width : 600px;
     }
-`;
-
-
-
-export const ModalContent = styled.div`
-    width : 95%;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 `;
 
 export const TitleBoxContainer = styled.div`
@@ -83,6 +30,10 @@ export const TitleBoxContainer = styled.div`
     height: 10%;
     display: flex;
     align-items: center;
+    @media (min-width: 600px){
+        width : 550px;
+        height: 100px;
+    }
 `;
 
 export const TitleBox = styled.div`

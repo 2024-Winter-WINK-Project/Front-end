@@ -5,7 +5,7 @@ export const ButtonContainer = styled.div`
     display: flex;
     width: 100%;
     // 모달창 버튼크기는 80%
-    height: 70px;
+    height: 50px;
     margin-top : 10px;
     text-align: center;
     @media (min-width: 600px){

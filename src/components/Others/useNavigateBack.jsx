@@ -1,5 +1,4 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import * as SessionCleaner from "./Crypto";
 
 export const useNavigateBack = () => {
     const navigate = useNavigate();
@@ -17,11 +16,3 @@ export const useNavigateBack = () => {
     };
 };
 
-// 브라우저 자체 뒤로가기 버튼의 경우
-export const useBrowserRefresh = () => {
-    return (
-        window.onbeforeunload = function (event){
-            SessionCleaner(200);
-        }
-    )
-}

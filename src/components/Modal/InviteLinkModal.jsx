@@ -1,14 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as styled from "./ModalStyles";
 import close from "../../icons/close.png";
-import upload from "../../icons/upload.png";
-import Html5QrcodePlugin from "../QRConverter/Html5QrcodePlugin";
 import OneButton from "../Button/OneButton";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 
 const InviteLinkModal = ({onDataChange}) => {
-    const [meetingData, setMeetingData] = useState();
     const [invitation, setInvitation] = useState();
     const {meetingId} = useParams();
     useEffect(() => {
@@ -17,7 +14,6 @@ const InviteLinkModal = ({onDataChange}) => {
             if (getMeetingData.data.inviteCode){
                 setInvitation(`/meetings/${meetingId}/invitations/${getMeetingData.data.inviteCode}`);
             }
-            console.log(getMeetingData.data.expiresAt)
         }
         fetchData();
     },[]);

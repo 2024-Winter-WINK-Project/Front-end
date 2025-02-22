@@ -21,6 +21,9 @@ const TwoButtons = ({isModalRequired,ButtonColor,
     const openModal = () => {
         onDataChange(`${Tag}`,true);
     }
+    const closeModal = () => {
+        onDataChange(`${Tag}`,false);
+    }
 
     const submitData = () =>{
         if (Type === '멤버 삭제'){
@@ -31,6 +34,9 @@ const TwoButtons = ({isModalRequired,ButtonColor,
         }
         else if (Type === '모임 탈퇴'){
             onSubmit('quitmeeting')
+        }
+        else if (Type === "모임장 위임"){
+            onSubmit('changemanager')
         }
     }
     return (
@@ -91,7 +97,7 @@ const TwoButtons = ({isModalRequired,ButtonColor,
                                 </styled.TwoButtons>
                             </styled.ButtonContentContainer>
                             <div style={{width: "20px"}}/>
-                            <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor2}`}}>
+                            <styled.ButtonContentContainer style={{backgroundColor: `${ButtonColor2}`}} onClick={closeModal}>
                                 <styled.TwoButtons style={{display: "flex", justifyContent: 'center'}}>
                                     <styled.TextBox
                                         style={{fontWeight: "bold", fontSize: "20px"}}>{ButtonText2}</styled.TextBox>
