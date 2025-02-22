@@ -120,7 +120,7 @@ const ManageMeeting = () => {
                                         ButtonText1={"모임 편집"}
                                         ButtonIcon={"edit"}
                                         Dest={`managemeeting/${elements.id}/edit/${params.skey}`}
-                                        ButtonText2={"초대링크 생성"}
+                                        ButtonText2={"초대코드 생성"}
                                         ButtonIcon2={"add"}
                                         Tag={"inviteModal"}
                                         onDataChange={handleDataChange}
@@ -155,7 +155,7 @@ const ManageMeeting = () => {
                                    feature={"done"}
                                    isModalRequired={false}
                                    isBackRequired={true}
-                                    dest={`/home/${sessionStorage.getItem("userId")}`}/>
+                                    dest={`/home?id=${sessionStorage.getItem("userId")}`}/>
                         <styled.FormContainer>
                             <DarkBlueReadBox feature={""}
                                                     boxtitle={"모임명"}
@@ -175,6 +175,12 @@ const ManageMeeting = () => {
                                               startDate={elements.startTime.replace('T',' ')}
                                               endDate={elements.endTime.replace('T',' ')}/>
                             {memberData && <ListBox data={memberData}/>}
+                            {/*<OneButton ButtonColor={"#E7EBF7"}*/}
+                            {/*           ButtonIcon={"add"}*/}
+                            {/*           ButtonText1={"초대코드 생성"}*/}
+                            {/*           Tag={"inviteModal"}*/}
+                            {/*           isModalRequired={true}*/}
+                            {/*           onDataChange={handleDataChange}/>*/}
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"quit"}
                                        ButtonText1={"모임 나가기"}
@@ -183,6 +189,9 @@ const ManageMeeting = () => {
                                        onDataChange={handleDataChange}/>
                             <ModalTemplate isOpen={leaveModalOpen} onClose={() =>setLeaveModalOpen(false)}>
                                 <AskModal mode={"모임 탈퇴"} onDataChange={() => setLeaveModalOpen(false)}/>
+                            </ModalTemplate>
+                            <ModalTemplate isOpen={inviteModalOpen} onClose={() => setInviteModalOpen(false)}>
+                                <InviteLinkModal onDataChange={() => setInviteModalOpen(false)}/>
                             </ModalTemplate>
                         </styled.FormContainer>
                     </>

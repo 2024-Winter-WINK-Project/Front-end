@@ -26,12 +26,8 @@ const DoneModal = ({onDataChange, isNotify}) => {
                         width: "95%",
                         lineHeight: "30px"
                     }}>
-                        정산 기능은 송금코드나 계좌번호 등으로 구현이 가능하나,
-                        모임장이 오히려 돈을 나누어 줘야 하는 상황에서는 멤버들이 모두 계좌 정보를 등록하고,
-                        오픈 뱅킹 API 등을 이용해서 송금을 처리해야 합니다.
-                    </styled.TextBox>
-                    <styled.TextBox style={{fontSize: "18px", marginTop: "10px", textAlign: "justify", width: "95%", lineHeight: "30px"}}>
-                     다만 이를 이용하기 위해서는 사업자 등록번호가 필요하고, 금전적으로 부담이 되는 비용이 들어 미처 구현하지 못했습니다. 이용자 여러분의 양해 바랍니다.
+                        정산 금액이 0보다 작아질 경우 모임장이 모임 멤버에게 돈을 돌려줘야 하는데,
+                        기술적 문제와 금전적 문제로 인해 아직 이용할 수 없습니다. 사용자 여러분의 양해 부탁드립니다.
                     </styled.TextBox>
                 </>
                 :

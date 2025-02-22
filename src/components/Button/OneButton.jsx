@@ -2,10 +2,11 @@ import React, {useEffect} from "react";
 import * as styled from "./ButtonStyles";
 import quit from "../../icons/quit.png";
 import remove from "../../icons/remove.png";
+import add from "../../icons/add.png";
 import {useNavigate} from "react-router-dom";
 
 const OneButton = ({ButtonColor, ButtonText1, ButtonText2, ButtonIcon, TextColor, Dest,isCopyRequired,isModalRequired, onDataChange,Tag}) =>{
-    const iconList = { quit, remove };
+    const iconList = { quit, remove, add };
     const navigate = useNavigate();
     const feat = iconList[ButtonIcon] || null;
     const openModal = () => {

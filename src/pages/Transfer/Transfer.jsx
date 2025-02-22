@@ -113,7 +113,6 @@ const Transfer = () => {
             alert('클립보드 복사에 실패했습니다.');
         }
     };
-
     return(
         <>
             {meetingData && meetingData.map(elements=>(
@@ -257,31 +256,40 @@ const Transfer = () => {
                                         <styled.TextWrapper>
                                             <textStyle.TextBox style={{lineHeight: "60px"}}>정산 금액</textStyle.TextBox>
                                         </styled.TextWrapper>
-                                        <OneButton ButtonColor={"#E7EBF7"}
-                                                   ButtonText1={"5000원"}
-                                                   TextColor={"#0234A8"}/>
-                                        <styled.TextWrapper style={{lineHeight: "80px"}}>
-                                            <textStyle.TextBox style={{fontWeight: "bold"}}>송금 방법</textStyle.TextBox>
-                                        </styled.TextWrapper>
+                                        <>
+                                            {ledgerData && ledgerData[0].details.length !== 0 ?
+                                                <>
+                                                    <OneButton ButtonColor={"#E7EBF7"}
+                                                               ButtonText1={`${(Math.abs(ledgerData[0].totalAmount) / settlementData[0].memberID.length).toLocaleString()}원`}
+                                                               TextColor={"#0234A8"}/>
+                                                    <styled.TextWrapper style={{lineHeight: "80px"}}>
+                                                        <textStyle.TextBox style={{fontWeight: "bold"}}>송금 방법</textStyle.TextBox>
+                                                    </styled.TextWrapper>
 
-                                        <TwoButtons ButtonColor={"#E7EBF7"}
-                                                    TextColor={"black"}
-                                                    ButtonText1={"토스"}
-                                                    Dest={settlementData[0].tossUrl}
-                                                    ButtonText2={"카카오페이"}
-                                                    Dest2={settlementData[0].kakaoUrl}
-                                                    Type={"URL"}
-                                                    isModalRequired={false}
+                                                    <TwoButtons ButtonColor={"#E7EBF7"}
+                                                                TextColor={"black"}
+                                                                ButtonText1={"토스"}
+                                                                Dest={settlementData[0].tossUrl}
+                                                                ButtonText2={"카카오페이"}
+                                                                Dest2={settlementData[0].kakaoUrl}
+                                                                Type={"URL"}
+                                                                isModalRequired={false}
                                                     />
-                                        <div onClick={handleCopy}>
-                                            <OneButton ButtonColor={"#E7EBF7"}
-                                                       ButtonText1={"계좌이체"}
-                                                       ButtonText2={"계좌번호 복사하기"}
-                                                       isCopyRequired={true}/>
-                                        </div>
-                                        <textStyle.TextWrapper style={{width : "100%",height: "80px"}}>
-                                            <textStyle.TextBox style={{lineHeight : "20px",fontSize : "15px", color : "gray"}}>⚠️ 카카오페이 송금코드와 토스 송금코드는 해당 서비스 이용자만 가능해요.</textStyle.TextBox>
-                                        </textStyle.TextWrapper>
+                                                    <div onClick={handleCopy}>
+                                                        <OneButton ButtonColor={"#E7EBF7"}
+                                                                   ButtonText1={"계좌이체"}
+                                                                   ButtonText2={"계좌번호 복사하기"}
+                                                                   isCopyRequired={true}/>
+                                                    </div>
+                                                    <textStyle.TextWrapper style={{width : "100%",height: "80px"}}>
+                                                        <textStyle.TextBox style={{lineHeight : "20px",fontSize : "15px", color : "gray"}}>⚠️ 카카오페이 송금코드와 토스 송금코드는 해당 서비스 이용자만 가능해요.</textStyle.TextBox>
+                                                    </textStyle.TextWrapper>
+                                                </>
+                                                :
+                                                <div>아직 정산할 금액이 없어요.</div>
+                                            }
+                                        </>
+
                                     </>
 
                                 }

@@ -15,6 +15,7 @@ const BottomNavBar = () => {
     const navigate = useNavigate();
     const currentPath = location.pathname;
     const userId = sessionStorage.getItem("userId");
+
     return(
         <>
             {currentPath === "/" ?
@@ -38,9 +39,13 @@ const BottomNavBar = () => {
                             }
                             <styled.ButtonStyles>모임 관리</styled.ButtonStyles>
                         </styled.ButtonContainer>
-                        <styled.ButtonContainer onClick={() => navigate("/")}>
-                            <styled.ButtonIcons src={notifications}/>
-                            <styled.ButtonStyles>받은 알림</styled.ButtonStyles>
+                        <styled.ButtonContainer onClick={() => navigate("/meetings/invitation")}>
+                            {currentPath === `/meetings/invitation` ?
+                                <styled.ButtonIcons src={notifications_filled}/>
+                                :
+                                <styled.ButtonIcons src={notifications}/>
+                            }
+                            <styled.ButtonStyles>모임 가입</styled.ButtonStyles>
                         </styled.ButtonContainer>
                         <styled.ButtonContainer onClick={() => navigate(`/mypage?id=${userId}`)}>
                             {currentPath === `/mypage` ?

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const InvitationCheck = () => {
   const { meetingId } = useParams();
-  console.log(invitationCode);
+  const { invitationCode } = useParams();
   const navigate = useNavigate();
   const memberId = sessionStorage.getItem("userId");
 
@@ -18,7 +18,7 @@ const InvitationCheck = () => {
     const checkInvitation = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/${meetingId}/invitations`,
+          `http://localhost:8080/meetings/${meetingId}/invitations`,
           {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
@@ -29,11 +29,11 @@ const InvitationCheck = () => {
         console.log('초대 링크:', invitationCode);
 
         alert('초대가 확인되었습니다.');
-        navigate(`/meetings/${meetingId}/invitations/${invitationCod}/nickname`);
+        navigate(`/meetings/${meetingId}/invitations/${invitationCode}/nickname`);
       } catch (error) {
         console.error('초대 확인 오류:', error);
-        alert('유효하지 않은 초대 코드입니다.');
-        navigate(`/home/${memberId}`);
+        // alert('유효하지 않은 초대 코드입니다.');
+        // navigate(`/home?id=${memberId}`);
       }
     };
 

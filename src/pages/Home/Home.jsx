@@ -24,7 +24,7 @@ const Home = () =>{
             });
             if(getLatestGroup.status === 200)
             {
-                setLatestGroup(getLatestGroup.data);
+                setLatestGroup(getLatestGroup.data.reverse());
             }
         }
         fetchData();

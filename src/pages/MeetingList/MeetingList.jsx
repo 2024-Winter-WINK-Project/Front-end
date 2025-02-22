@@ -36,8 +36,8 @@ const MeetingList = () =>{
                         Object.assign(tmpInvitedGroupList.push(getCreatedGroup.data[i]));
                     }
                 }
-                setInvitedGroup(tmpInvitedGroupList);
-                setCreatedGroup(tmpCreatedGroupList);
+                setInvitedGroup(tmpInvitedGroupList.reverse());
+                setCreatedGroup(tmpCreatedGroupList.reverse());
             }
         }
         fetchData();

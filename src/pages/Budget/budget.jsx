@@ -20,8 +20,8 @@ export default function Budget() {
   // const isOwner = searchParams.get("owner") === "true";
   const { meetingId } = useParams();
   const groupId = meetingId;
-  const isOwner  = useParams().skey;
-
+  const isOwner  = crypto.decrypt(useParams().skey);
+  
   // 가계부 데이터 가져오는 함수
   const fetchLedgerData = async () => {
     try {

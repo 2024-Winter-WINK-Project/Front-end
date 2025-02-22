@@ -44,12 +44,12 @@ const App = () =>{
                     <Route path="/createmeeting" element={<PrivateRoute><CreateMeeting /></PrivateRoute>}/>
                     <Route path="/managemeeting/:meetingId/:skey" element={<PrivateRoute><ManageMeeting /></PrivateRoute>}/>
                     <Route path="/managemeeting/:meetingId/edit/:skey" element={<PrivateRoute><EditMeeting /></PrivateRoute>}/>
-                    <Route path="/managemeeting/:meetingId/changemanager:skey" element={<PrivateRoute><ChangeManager /></PrivateRoute>}/>
-                    <Route path="/managemeeting/:meetingId/removemembers:skey" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/changemanager/:skey" element={<PrivateRoute><ChangeManager /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/removemembers/:skey" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
                     <Route path="/transfer/:meetingId/selectmembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
                     <Route path="/movingkakaomap" element={<PrivateRoute><MovingKakaoMap /></PrivateRoute>}/>
-                    <Route path="/meetings/:meetingId/invitations" element={<PrivateRoute><InvitationCallback /></PrivateRoute>}/>
-                    <Route path="/meetings/:meetingId/invitations/:invitationCod/nickname" element={<PrivateRoute><Nickname /></PrivateRoute>}/>
+                    {/*<Route path="/meetings/:meetingId/invitations/:invitationCode" element={<PrivateRoute><InvitationCallback /></PrivateRoute>}/>*/}
+                    <Route path="/meetings/invitation" element={<PrivateRoute><Nickname /></PrivateRoute>}/>
                     <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>}/>
                     <Route path="/budget/:meetingId/:skey" element={<PrivateRoute><Budget /></PrivateRoute>}/>
                     <Route path="/budget/:meetingId/transfer/:skey" element={<PrivateRoute><Transfer /></PrivateRoute>}/>
