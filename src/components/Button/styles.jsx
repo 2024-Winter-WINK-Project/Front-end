@@ -11,7 +11,6 @@ export const BigButton = styled.button`
   color: white;
   cursor: pointer;
   padding: 4px;
-  margin-inline: 24px;
 `;
 
 export const ModalButton1 = styled.button`
@@ -43,20 +42,20 @@ export const ModalButton2 = styled.button`
 `;
 
 export const BudgetButton = styled.button`
-  width: 360px;
-  height: 228px;
+  width: 336px;
+  height: 200px;
   background-color: #0234A8;
   color: white;
   border: none;
   border-radius: 10px;
   display: flex;
-  padding: 8px;
+  padding-bottom: 160px;
   cursor: pointer;
 `;
 
 export const OptionsButton = styled.button`
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   background-color: #E7EBF7;
   border: none;
   border-radius: 10px;
@@ -103,8 +102,8 @@ export const ButtonContent = styled.div`
     width: 32px;
     margin-left: ${(props) =>
     props.name === 'options'
-      ? '24px'
-      : '-156px'};
+      ? '22px'
+      : '-148px'};
   }
   >span {
     margin-top: ${(props) =>
@@ -116,8 +115,8 @@ export const ButtonContent = styled.div`
     position: absolute;
     left: ${(props) =>
     props.name === 'budget'
-      ? '28px'
-      : '-112px'};
+      ? '48px'
+      : '-92px'};
     white-space: nowrap;
   }
   > span:nth-of-type(2) {
@@ -130,8 +129,8 @@ export const ButtonContent = styled.div`
     position: absolute;
     right: ${(props) =>
     props.name === 'budget'
-      ? '-320px'
-      : '-156px'};
+      ? '-280px'
+      : '-148px'};
     white-space: nowrap;
   }
 `;
