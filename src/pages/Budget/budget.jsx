@@ -123,7 +123,7 @@ export default function Budget() {
             filteredTransactions.map(transaction => (
               <Button
                 key={transaction.id}
-                width={"360px"}
+                width={"336px"}
                 height={"80px"}
                 name={transaction.category}
                 image={transaction.image}

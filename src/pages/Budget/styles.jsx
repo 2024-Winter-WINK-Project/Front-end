@@ -16,7 +16,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -43,5 +43,5 @@ export const HistoryTitle = styled.span`
   font-size: 20px;
   font-weight: 600;
   margin-top: 16px;
-  margin-right: 280px;
+  margin-right: 248px;
 `;

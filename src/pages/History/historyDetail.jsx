@@ -116,8 +116,8 @@ export default function ViewHistory() {
       <style.Wrapper>
         <style.ButtonWrapper>
           <Button
-            width={'168px'}
-            height={'68px'}
+            width={'160px'}
+            height={'60px'}
             name={'income'}
             type={'detail'}
             content={'수입'}
@@ -125,8 +125,8 @@ export default function ViewHistory() {
             isSelected={selectedType === 'income'}
           />
           <Button
-            width={'168px'}
-            height={'68px'}
+            width={'160px'}
+            height={'60px'}
             name={'expenditure'}
             type={'detail'}
             content={'지출'}
@@ -137,7 +137,7 @@ export default function ViewHistory() {
         <style.FormContainer>
           {isOwner && (
             <Button
-              width={'376px'}
+              width={'342px'}
               height={'60px'}
               name={'expenditure'}
               type={'detail'}
@@ -146,7 +146,7 @@ export default function ViewHistory() {
             />
           )}
           <Input
-            width={'376px'}
+            width={'342px'}
             height={'60px'}
             type={'text'}
             name={selectedType}
@@ -155,7 +155,7 @@ export default function ViewHistory() {
             onChange={(e) => isOwner && setDescription(e.target.value)}
           />
           <Input
-            width={'376px'}
+            width={'342px'}
             height={'60px'}
             type={'text'}
             name={selectedType}
@@ -164,8 +164,8 @@ export default function ViewHistory() {
             onChange={(e) => isOwner && setAmount(e.target.value)}
           />
           <Input
-            width={'376px'}
-            height={'376px'}
+            width={'342px'}
+            height={'360px'}
             type={'textarea'}
             name={selectedType}
             value={memo}
