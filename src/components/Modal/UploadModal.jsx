@@ -7,7 +7,6 @@ import Html5QrcodePlugin from "../QRConverter/Html5QrcodePlugin";
 
 
 const UploadModal = ({onDataChange}) => {
-    const URL = useRef(null);
     const modalRef = useRef(null);
     const [isBankNumUploaded, setIsBankNumUploaded] =
         useState(sessionStorage.getItem("bankAccountNumber") ? true : false);
@@ -84,7 +83,7 @@ const UploadModal = ({onDataChange}) => {
                     lineHeight: '20px',
                     fontWeight: 'bold'
                 }}>
-                    카카오페이 송금코드 등록방법
+                    ✅ 카카오페이 송금코드 등록방법
                 </styled.TextBox>
                 <styled.TextBox style={{
                     color: 'gray',
@@ -102,7 +101,7 @@ const UploadModal = ({onDataChange}) => {
                     lineHeight: '20px',
                     fontWeight: 'bold'
                 }}>
-                    토스 송금코드 등록방법
+                    ✅ 토스 송금코드 등록방법
                 </styled.TextBox>
                 <styled.TextBox style={{
                     color: 'gray',
@@ -114,9 +113,8 @@ const UploadModal = ({onDataChange}) => {
                     토스 앱 > 전체 > 송금 > 계좌 사진으로 보내기 > QR코드 발급
                 </styled.TextBox>
                 <styled.TextBox style={{color: 'gray', fontSize: '10px', textAlign: 'left', fontWeight: 'bold'}}>
-                    * 카카오페이와 토스 송금코드는 해당 서비스 가입자만 이용 가능해요.
+                    ⚠️ 카카오페이와 토스 송금코드는 해당 서비스 가입자만 이용 가능해요.
                 </styled.TextBox>
-
             </styled.InfoBox>
         </div>
     );

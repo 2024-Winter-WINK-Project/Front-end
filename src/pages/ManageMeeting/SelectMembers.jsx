@@ -1,21 +1,16 @@
 import React, {useEffect, useState} from "react";
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
-import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
-import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
 import {useLocation, useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import * as styled from "../CreateMeeting/styles";
-import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
-import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
 import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
 import ListBox from "../../components/Box/ListBox";
-import TwoButtons from "../../components/Button/TwoButtons";
-import OneButton from "../../components/Button/OneButton";
 import DoneModal from "../../components/Modal/DoneModal";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
 import AskModal from "../../components/Modal/AskModal";
 import * as ValuesCheck from "../../components/Others/ValuesCheck";
-
+import * as crypto from "../../components/Others/Crypto";
+import {useNavigateBack} from "../../components/Others/useNavigateBack";
 
 const SelectMembers = () => {
     const params = useParams();
@@ -25,9 +20,9 @@ const SelectMembers = () => {
     const [memberData, setMemberData] = useState();
     const [memberDeleteModalOpen, setMemberDeleteModalOpen] = useState(false);
     const [selectModalOpen, setSelectModalOpen] = useState(false);
-    const navigate = useNavigate();
+    const navigateBack = useNavigateBack();
     const handleDataChange = async (id, value) => {
-        if (currPath === `/managemeeting/${meetingData[0].id}/removemembers`){
+        if (currPath === `/managemeeting/${meetingData[0].id}/${crypto.encrypt("true")}/removemembers`){
             setMemberDeleteModalOpen(value);
         }
     }
@@ -62,11 +57,10 @@ const SelectMembers = () => {
                 setMeetingData(tmpMeetingData);
                 tmpMemberData.push(getMemberData.data);
                 setMemberData(tmpMemberData);
-                console.log(getMemberData)
                 if (window.location.pathname === `/managemeeting/${getMeetingData.data.id}/${params.skey}/removemembers`){
                     if (getMemberData && getMemberData.data.length === 1){
                         alert("삭제할 멤버가 없습니다.");
-                        navigate(-1);
+                        navigateBack();
                     }
                 }
             }
@@ -107,10 +101,7 @@ const SelectMembers = () => {
                 </styled.FormContainer>
                 <ModalTemplate isOpen={memberDeleteModalOpen} onClose={() => setMemberDeleteModalOpen(false)}>
                     <AskModal mode={"멤버 삭제"}
-                              onDataChange={() => {
-                                  setMemberDeleteModalOpen(false)
-                                  onSubmit={handleDataChange}
-                              }}/>
+                              onDataChange={handleDataChange}/>
                 </ModalTemplate>
                 <ModalTemplate isOpen={selectModalOpen} onClose={() => setSelectModalOpen(false)}>
                     <DoneModal onDataChange={() => setSelectModalOpen(false)}/>

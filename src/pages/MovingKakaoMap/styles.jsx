@@ -7,6 +7,7 @@ export const MapContainer = styled.div`
     justify-content: center;
 
     @media (min-width: 600px){
+        margin-top: 10vh;
         width : 600px;
     }
 `;

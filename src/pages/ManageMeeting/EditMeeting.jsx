@@ -7,20 +7,17 @@ import axios from "axios";
 import * as styled from "../CreateMeeting/styles";
 import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
 import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
-import DarkBlueReadBox from "../../components/Box/DarkBlueReadBox";
-import ListBox from "../../components/Box/ListBox";
-import TwoButtons from "../../components/Button/TwoButtons";
-import OneButton from "../../components/Button/OneButton";
+import * as SStorageCleaner from "../../components/Session/SessionStorageCleaner";
+import * as ValuesCheck from "../../components/Others/ValuesCheck";
 
 const EditMeeting = () => {
-    const {meetingId} = useParams();
     const [meetingData, setMeetingData] = useState();
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
     const params = useParams();
     const navigate = useNavigate();
     useEffect(() => {
-
+        ValuesCheck.ValuesCheck("isOwner",params.skey);
         const fetchData = async () => {
             const getMeetingData = await axios({
                 method: 'GET',
@@ -55,17 +52,6 @@ const EditMeeting = () => {
         fetchData();
 
     }, [lat,lon]);
-
-    const sessionStorageClear = (responseCode) => {
-        sessionStorage.removeItem("meetingStartTime");
-        sessionStorage.removeItem("meetingEndTime");
-        sessionStorage.removeItem("meetingName");
-        sessionStorage.removeItem("place");
-        sessionStorage.removeItem("placeSearch");
-        if (responseCode === 401){
-            sessionStorage.removeItem("userId");
-        }
-    }
 
     const handleSubmit = (e) =>{
         // e.preventDefault();
@@ -129,19 +115,17 @@ const EditMeeting = () => {
             })
 
                 .then(res=>{
-                    console.log(res.status);
                     if (res.status === 200){
                         alert("모임 편집을 완료했어요. 확인 버튼을 누르면 모임조회 페이지로 이동해요.");
-                        sessionStorageClear(res.status);
-                        navigate(`/managemeeting/${meetingData[0].id}?owner=true`);
+                        SStorageCleaner.SessionStorageCleaner(res.status);
+                        navigate(`/managemeeting/${meetingData[0].id}/${params.skey}`);
                     }
                 })
                 .catch(e=>{
-                    console.log(e);
                     if (e.status === 401){
                         alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
-                        sessionStorageClear(e.status);
-                        navigate('/login');
+                        SStorageCleaner.SessionStorageCleaner(e.status);
+                        navigate('/');
                     }
                     else{
                         alert("모임 편집에 실패했어요.");

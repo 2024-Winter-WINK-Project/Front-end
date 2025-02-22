@@ -11,8 +11,6 @@ const Home = () =>{
     const [latestGroup,setLatestGroup] = useState();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id');
-    
-
     useEffect(() => {
         ValuesCheck.ValuesCheck("userId",id);
         const fetchData = async () => {
@@ -23,16 +21,13 @@ const Home = () =>{
                     authorization : `Bearer ${document.cookie}`
                 },
                 url: 'http://localhost:8080/meetings/latest',
-
             });
             if(getLatestGroup.status === 200)
             {
                 setLatestGroup(getLatestGroup.data);
             }
-
         }
         fetchData();
-
     }, []);
 
     return (

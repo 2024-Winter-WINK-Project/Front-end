@@ -1,49 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import * as crypto from "../../components/Others/Crypto";
 
 const LoginCallback = () => {
   const code = new URLSearchParams(window.location.search).get('code');
+  // code : 인가코드
   const navigate = useNavigate();
-  const isFetching = useRef(false);
+
+  const requestAccess = async () => {
+    fetch(`http://localhost:8080/auth/kakao/login?code=${code}`,{
+      method : 'get',
+      headers : {
+        'content-type' : 'application/json'
+      },
+      credentials : 'include'
+    })
+        .then((res) => res.json())
+        .then((backendData) => {
+            sessionStorage.setItem('userId',crypto.encrypt(toString(backendData.memberId)));
+            navigate(`/home?id=${crypto.encrypt(toString(backendData.memberId))}`);
+        })
+        .catch(() => {
+            alert('로그인 오류 발생');
+            navigate('/');
+        });
+  }
 
   useEffect(() => {
-    if (!code) {
-      alert('카카오 로그인 실패');
-      navigate('/login');
-      return;
-    }
+      requestAccess();
+  }, []);
 
-    if (isFetching.current) return; // 중복 요청 방지
-    isFetching.current = true;
-
-    const fetchLogin = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/auth/kakao/login?code=${code}`,
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
-
-        const data = res.data;
-        sessionStorage.setItem('userId', data.memberId);
-        sessionStorage.setItem('nickName', data.nickName);
-        sessionStorage.setItem('profileUrl', data.profileUrl);
-        
-        navigate(`/home/${data.memberId}`);
-      } catch (error) {
-        console.error('로그인 오류:', error);
-        alert('로그인 오류 발생');
-        navigate('/login');
-      } finally {
-        isFetching.current = false;
-      }
-    };
-
-    fetchLogin();
-  }, [navigate]);
 
   return <span>카카오 로그인 진행중입니다.</span>;
 };

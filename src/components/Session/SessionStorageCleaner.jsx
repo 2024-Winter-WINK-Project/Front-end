@@ -1,5 +1,3 @@
-import React from "react";
-
 export function SessionStorageCleaner(response_status){
     const tmpData = sessionStorage.getItem("userId");
     sessionStorage.clear();

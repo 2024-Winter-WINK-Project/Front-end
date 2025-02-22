@@ -1,5 +1,3 @@
-import React, {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
 import * as crypto from "../Others/Crypto"
 
 export function ValuesCheck(key,id) {

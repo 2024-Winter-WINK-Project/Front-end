@@ -3,23 +3,19 @@ import back from "../../icons/back.png";
 import done from "../../icons/done.png";
 import add from "../../icons/add.png";
 import { useNavigate } from "react-router-dom";
-import UploadModal from "../Modal/UploadModal.jsx";
 import Modal from "../Modal/modal.jsx";
 import * as styled from "./styles";
 import * as SessionCleaner from "../../components/Session/SessionStorageCleaner";
+import {useNavigateBack} from "../Others/useNavigateBack";
 
 
-const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest, data}) =>{
+const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest}) =>{
     const iconList = { add, done };
     const feat = iconList[feature] || null;
-    const userId = localStorage.getItem("userId");
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [isJoinModalOpen, setJoinModalOpen] = useState(false);
-
-    const handleConfirm = () => {
-        closeModal();
-    }
+    const navigateBack = useNavigateBack();
 
     const closeJoinModal = () => {
         setJoinModalOpen(false);
@@ -28,9 +24,6 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
 
     const openModal = () => {
         onDataChange(`${feat}Modal`,true);
-    }
-    const closeModal = (event) => {
-        onDataChange(event.target.id,event.target.value);
     }
 
     const sendSubmit = () => {
@@ -50,7 +43,9 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                 <>
                     <styled.BarContainer>
                         <styled.BarContentsContainer>
-                            <styled.ButtonIcons src={back} onClick={() => navigate(-1)} />
+                            <styled.ButtonIcons src={back} onClick={() => {
+                                SessionCleaner.SessionStorageCleaner();
+                                navigateBack();}} />
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>
                             </styled.TextWrapper>
@@ -70,7 +65,7 @@ const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataCha
                         <styled.BarContentsContainer>
                             <styled.ButtonIcons src={back} onClick={() => {
                                 SessionCleaner.SessionStorageCleaner();
-                                navigate(-1);
+                                navigateBack();
                             }}/>
                             <styled.TextWrapper>
                                 <styled.TextBox>{pageName}</styled.TextBox>

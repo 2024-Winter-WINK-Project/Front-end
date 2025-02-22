@@ -1,22 +1,14 @@
-import React, {useRef, useState} from "react";
+import React from "react";
 import * as styled from "./ModalStyles";
 import close from "../../icons/close.png";
-import upload from "../../icons/upload.png";
-import Html5QrcodePlugin from "../QRConverter/Html5QrcodePlugin";
+
 import OneButton from "../Button/OneButton";
 
 const DoneModal = ({onDataChange, isNotify}) => {
-    const URL = useRef(null);
-
-    const sendDatatoParent = (event) => {
-        onDataChange(event.target.id,event.target.value);
-    }
     const closeModal = () => {
         onDataChange("doneModal",false);
     }
-    const getURL = (newData) => {
-        URL.current = newData;
-    }
+
     return (
         <>
             {isNotify === true ?

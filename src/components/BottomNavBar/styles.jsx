@@ -19,8 +19,7 @@ export const BarContainer = styled.nav`
     @media (min-width: 600px){
         width : 600px;
     }
-
-
+    
 `;
 
 export const BarContentsContainer = styled.div`

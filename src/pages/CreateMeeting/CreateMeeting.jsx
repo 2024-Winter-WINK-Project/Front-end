@@ -1,18 +1,16 @@
 import React, {useEffect, useRef, useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import DoubleColumnsBox from "../../components/Box/DoubleColumnsBox.jsx";
 import KakaoMap from "../MovingKakaoMap/KakaoMap.jsx";
 import axios from "axios";
 import UploadModal from "../../components/Modal/UploadModal";
 import * as styled from "./styles";
-import DarkBlueBox from "../../components/Box/DarkBlueWriteBox";
 import DarkBlueWriteBox from "../../components/Box/DarkBlueWriteBox";
 import LightBlueWriteBox from "../../components/Box/LightBlueWriteBox";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
-import close from "../../icons/close.png";
 import DoneModal from "../../components/Modal/DoneModal";
-
+import * as SStorageCleaner from "../../components/Session/SessionStorageCleaner";
 
 const CreateMeeting = () => {
     const [uploadModalOpen, setUploadModalOpen] = useState(false);
@@ -27,7 +25,6 @@ const CreateMeeting = () => {
         :
         {id : 126997376109, address : '서울 성북구 정릉로 77', latitude : 37.61099, longitude : 126.99726, name : '국민대학교'};
     const handleDataChange = async (id,value) => {
-        console.log(id, ":",value);
         if (id === "uploadModal"){
             setUploadModalOpen(value);
         }
@@ -38,20 +35,7 @@ const CreateMeeting = () => {
             sessionStorage.setItem(id,`${value}`);
         }
     }
-    const sessionStorageClear = (responseCode) => {
-        sessionStorage.removeItem("bankAccountNumber");
-        sessionStorage.removeItem("kakaoURL");
-        sessionStorage.removeItem("tossURL");
-        sessionStorage.removeItem("meetingStartTime");
-        sessionStorage.removeItem("meetingEndTime");
-        sessionStorage.removeItem("meetingName");
-        sessionStorage.removeItem("meetingNickname");
-        sessionStorage.removeItem("place");
-        sessionStorage.removeItem("placeSearch");
-        if (responseCode === 401){
-            sessionStorage.removeItem("userId");
-        }
-    }
+
     const handleSubmit = (e) =>{
         // e.preventDefault();
         if(
@@ -88,19 +72,17 @@ const CreateMeeting = () => {
                 }
             })
                 .then(res=>{
-                    console.log(res.status);
                     if (res.status === 200){
                         alert("모임 등록을 완료했어요. 확인 버튼을 누르면 홈으로 이동해요.");
-                        sessionStorageClear(res.status);
-                        navigate(`/home/${sessionStorage.getItem('userId')}`);
+                        SStorageCleaner.SessionStorageCleaner(res.status);
+                        navigate(`/home?id=${sessionStorage.getItem('userId')}`);
                     }
                 })
                 .catch(e=>{
-                    console.log(e);
                     if (e.status === 401){
                         alert("로그아웃 되었어요. 다시 로그인 해 주세요.");
-                        sessionStorageClear(e.status);
-                        navigate('/login');
+                        SStorageCleaner.SessionStorageCleaner(e.status);
+                        navigate('/');
                     }
                     else{
                         alert("모임 등록에 실패했어요.");
@@ -109,6 +91,7 @@ const CreateMeeting = () => {
                 });
         }
     }
+
     return (
         <styled.BodyContainer>
             <TopNavBar pageName={"모임 생성"}
