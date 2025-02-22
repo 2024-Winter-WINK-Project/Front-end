@@ -15,6 +15,7 @@ import DoneModal from "../../components/Modal/DoneModal";
 import ModalTemplate from "../../components/Modal/ModalTemplate";
 import axios from "axios";
 import mediaQuery from "react-responsive/src/mediaQuery";
+import * as crypto from "../../components/Others/Crypto";
 
 const Transfer = () => {
     const params = useParams();
@@ -24,6 +25,7 @@ const Transfer = () => {
     const [settlementData, setSettlementData] = useState();
     const [ledgerData, setLedgerData] = useState();
     const [doneModalOpen, setDoneModalOpen] = useState(false);
+    const isOwner = Boolean(crypto.decrypt(params.skey));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -125,7 +127,7 @@ const Transfer = () => {
                                 <DarkBlueReadBox feature={""}
                                                  boxtitle={"모임명"}
                                                  eventTitle={elements.name}/>
-                                {elements.isManager === false ?
+                                {isOwner === true ?
                                     <styled.FormBoxContainer style={{display : 'flex',flexDirection : "column", alignItems : "center"}}>
                                         <styled.TextWrapper>
                                             <textStyle.TextBox style={{lineHeight: "60px"}}>거래 내역</textStyle.TextBox>

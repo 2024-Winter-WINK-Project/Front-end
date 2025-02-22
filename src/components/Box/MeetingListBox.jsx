@@ -24,7 +24,7 @@ const MeetingListBox = ({group,isList}) => {
                                     <styled.TextBox>{elements.startTime.slice(0, 10)} ~ {elements.endTime.slice(0, 10)}</styled.TextBox>
 
                                 </styled.TextContainer>
-                                <styled.BoxIcon onClick={() => navigate(`/budget/${elements.id}?owner=${elements.owner}`)}
+                                <styled.BoxIcon onClick={() => navigate((`/budget/${elements.id}/`)+ (crypto.encrypt(`${elements.owner}`)))}
                                                 src={calculate}></styled.BoxIcon>
                             </styled.BoxContentsContainerMedium>
                             :

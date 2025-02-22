@@ -119,7 +119,7 @@ const ManageMeeting = () => {
                                         TextColor={"black"}
                                         ButtonText1={"모임 편집"}
                                         ButtonIcon={"edit"}
-                                        Dest={`managemeeting/${elements.id}/${params.skey}/edit`}
+                                        Dest={`managemeeting/${elements.id}/edit/${params.skey}`}
                                         ButtonText2={"초대링크 생성"}
                                         ButtonIcon2={"add"}
                                         Tag={"inviteModal"}
@@ -129,10 +129,10 @@ const ManageMeeting = () => {
                                         TextColor={"black"}
                                         ButtonText1={"모임장 위임"}
                                         ButtonIcon={"change"}
-                                        Dest={`managemeeting/${elements.id}/${params.skey}/changemanager`}
+                                        Dest={`managemeeting/${elements.id}/changemanager/${params.skey}`}
                                         ButtonText2={"멤버 삭제"}
                                         ButtonIcon2={"remove"}
-                                        Dest2={`managemeeting/${elements.id}/${params.skey}/removemembers`}/>
+                                        Dest2={`managemeeting/${elements.id}/removemembers/${params.skey}`}/>
                             <OneButton ButtonColor={"#F7E7E7"}
                                        ButtonIcon={"remove"}
                                        ButtonText1={"모임 삭제"}

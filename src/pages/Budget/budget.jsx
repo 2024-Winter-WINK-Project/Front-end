@@ -8,6 +8,8 @@ import Deposit from '../../assets/Budget/deposit.svg';
 import Add from '../../assets/Budget/history.svg';
 import Transfer from '../../assets/Budget/transfer.svg';
 import * as style from './styles.jsx';
+import * as crypto from "../../components/Others/Crypto";
+
 
 export default function Budget() {
   const [btnState, setBtnState] = useState('all');
@@ -15,9 +17,10 @@ export default function Budget() {
   const [transactions, setTransactions] = useState([]);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const isOwner = searchParams.get("owner") === "true";
+  // const isOwner = searchParams.get("owner") === "true";
   const { meetingId } = useParams();
   const groupId = meetingId;
+  const isOwner  = useParams().skey;
 
   // 가계부 데이터 가져오는 함수
   const fetchLedgerData = async () => {
@@ -28,20 +31,20 @@ export default function Budget() {
           authorization: `Bearer ${document.cookie}`,
         },
       });
-  
+
       console.log("API 응답:", ledgerResponse.data);
-  
+
       if (ledgerResponse.status === 200) {
         const { totalAmount, details } = ledgerResponse.data;
-  
+
         if (typeof totalAmount !== "undefined") {
           console.log("가져온 잔액:", totalAmount);
           setTotalAmount(totalAmount);
         }
-  
+
         if (Array.isArray(details)) {
           console.log("가져온 거래 내역:", details);
-  
+
           // 거래 내역을 가공하여 필요한 데이터 추가
           const formattedTransactions = details.map((transaction) => ({
             id: transaction.id,
@@ -53,30 +56,30 @@ export default function Budget() {
               : `-${transaction.amount.toLocaleString()}원`,
             amount: transaction.amount,
           }));
-  
+
           setTransactions(formattedTransactions);
         }
       }
     } catch (error) {
       console.error("데이터 불러오기 실패:", error);
     }
-  };  
+  };
 
   useEffect(() => {
     if (groupId) {
       fetchLedgerData();
     }
   }, [groupId, totalAmount]);
-
+  console.log(Boolean(crypto.decrypt(`${isOwner}`)))
   const handleButtonClick = (type) => {
     if (type === "addHistory") {
-        if (isOwner) {
-            navigate(`/budget/${meetingId}/addhistory?owner=${isOwner}`);
+        if (Boolean(crypto.decrypt(`${isOwner}`)) === true) {
+            navigate(`/budget/${meetingId}/addhistory/` + `${isOwner}`);
         } else {
             alert("모임장만 추가할 수 있습니다.");
         }
     } else if (type === "transfer") {
-        navigate(`/budget/${groupId}/transfer`);
+        navigate(`/budget/${groupId}/transfer/` + `${isOwner}`);
     } else {
         setBtnState(type);
     }
@@ -89,7 +92,7 @@ export default function Budget() {
 
   return (
     <>
-      <TopNavBar pageName={"가계부"} isModalRequired={true} />
+      <TopNavBar pageName={"가계부"} isModalRequired={false} isBackRequired={true}/>
       <style.Wrapper>
         <Button
           name={"budget"}
@@ -111,7 +114,7 @@ export default function Budget() {
           </style.Label>
           <style.Label>
             <Button name={"options"} image={Transfer} onClick={() => handleButtonClick("transfer")} />
-            <span>송금하기</span>
+            <span>정산하기</span>
           </style.Label>
         </style.ButtonWrapper>
         <style.HistoryContainer>
@@ -126,7 +129,7 @@ export default function Budget() {
                 image={transaction.image}
                 description={transaction.description}
                 amount={transaction.amountFormatted}
-                onClick={() => navigate(`/history/${meetingId}/${transaction.id}?owner=${isOwner}`, {
+                onClick={() => navigate((`/history/${meetingId}/${transaction.id}/` + crypto.encrypt(`${isOwner}`)), {
                   state: { transaction, groupId, isOwner },
                 })}
               />

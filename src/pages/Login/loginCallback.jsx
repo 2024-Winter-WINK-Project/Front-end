@@ -18,6 +18,8 @@ const LoginCallback = () => {
         .then((res) => res.json())
         .then((backendData) => {
             sessionStorage.setItem('userId',crypto.encrypt(toString(backendData.memberId)));
+            sessionStorage.setItem('profileUrl',crypto.encrypt(backendData.profileUrl));
+            sessionStorage.setItem('nickName',crypto.encrypt(backendData.nickName));
             navigate(`/home?id=${crypto.encrypt(toString(backendData.memberId))}`);
         })
         .catch(() => {

@@ -42,8 +42,8 @@ const BottomNavBar = () => {
                             <styled.ButtonIcons src={notifications}/>
                             <styled.ButtonStyles>받은 알림</styled.ButtonStyles>
                         </styled.ButtonContainer>
-                        <styled.ButtonContainer onClick={() => navigate(`/mypage/${userId}`)}>
-                            {currentPath === `/mypage/${userId}` ?
+                        <styled.ButtonContainer onClick={() => navigate(`/mypage?id=${userId}`)}>
+                            {currentPath === `/mypage` ?
                                 <styled.ButtonIcons src={mypage_filled}/>
                                 :
                                 <styled.ButtonIcons src={mypage}/>

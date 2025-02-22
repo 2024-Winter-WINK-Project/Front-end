@@ -43,18 +43,18 @@ const App = () =>{
                     <Route path="/meetinglist" element={<PrivateRoute><MeetingList /></PrivateRoute>}/>
                     <Route path="/createmeeting" element={<PrivateRoute><CreateMeeting /></PrivateRoute>}/>
                     <Route path="/managemeeting/:meetingId/:skey" element={<PrivateRoute><ManageMeeting /></PrivateRoute>}/>
-                    <Route path="/managemeeting/:meetingId/:skey/edit" element={<PrivateRoute><EditMeeting /></PrivateRoute>}/>
-                    <Route path="/managemeeting/:meetingId/:skey/changemanager" element={<PrivateRoute><ChangeManager /></PrivateRoute>}/>
-                    <Route path="/managemeeting/:meetingId/:skey/removemembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/edit/:skey" element={<PrivateRoute><EditMeeting /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/changemanager:skey" element={<PrivateRoute><ChangeManager /></PrivateRoute>}/>
+                    <Route path="/managemeeting/:meetingId/removemembers:skey" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
                     <Route path="/transfer/:meetingId/selectmembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
                     <Route path="/movingkakaomap" element={<PrivateRoute><MovingKakaoMap /></PrivateRoute>}/>
                     <Route path="/meetings/:meetingId/invitations" element={<PrivateRoute><InvitationCallback /></PrivateRoute>}/>
                     <Route path="/meetings/:meetingId/invitations/:invitationCod/nickname" element={<PrivateRoute><Nickname /></PrivateRoute>}/>
-                    <Route path="/mypage/:memberId" element={<PrivateRoute><MyPage /></PrivateRoute>}/>
-                    <Route path="/budget/:meetingId" element={<PrivateRoute><Budget /></PrivateRoute>}/>
-                    <Route path="/budget/:meetingId/transfer" element={<PrivateRoute><Transfer /></PrivateRoute>}/>
-                    <Route path="/addhistory" element={<PrivateRoute><AddHistory /></PrivateRoute>}/>
-                    <Route path="/history/:id" element={<PrivateRoute><HistoryDetail /></PrivateRoute>} />
+                    <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>}/>
+                    <Route path="/budget/:meetingId/:skey" element={<PrivateRoute><Budget /></PrivateRoute>}/>
+                    <Route path="/budget/:meetingId/transfer/:skey" element={<PrivateRoute><Transfer /></PrivateRoute>}/>
+                    <Route path="/budget/:meetingId/addhistory/:skey" element={<PrivateRoute><AddHistory /></PrivateRoute>}/>
+                    <Route path="/history/:meetingId/:transactionId/:skey" element={<PrivateRoute><HistoryDetail /></PrivateRoute>} />
                     <Route path="*" element={<NotFound />} />
 
                 </Routes>

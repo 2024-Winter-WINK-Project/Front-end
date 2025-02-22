@@ -6,6 +6,9 @@ import Profile from '../../assets/MyPage/profile.svg';
 import Button from '../../components/Button/ProfileButton.jsx';
 import Modal from '../../components/Modal/modal.jsx';
 import * as style from './styles';
+import * as crypto from "../../components/Others/Crypto";
+import * as SStorageCleaner from "../../components/Session/SessionStorageCleaner";
+
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -13,9 +16,9 @@ export default function MyPage() {
   const [modalType, setModalType] = useState(null);
 
   // 사용자 정보 불러오기
-  const memberId = sessionStorage.getItem("userId");
-  const nickName = sessionStorage.getItem("nickName") || "사용자";
-  const profilePicture = sessionStorage.getItem("profileUrl") || Profile;
+  const memberId = crypto.decrypt(sessionStorage.getItem("userId")) || null;
+  const nickName = crypto.decrypt(sessionStorage.getItem("nickName")) || "사용자";
+  const profilePicture = crypto.decrypt(sessionStorage.getItem("profileUrl")) || Profile;
 
   useEffect(() => {
     console.log("마이페이지 로드됨");
@@ -25,7 +28,8 @@ export default function MyPage() {
 
     if (!memberId) {
       alert("로그인이 필요합니다.");
-      navigate('/login');
+      SStorageCleaner.SessionStorageCleaner(401);
+      window.location.replace('/');
     }
   }, [memberId, navigate]);
 
@@ -45,7 +49,7 @@ export default function MyPage() {
       await axios.get(`http://localhost:8080/auth/logout`, {
         withCredentials: true,
       });
-  
+
       sessionStorage.clear();
       alert("로그아웃 완료");
       navigate('/login');
@@ -61,13 +65,13 @@ export default function MyPage() {
       await axios.delete(`http://localhost:8080/auth/withdraw`, {
         withCredentials: true,
       });
-  
+
       sessionStorage.clear();
       alert("회원 탈퇴 완료");
       navigate('/login');
     } catch (error) {
       console.error("탈퇴 실패:", error.response?.data || error.message);
-  
+
       if (error.response?.status === 400) {
         alert("소속된 모임이 있어 탈퇴할 수 없습니다.");
       } else {

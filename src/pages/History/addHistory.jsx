@@ -5,6 +5,8 @@ import TopNavBar from "../../components/TopNavBar/TopNavBar.jsx";
 import Button from '../../components/Button/BudgetButton.jsx';
 import Input from '../../components/Input/input.jsx';
 import * as style from './styles.jsx';
+import * as crypto from "../../components/Others/Crypto";
+
 
 export default function History() {
   const [btnState, setBtnState] = useState('income');
@@ -15,7 +17,7 @@ export default function History() {
   const { meetingId } = useParams();
   const groupId = meetingId;
   const [searchParams] = useSearchParams();
-  const isOwner = searchParams.get("owner") === "true";
+  const isOwner  = useParams().skey;
 
   const handleButtonClick = (type) => {
     setBtnState(type);
@@ -54,7 +56,7 @@ export default function History() {
         }
       );
       alert("내역이 추가되었습니다.");
-      navigate(`/budget/${meetingId}?owner=${isOwner}`);
+      navigate(`/budget/${meetingId}/${isOwner}`);
     } catch (error) {
       console.error("내역 추가 실패:", error);
       alert("내역 추가 실패");

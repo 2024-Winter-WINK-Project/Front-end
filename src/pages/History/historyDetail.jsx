@@ -6,12 +6,13 @@ import Button from '../../components/Button/BudgetButton.jsx';
 import Input from '../../components/Input/input.jsx';
 import Modal from '../../components/Modal/modal.jsx';
 import * as style from './styles.jsx';
+import * as crypto from "../../components/Others/Crypto";
 
 export default function ViewHistory() {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const isOwner = searchParams.get("owner") === "true";
+  const isOwner = Boolean(crypto.decrypt(useParams().skey));
   const { meetingId } = useParams();
   const groupId = meetingId;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,7 +51,7 @@ export default function ViewHistory() {
     }
 
     const parsedAmount = selectedType === 'income' ? Math.abs(Number(amount)) : -Math.abs(Number(amount));
-  
+
     try {
       const res = await axios.put(
         `http://localhost:8080/groups/${groupId}/ledger/transactions/${transactionId}`,
@@ -68,7 +69,7 @@ export default function ViewHistory() {
           },
         }
       );
-  
+
       console.log("수정 성공:", res.data);
       alert("거래 내역이 수정되었습니다.");
       navigate(-1); // 이전 페이지로 이동
@@ -83,7 +84,7 @@ export default function ViewHistory() {
       alert("거래 내역을 찾을 수 없습니다.");
       return;
     }
-  
+
     try {
       await axios.delete(
         `http://localhost:8080/groups/${groupId}/ledger/transactions/${transactionId}`,
@@ -94,7 +95,7 @@ export default function ViewHistory() {
           },
         }
       );
-  
+
       alert("거래 내역이 삭제되었습니다.");
       navigate(-1); // 이전 페이지로 이동
     } catch (error) {
