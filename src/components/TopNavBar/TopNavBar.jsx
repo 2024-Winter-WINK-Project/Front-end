@@ -8,6 +8,7 @@ import * as styled from "./styles";
 import * as SessionCleaner from "../../components/Session/SessionStorageCleaner";
 import {useNavigateBack} from "../Others/useNavigateBack";
 
+
 const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest}) =>{
     const iconList = { add, done };
     const feat = iconList[feature] || null;

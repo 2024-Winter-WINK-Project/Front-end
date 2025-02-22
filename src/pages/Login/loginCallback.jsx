@@ -30,11 +30,8 @@ const LoginCallback = () => {
       requestAccess();
   }, []);
 
-  return (
-      <>
-        <span>카카오 로그인 진행중입니다.</span>
-      </>
-  );
+
+  return <span>카카오 로그인 진행중입니다.</span>;
 };
 
 export default LoginCallback;
