@@ -165,7 +165,7 @@ export default function ViewHistory() {
           />
           <Input
             width={'342px'}
-            height={'256px'}
+            height={'360px'}
             type={'textarea'}
             name={selectedType}
             value={memo}

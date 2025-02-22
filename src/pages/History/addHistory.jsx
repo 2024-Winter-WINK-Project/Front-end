@@ -109,7 +109,7 @@ export default function History() {
           />
           <Input
             width={'342px'}
-            height={'256px'}
+            height={'360px'}
             type={'textarea'}
             placeholder={'메모...'}
             name={btnState}

@@ -1,27 +1,27 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     @media (min-width: 600px){
         width : 600px;
+        padding-top: 10vh;
     }
 `;
 
 export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 12px;
 `;
 
 export const ProfileTitle = styled.span`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  margin-left: 20px;
-  margin-bottom: 28px;
+  margin-left: 80px;
+  margin-bottom: 68px;
 `;
 
 export const UserInfoContainer = styled.div`
@@ -29,29 +29,29 @@ export const UserInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 40px;
 `;
 
 export const Profile = styled.div`
   > img {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
+    border-radius: 40px;
   }
 `;
 
 export const UserInfo = styled.div`
-  font-size: 16px;
+  font-size: 20px;
   :first-child {
     font-weight: 600;
     margin-right: 12px;
   }
-  margin-bottom: 32px;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin: 28px;
-  margin-bottom: 80px;
+  gap: 24px;
+  margin: 52px;
 `;

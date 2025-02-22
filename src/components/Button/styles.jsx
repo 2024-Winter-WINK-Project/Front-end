@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const BigButton = styled.button`
   width: 120px;
-  height: 32px;
+  height: 40px;
   border: none;
   border-radius: 10px;
   background: #0234A8;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: white;
   cursor: pointer;

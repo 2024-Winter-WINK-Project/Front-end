@@ -96,12 +96,11 @@ return (
           </style.UserInfo>
         </style.UserInfoContainer>
         <style.ButtonContainer>
-          <div>
-            <Button size="big" content="로그아웃" onClick={() => openModal("signout")} />
-            <Button size="big" content="탈퇴하기" onClick={() => openModal("delete")} />
-          </div>
+        <style.ButtonContainer>
+          <Button size="big" content="로그아웃" onClick={() => openModal("signout")} />
+          <Button size="big" content="탈퇴하기" onClick={() => openModal("delete")} />
         </style.ButtonContainer>
-        <style.ProfileTitle>자주 묻는 질문</style.ProfileTitle>
+        </style.ButtonContainer>
       </style.ProfileContainer>
     </style.Wrapper>
     <Modal
