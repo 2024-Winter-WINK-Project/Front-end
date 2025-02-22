@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import UploadModal from "../Modal/UploadModal.jsx";
 import Modal from "../Modal/modal.jsx";
 import * as styled from "./styles";
-import * as SessionCleaner from "../../components/SessionStorageCleaner/SessionStorageCleaner";
+import * as SessionCleaner from "../../components/Session/SessionStorageCleaner";
 
 
 const TopNavBar = ({pageName, feature, isModalRequired,isBackRequired, onDataChange, dest, data}) =>{

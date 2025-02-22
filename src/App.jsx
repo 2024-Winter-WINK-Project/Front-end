@@ -9,6 +9,7 @@ import MyPage from "./pages/MyPage/myPage.jsx";
 import Budget from "./pages/Budget/budget.jsx";
 import AddHistory from "./pages/History/addHistory.jsx";
 import HistoryDetail from './pages/History/HistoryDetail.jsx';
+import InvitationCallback from './pages/Nickname/checkInvite.jsx';
 import Nickname from "./pages/Nickname/nickname.jsx";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
 import {useEffect} from "react";
@@ -47,7 +48,8 @@ const App = () =>{
                     <Route path="/managemeeting/:meetingId/:skey/removemembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
                     <Route path="/transfer/:meetingId/selectmembers" element={<PrivateRoute><SelectMembers /></PrivateRoute>}/>
                     <Route path="/movingkakaomap" element={<PrivateRoute><MovingKakaoMap /></PrivateRoute>}/>
-                    <Route path="/nickname" element={<PrivateRoute><Nickname /></PrivateRoute>}/>
+                    <Route path="/meetings/:meetingId/invitations" element={<PrivateRoute><InvitationCallback /></PrivateRoute>}/>
+                    <Route path="/meetings/:meetingId/invitations/:invitationCod/nickname" element={<PrivateRoute><Nickname /></PrivateRoute>}/>
                     <Route path="/mypage/:memberId" element={<PrivateRoute><MyPage /></PrivateRoute>}/>
                     <Route path="/budget/:meetingId" element={<PrivateRoute><Budget /></PrivateRoute>}/>
                     <Route path="/budget/:meetingId/transfer" element={<PrivateRoute><Transfer /></PrivateRoute>}/>
